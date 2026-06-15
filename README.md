@@ -16,7 +16,7 @@ collaboration happen, not just read it in logs.
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 [![TypeScript](https://img.shields.io/badge/built%20with-TypeScript-3178c6.svg)](https://www.typescriptlang.org/)
 
-[Quick Start](#-quick-start) · [Docs](https://naaa-g.github.io/OACP) · [Launch kit](./docs/launch-kit.md) · [Architecture](#-architecture) · [Examples](#-examples) · [Roadmap](#-roadmap) · [Contributing](./CONTRIBUTING.md)
+[Quick Start](#-quick-start) · [Docs](https://naaa-g.github.io/OACP) · [Architecture](#-architecture) · [Examples](#-examples) · [Roadmap](#-roadmap) · [Contributing](./CONTRIBUTING.md)
 
 </div>
 
@@ -28,7 +28,6 @@ collaboration happen, not just read it in logs.
 - [Project Status](#-project-status)
 - [Features](#-features)
 - [Quick Start](#-quick-start)
-- [Launch kit](#-launch-kit)
 - [Core Concepts](#-core-concepts)
 - [Architecture](#-architecture)
 - [The Protocol](#-the-protocol)
@@ -264,21 +263,16 @@ console.log(result.output);
 oacp run "build a habit tracker app"
 ```
 
-## 📣 Launch kit & community
+## 📣 Community
 
-**Public launch (Day 30):** release `v0.1.0-alpha`, playbook, and community tooling are ready.
+**Public launch (Day 30):** release `v0.1.0-alpha` and community tooling are ready.
 
 | Resource                                                | Purpose                                |
 | ------------------------------------------------------- | -------------------------------------- |
-| [Launch day playbook](./docs/launch-day.md)             | GitHub release, HN, Reddit, X copy     |
-| [Post-launch runbook](./docs/post-launch.md)            | Week 1 triage and metrics              |
 | [Community & support](./docs/community.md)              | Issues, Discussions, security          |
-| [Launch kit](./docs/launch-kit.md)                      | Demo assets, elevator pitch, checklist |
 | [Release v0.1.0-alpha](./docs/releases/v0.1.0-alpha.md) | What's in the first public release     |
 
 Tag a release: `.\scripts\tag-release.ps1` (Windows) or `./scripts/tag-release.sh`
-
-Capture helper: `.\scripts\capture-launch-assets.ps1` or `./scripts/capture-launch-assets.sh`
 
 ---
 
@@ -498,7 +492,7 @@ oacp/
 
 **M7–M8 focus:** teams can run OACP on a private network with signing, Docker, and clearer semver — still **not** production until `v1.0`.
 
-Runbooks: [`docs/post-launch.md`](./docs/post-launch.md) · [`docs/launch-day.md`](./docs/launch-day.md) · [`docs/security-model.md`](./docs/security-model.md)
+Runbooks: [`docs/security-model.md`](./docs/security-model.md) · [`docs/community.md`](./docs/community.md)
 
 ---
 

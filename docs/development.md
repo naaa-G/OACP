@@ -286,18 +286,12 @@ VitePress imports them in [`config.mjs`](./.vitepress/config.mjs) for nav, socia
 “edit on GitHub”. When the GitHub org/repo or Pages URL changes, update `repo.mjs` once —
 Markdown clone snippets in README and guides should match those constants.
 
-## Launch kit (Day 29)
+## Launch assets (local only)
 
-Assets and playbooks for demos and public launch:
+Launch runbooks, demo scripts, and screenshot guides are kept locally (gitignored) and are not published to GitHub. Public launch resources:
 
-| Doc                                            | Purpose                              |
-| ---------------------------------------------- | ------------------------------------ |
-| [launch-kit.md](./launch-kit.md)               | Pre-launch checklist, elevator pitch |
-| [demo-video-script.md](./demo-video-script.md) | 3–5 minute recording script          |
-| [screenshots.md](./screenshots.md)             | Capture playground & CLI visuals     |
-| [launch-day.md](./launch-day.md)               | HN, Reddit, X templates (Day 30)     |
-| [post-launch.md](./post-launch.md)             | Week 1 triage after public launch    |
-| [community.md](./community.md)                 | Support channels and triage SLA      |
+| Doc                            | Purpose                         |
+| ------------------------------ | ------------------------------- |
+| [community.md](./community.md) | Support channels and triage SLA |
 
-Static assets live in `docs/public/` (e.g. `architecture-diagram.svg`). Capture helpers:
-`scripts/capture-launch-assets.ps1` / `.sh`. Release helper: `scripts/tag-release.ps1` / `.sh`.
+Static assets live in `docs/public/` (e.g. `architecture-diagram.svg`). Release helper: `scripts/tag-release.ps1` / `.sh`.

@@ -102,15 +102,10 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Launch & adoption',
+        text: 'Community',
         items: [
-          { text: 'Launch kit', link: '/launch-kit' },
-          { text: 'Launch day (Day 30)', link: '/launch-day' },
-          { text: 'Post-launch runbook', link: '/post-launch' },
           { text: 'Community & support', link: '/community' },
           { text: 'Release v0.1.0-alpha', link: '/releases/v0.1.0-alpha' },
-          { text: 'Demo video script', link: '/demo-video-script' },
-          { text: 'Screenshots guide', link: '/screenshots' },
         ],
       },
       {

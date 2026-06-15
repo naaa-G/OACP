@@ -28,7 +28,7 @@ Open the printed `playground_url`. You should see PM, Designer, Backend, Fronten
 - [Quick start](https://naaa-g.github.io/OACP/quick-start)
 - [What is OACP?](https://naaa-g.github.io/OACP/what-is-oacp)
 - [Architecture diagram](https://naaa-g.github.io/OACP/architecture-diagram.svg)
-- [Launch kit](https://naaa-g.github.io/OACP/launch-kit)
+- [Community & support](https://naaa-g.github.io/OACP/community)
 
 ### Status
 

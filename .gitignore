@@ -40,8 +40,24 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 
-# Local planning docs (not published to GitHub)
+# Local / internal planning docs (not published to GitHub)
 plan.md
 ROADMAP.md
 roadmap.md
 structure.md
+
+# Launch & marketing runbooks (local only)
+docs/launch-kit.md
+docs/launch-day.md
+docs/post-launch.md
+docs/demo-video-script.md
+docs/screenshots.md
+
+# Launch asset tooling & captured marketing media
+scripts/capture-launch-assets.ps1
+scripts/capture-launch-assets.sh
+docs/public/screenshots/*.png
+docs/public/screenshots/*.jpg
+docs/public/screenshots/*.jpeg
+docs/public/screenshots/*.webp
+docs/public/screenshots/*.gif

@@ -106,7 +106,6 @@ pnpm --filter oacp-examples start:local
 
 ## What's next?
 
-- [Launch kit](/launch-kit) — demo video script, screenshots, launch-day playbook
 - [What is OACP?](/what-is-oacp) — positioning and architecture diagrams
 - [Development guide](/development) — contributing and package commands
 - [HTTP server](/http-server) — API reference

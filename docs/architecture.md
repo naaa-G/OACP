@@ -105,7 +105,6 @@ Live web visualization served by `@oacp/server` at `GET /playground`. See [playg
 ## Current state (Day 29)
 
 - Week 1–3 milestones complete (M1–M3). Week 4 adoption layer in progress (M4).
-- **Launch kit** — architecture SVG, demo video script, screenshot guide, launch-day playbook.
 - **Integration adapters** — LangChain (`@oacp/integration-langchain`) and AutoGen (`oacp-autogen`).
 - **Demo v1** (`examples/demo-v1/`) — remote coordinator + document pipeline over HTTP.
 - **Demo v2** (`examples/demo-v2/`) — DAG workflow with memory, graph, recovery, and traces.

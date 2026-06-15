@@ -1,21 +1,11 @@
-# Place screenshots here before launch.
+# Screenshots
 
-#
+Place captured playground and CLI images here for the docs site and README.
 
-# See docs/screenshots.md for capture instructions.
+Expected files:
 
-#
+- `playground-agents.png`
+- `playground-messages.png`
+- `cli-run-output.png`
 
-# Expected files:
-
-# playground-agents.png
-
-# playground-messages.png
-
-# cli-run-output.png
-
-#
-
-# Architecture diagram (already available):
-
-# ../architecture-diagram.svg
+Architecture diagram (already available): `../architecture-diagram.svg`

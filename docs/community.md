@@ -45,6 +45,4 @@ Participation is governed by [CODE_OF_CONDUCT.md](https://github.com/naaa-G/OACP
 
 ## Related
 
-- [Launch day playbook](./launch-day.md)
-- [Post-launch runbook](./post-launch.md)
-- [Launch kit](./launch-kit.md)
+- [Community & support](./community.md)

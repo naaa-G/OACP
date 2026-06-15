@@ -17,7 +17,6 @@ Use the sidebar to browse guides, or start with [What is OACP?](/what-is-oacp) a
 | [Python SDK](/sdk-python)            | `oacp-sdk` async HTTP client            |
 | [Example gallery](/examples-gallery) | Coding, research, bug-finder swarms     |
 | [Integrations](/integrations)        | LangChain & AutoGen adapters (Day 28)   |
-| [Launch kit](/launch-kit)            | Demo script, screenshots, launch prep   |
 | [Startup team](/startup-team)        | Flagship autonomous team demo           |
 | [Playground](/playground)            | Live agent graph UI                     |
 
