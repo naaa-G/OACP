@@ -5,13 +5,25 @@ callables.
 
 ## Install
 
+From the monorepo root (install SDK first — autogen imports `oacp_sdk`):
+
 ```bash
-pip install -e "integrations/autogen[dev]"
-# Optional AutoGen bindings:
+pip install -e "sdk/python[dev]"
+pip install -e "integrations/autogen" --no-deps
+pip install pytest pytest-asyncio pytest-httpx
+
+# Or use the helper script:
+# bash scripts/verify-python.sh   # Linux / CI
+# .\scripts\verify-python.ps1     # Windows
+```
+
+Optional AutoGen bindings:
+
+```bash
 pip install -e "integrations/autogen[autogen]"
 ```
 
-Requires `oacp-sdk` (install from `sdk/python` in the monorepo).
+When published to PyPI, `oacp-autogen` will depend on `oacp-sdk` from PyPI. In the monorepo, install `sdk/python` first.
 
 ## Quick start
 
