@@ -489,12 +489,12 @@ oacp/
 
 | Milestone | Theme                     | Outcome                                           |   Status   |
 | --------- | ------------------------- | ------------------------------------------------- | :--------: |
-| **M5**    | Launch & flagship polish  | Public release, demo video, cold-run verification | ⚪ Planned |
+| **M5**    | Launch & flagship polish  | Public release, demo video, cold-run verification | 🟡 In progress |
 | **M6**    | Demo & DX                 | Under-5-min quick start, hosted demo, CI smoke    | ⚪ Planned |
 | **M7**    | Trust & deployability     | Message signing, server auth, Docker Compose      | ⚪ Planned |
 | **M8**    | Stability & observability | API policy, OpenTelemetry, persistent registry    | ⚪ Planned |
 
-**M5 focus:** tag `v0.1.0-alpha`, enable GitHub Pages, record the Autonomous Startup Team demo, and verify `pnpm oacp run "build todo app" --keep-alive` works on a fresh clone before Show HN / Reddit outreach.
+**M5 focus (remaining):** demo video, README hero GIF, GitHub Discussions, then one outreach channel (Show HN or Reddit).
 
 **M7–M8 focus:** teams can run OACP on a private network with signing, Docker, and clearer semver — still **not** production until `v1.0`.
 
