@@ -27,7 +27,7 @@
     "format:check": "prettier --check .",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean",
-    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "verify": "pnpm format:check && pnpm build && pnpm lint && pnpm typecheck && pnpm test",
     "oacp": "node cli/dist/main.js",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

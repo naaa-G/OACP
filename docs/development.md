@@ -19,7 +19,7 @@ pnpm install
 pnpm verify
 ```
 
-`pnpm verify` runs the full quality gate: format check, lint, typecheck, test, and build.
+`pnpm verify` runs the full quality gate: format check, build, lint, typecheck, and test.
 
 ## Monorepo structure
 

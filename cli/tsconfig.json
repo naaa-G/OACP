@@ -5,5 +5,5 @@
     "noEmit": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "vitest.config.ts"],
-  "references": [{ "path": "../core" }, { "path": "../sdk/typescript" }, { "path": "../server" }]
+  "references": [{ "path": "../core" }, { "path": "../sdk/typescript" }]
 }
