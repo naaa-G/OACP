@@ -267,10 +267,10 @@ oacp run "build a habit tracker app"
 
 **Public launch (Day 30):** release `v0.1.0-alpha` and community tooling are ready.
 
-| Resource                                                | Purpose                                |
-| ------------------------------------------------------- | -------------------------------------- |
-| [Community & support](./docs/community.md)              | Issues, Discussions, security          |
-| [Release v0.1.0-alpha](./docs/releases/v0.1.0-alpha.md) | What's in the first public release     |
+| Resource                                                | Purpose                            |
+| ------------------------------------------------------- | ---------------------------------- |
+| [Community & support](./docs/community.md)              | Issues, Discussions, security      |
+| [Release v0.1.0-alpha](./docs/releases/v0.1.0-alpha.md) | What's in the first public release |
 
 Tag a release: `.\scripts\tag-release.ps1` (Windows) or `./scripts/tag-release.sh`
 
@@ -481,12 +481,12 @@ oacp/
 
 **Target:** production-adjacent alpha — flawless flagship demo, deployable stack, trust layer for internal evaluation.
 
-| Milestone | Theme                     | Outcome                                           |   Status   |
-| --------- | ------------------------- | ------------------------------------------------- | :--------: |
+| Milestone | Theme                     | Outcome                                           |     Status     |
+| --------- | ------------------------- | ------------------------------------------------- | :------------: |
 | **M5**    | Launch & flagship polish  | Public release, demo video, cold-run verification | 🟡 In progress |
-| **M6**    | Demo & DX                 | Under-5-min quick start, hosted demo, CI smoke    | ⚪ Planned |
-| **M7**    | Trust & deployability     | Message signing, server auth, Docker Compose      | ⚪ Planned |
-| **M8**    | Stability & observability | API policy, OpenTelemetry, persistent registry    | ⚪ Planned |
+| **M6**    | Demo & DX                 | Under-5-min quick start, hosted demo, CI smoke    |   ⚪ Planned   |
+| **M7**    | Trust & deployability     | Message signing, server auth, Docker Compose      |   ⚪ Planned   |
+| **M8**    | Stability & observability | API policy, OpenTelemetry, persistent registry    |   ⚪ Planned   |
 
 **M5 focus (remaining):** demo video, README hero GIF, GitHub Discussions, then one outreach channel (Show HN or Reddit).
 
