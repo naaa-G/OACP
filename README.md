@@ -480,19 +480,19 @@ oacp/
 | **M0**    | Repository bootstrap   | Monorepo, tooling, CI, docs                       | ✅ Done |
 | **M1**    | Protocol Core          | Schemas + validation + minimal in-process runtime | ✅ Done |
 | **M2**    | Networking             | Agents collaborate over HTTP with a registry      | ✅ Done |
-| **M3**    | Collaboration & Memory | Shared memory, delegation graphs, DAG workflows | ✅ Done |
+| **M3**    | Collaboration & Memory | Shared memory, delegation graphs, DAG workflows   | ✅ Done |
 | **M4**    | Adoption               | Playground, CLI, docs site, launch                | ✅ Done |
 
 ### v0.2.0-alpha — in progress (trust, polish & adoption)
 
 **Target:** production-adjacent alpha — flawless flagship demo, deployable stack, trust layer for internal evaluation.
 
-| Milestone | Theme                    | Outcome                                           | Status     |
-| --------- | ------------------------ | ------------------------------------------------- | :--------: |
-| **M5**    | Launch & flagship polish | Public release, demo video, cold-run verification | ⚪ Planned |
-| **M6**    | Demo & DX                | Under-5-min quick start, hosted demo, CI smoke    | ⚪ Planned |
-| **M7**    | Trust & deployability    | Message signing, server auth, Docker Compose      | ⚪ Planned |
-| **M8**    | Stability & observability| API policy, OpenTelemetry, persistent registry    | ⚪ Planned |
+| Milestone | Theme                     | Outcome                                           |   Status   |
+| --------- | ------------------------- | ------------------------------------------------- | :--------: |
+| **M5**    | Launch & flagship polish  | Public release, demo video, cold-run verification | ⚪ Planned |
+| **M6**    | Demo & DX                 | Under-5-min quick start, hosted demo, CI smoke    | ⚪ Planned |
+| **M7**    | Trust & deployability     | Message signing, server auth, Docker Compose      | ⚪ Planned |
+| **M8**    | Stability & observability | API policy, OpenTelemetry, persistent registry    | ⚪ Planned |
 
 **M5 focus:** tag `v0.1.0-alpha`, enable GitHub Pages, record the Autonomous Startup Team demo, and verify `pnpm oacp run "build todo app" --keep-alive` works on a fresh clone before Show HN / Reddit outreach.
 
