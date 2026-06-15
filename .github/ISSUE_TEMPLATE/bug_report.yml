@@ -1,0 +1,72 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly
+title: '[Bug]: '
+labels: ['bug', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please search [existing issues](https://github.com/naaa-G/OACP/issues) first.
+        For security vulnerabilities, use [private advisories](https://github.com/naaa-G/OACP/security/advisories/new) instead.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Clear description of the bug
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Commands, config, or minimal example
+      placeholder: |
+        1. pnpm oacp run "build todo app"
+        2. Open playground URL
+        3. See error ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        OS: Windows 11 / macOS 14 / Ubuntu 22.04
+        Node: 20.x
+        pnpm: 9.x
+        OACP commit or version: main @ abc1234
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - CLI (@oacp/cli)
+        - Core protocol (@oacp/core)
+        - HTTP server (@oacp/server)
+        - TypeScript SDK (@oacp/sdk)
+        - Python SDK (oacp-sdk)
+        - Playground UI
+        - Documentation
+        - CI / tooling
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste relevant terminal output or attach screenshots

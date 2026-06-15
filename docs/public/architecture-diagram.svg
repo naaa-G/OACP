@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" role="img" aria-label="OACP architecture diagram">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f14"/>
+      <stop offset="100%" stop-color="#141b26"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8b9cb3"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="620" fill="url(#bg)"/>
+  <text x="480" y="42" text-anchor="middle" fill="#e8edf5" font-family="Segoe UI, system-ui, sans-serif" font-size="24" font-weight="700">OACP Architecture</text>
+  <text x="480" y="68" text-anchor="middle" fill="#8b9cb3" font-family="Segoe UI, system-ui, sans-serif" font-size="14">Multi-agent collaboration you can see working live</text>
+
+  <!-- Applications -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="95" width="800" height="72" rx="12" fill="#1a2332" stroke="#2a364a"/>
+    <text x="480" y="122" text-anchor="middle" fill="#5b9cf5" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="600">APPLICATIONS</text>
+    <text x="480" y="148" text-anchor="middle" fill="#e8edf5" font-family="Segoe UI, system-ui, sans-serif" font-size="15">CLI · Playground · Examples · LangChain / AutoGen adapters</text>
+  </g>
+
+  <!-- SDK -->
+  <g filter="url(#shadow)">
+    <rect x="120" y="195" width="720" height="72" rx="12" fill="#1a2332" stroke="#2a364a"/>
+    <text x="480" y="222" text-anchor="middle" fill="#5b9cf5" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="600">CLIENT SDKs</text>
+    <text x="480" y="248" text-anchor="middle" fill="#e8edf5" font-family="Segoe UI, system-ui, sans-serif" font-size="15">@oacp/sdk · oacp-sdk · Agent · AgentClient · WorkflowEngine</text>
+  </g>
+
+  <!-- Server -->
+  <g filter="url(#shadow)">
+    <rect x="160" y="295" width="640" height="72" rx="12" fill="#1a2332" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="480" y="322" text-anchor="middle" fill="#5b9cf5" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="600">@oacp/server (optional network node)</text>
+    <text x="480" y="348" text-anchor="middle" fill="#e8edf5" font-family="Segoe UI, system-ui, sans-serif" font-size="15">HTTP API · Registry · Workflow runner · Traces · Playground UI</text>
+  </g>
+
+  <!-- Core -->
+  <g filter="url(#shadow)">
+    <rect x="120" y="395" width="720" height="88" rx="12" fill="#1a2332" stroke="#2a364a"/>
+    <text x="480" y="422" text-anchor="middle" fill="#5b9cf5" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="600">@oacp/core  PROTOCOL ENGINE</text>
+    <text x="480" y="448" text-anchor="middle" fill="#e8edf5" font-family="Segoe UI, system-ui, sans-serif" font-size="14">Validation · Message bus · Runtime · Memory · Delegation graph</text>
+    <text x="480" y="468" text-anchor="middle" fill="#8b9cb3" font-family="Segoe UI, system-ui, sans-serif" font-size="13">Workflow engine · Failure recovery · Observability</text>
+  </g>
+
+  <!-- Specs -->
+  <g filter="url(#shadow)">
+    <rect x="200" y="511" width="560" height="64" rx="12" fill="#141b26" stroke="url(#accent)" stroke-width="2"/>
+    <text x="480" y="538" text-anchor="middle" fill="#5b9cf5" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="600">specs/  JSON SCHEMA (SOURCE OF TRUTH)</text>
+    <text x="480" y="560" text-anchor="middle" fill="#e8edf5" font-family="Segoe UI, system-ui, sans-serif" font-size="14">messages/ · agent/ · registry/ · version 0.1</text>
+  </g>
+
+  <!-- Arrows -->
+  <line x1="480" y1="167" x2="480" y2="195" stroke="#4a5f7a" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="267" x2="480" y2="295" stroke="#4a5f7a" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="367" x2="480" y2="395" stroke="#4a5f7a" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="483" x2="480" y2="511" stroke="#4a5f7a" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Side labels -->
+  <text x="48" y="240" fill="#8b9cb3" font-family="Segoe UI, system-ui, sans-serif" font-size="12" transform="rotate(-90 48 240)">uses</text>
+  <text x="48" y="340" fill="#8b9cb3" font-family="Segoe UI, system-ui, sans-serif" font-size="12" transform="rotate(-90 48 340)">uses</text>
+  <text x="48" y="440" fill="#8b9cb3" font-family="Segoe UI, system-ui, sans-serif" font-size="12" transform="rotate(-90 48 440)">uses</text>
+  <text x="48" y="545" fill="#8b9cb3" font-family="Segoe UI, system-ui, sans-serif" font-size="12" transform="rotate(-90 48 545)">validates</text>
+
+  <!-- Playground observe -->
+  <rect x="760" y="300" width="150" height="56" rx="8" fill="#243044" stroke="#5b9cf5"/>
+  <text x="835" y="324" text-anchor="middle" fill="#5b9cf5" font-size="11" font-family="Segoe UI, system-ui, sans-serif" font-weight="600">PLAYGROUND</text>
+  <text x="835" y="342" text-anchor="middle" fill="#e8edf5" font-size="11" font-family="Segoe UI, system-ui, sans-serif">live graph</text>
+  <path d="M760 328 L800 328" stroke="#5b9cf5" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="820" y="322" fill="#8b9cb3" font-size="10" font-family="Segoe UI, system-ui, sans-serif">observes</text>
+</svg>

@@ -1,0 +1,54 @@
+name: Feature request
+description: Suggest an enhancement or new capability
+title: '[Feature]: '
+labels: ['enhancement', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For design questions, consider [GitHub Discussions](https://github.com/naaa-G/OACP/discussions) first.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What problem does this solve? Who benefits?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to see?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Protocol / schemas (high impact)
+        - Core runtime
+        - Server / HTTP API
+        - SDK (TypeScript or Python)
+        - Playground / DX
+        - Documentation / examples
+        - Integration adapter
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      options:
+        - label: I considered workarounds or existing OACP features
+          required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Links, diagrams, or references to MCP/A2A interoperability if relevant

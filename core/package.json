@@ -1,0 +1,36 @@
+{
+  "name": "@oacp/core",
+  "version": "0.1.0",
+  "description": "OACP protocol engine — validation, routing, runtime, and memory primitives",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "schemas"
+  ],
+  "scripts": {
+    "prebuild": "node scripts/copy-specs.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "predev": "node scripts/copy-specs.mjs",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "pretest": "node scripts/copy-specs.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\""
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

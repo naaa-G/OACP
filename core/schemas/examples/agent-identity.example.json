@@ -1,0 +1,20 @@
+{
+  "id": "agent://summarizer",
+  "name": "Text Summarizer",
+  "version": "0.1",
+  "capabilities": ["text.summarize"],
+  "publicKey": {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "WKn-ZIGevcwGIyyrzFoZNBdaq9_TsqzGl96oc0CWlibY",
+    "y": "ALOpExF7nDwyk9V4ToWo3L5v_6Y1sQJCrcn_6OlOWf5",
+    "use": "sig",
+    "alg": "ES256",
+    "kid": "summarizer-2026"
+  },
+  "description": "Summarizes long-form text into concise bullet points.",
+  "metadata": {
+    "homepage": "https://example.com/agents/summarizer",
+    "tags": ["nlp", "text"]
+  }
+}

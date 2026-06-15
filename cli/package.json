@@ -1,0 +1,28 @@
+{
+  "name": "@oacp/cli",
+  "version": "0.1.0",
+  "description": "OACP command-line interface — run agent teams, inspect traces, start servers",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "oacp": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\""
+  },
+  "dependencies": {
+    "@oacp/core": "workspace:*",
+    "@oacp/sdk": "workspace:*",
+    "@oacp/server": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  }
+}

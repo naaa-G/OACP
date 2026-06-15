@@ -1,0 +1,13 @@
+{
+  "type": "task_response",
+  "version": "0.1",
+  "message_id": "550e8400-e29b-41d4-4716-446655440002",
+  "trace_id": "0c8f1e2a-7b3d-4f9e-9b1a-2d4e6f8a0c1b",
+  "from": "agent://summarizer",
+  "timestamp": "2026-06-12T12:00:01.250Z",
+  "in_reply_to": "550e8400-e29b-41d4-4716-446655440001",
+  "status": "success",
+  "output": {
+    "summary": "OACP enables agent collaboration via a shared protocol."
+  }
+}

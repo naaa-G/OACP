@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/oacp.schema.json",
+  "title": "OACP Base Definitions",
+  "description": "Shared definitions and message envelope for OACP protocol v0.1.",
+  "$defs": {
+    "protocolVersion": {
+      "type": "string",
+      "const": "0.1",
+      "description": "OACP protocol version. Must match the active spec release."
+    },
+    "messageId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for a single message instance."
+    },
+    "traceId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Correlation identifier linking related messages across agents."
+    },
+    "agentUri": {
+      "type": "string",
+      "pattern": "^agent://[a-zA-Z0-9][a-zA-Z0-9._-]*$",
+      "description": "Stable agent identity URI (e.g. agent://summarizer)."
+    },
+    "capability": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9]*)*$",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Capability identifier in dot notation (e.g. text.summarize)."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when the message was created."
+    },
+    "messageType": {
+      "type": "string",
+      "enum": [
+        "task_request",
+        "task_response",
+        "delegation",
+        "capability_query",
+        "memory_share",
+        "heartbeat"
+      ],
+      "description": "OACP message type discriminator."
+    },
+    "payload": {
+      "type": "object",
+      "description": "Arbitrary JSON object for task-specific input or output.",
+      "additionalProperties": true
+    },
+    "taskError": {
+      "type": "object",
+      "description": "Structured error returned when a task fails.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "description": "Machine-readable error code (e.g. TASK_TIMEOUT)."
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable error summary."
+        },
+        "details": {
+          "type": "object",
+          "description": "Optional structured error context.",
+          "additionalProperties": true
+        }
+      },
+      "required": ["code", "message"],
+      "additionalProperties": false
+    },
+    "messageEnvelope": {
+      "type": "object",
+      "description": "Common fields present on every OACP message.",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/messageType"
+        },
+        "version": {
+          "$ref": "#/$defs/protocolVersion"
+        },
+        "message_id": {
+          "$ref": "#/$defs/messageId"
+        },
+        "trace_id": {
+          "$ref": "#/$defs/traceId"
+        },
+        "from": {
+          "$ref": "#/$defs/agentUri"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": ["type", "version", "message_id", "trace_id", "from", "timestamp"],
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/agent/identity.schema.json",
+  "title": "OACP Agent Identity",
+  "description": "Canonical identity record for an OACP agent.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "../oacp.schema.json#/$defs/agentUri"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Human-readable agent name."
+    },
+    "version": {
+      "$ref": "../oacp.schema.json#/$defs/protocolVersion"
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "Capability identifiers this agent declares it can perform.",
+      "items": {
+        "$ref": "../oacp.schema.json#/$defs/capability"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "publicKey": {
+      "$ref": "#/$defs/publicKeyMaterial",
+      "description": "Public key material for signature verification (PEM or JWK)."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Optional agent description."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional opaque metadata (contact, homepage, tags, etc.).",
+      "additionalProperties": true
+    }
+  },
+  "required": ["id", "name", "version", "capabilities", "publicKey"],
+  "additionalProperties": false,
+  "$defs": {
+    "publicKeyMaterial": {
+      "description": "Public key as PEM string or JSON Web Key.",
+      "oneOf": [{ "$ref": "#/$defs/pemPublicKey" }, { "$ref": "#/$defs/jwkPublicKey" }]
+    },
+    "pemPublicKey": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^-----BEGIN (?:RSA )?PUBLIC KEY-----",
+      "description": "PEM-encoded public key."
+    },
+    "jwkPublicKey": {
+      "type": "object",
+      "description": "JSON Web Key (RFC 7517).",
+      "required": ["kty"],
+      "properties": {
+        "kty": {
+          "type": "string",
+          "minLength": 1
+        },
+        "crv": { "type": "string" },
+        "x": { "type": "string" },
+        "y": { "type": "string" },
+        "n": { "type": "string" },
+        "e": { "type": "string" },
+        "kid": { "type": "string" },
+        "use": { "type": "string", "enum": ["sig", "enc"] },
+        "alg": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

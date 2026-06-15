@@ -1,0 +1,42 @@
+{
+  "name": "oacp-examples",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Runnable OACP examples (local and remote multi-agent flows)",
+  "type": "module",
+  "scripts": {
+    "start:local": "tsx multi-agent/hello-agents.ts",
+    "start:remote": "tsx remote-agent/hello-remote.ts",
+    "start:pipeline": "tsx pipeline/agent-chain.ts",
+    "start:demo": "tsx demo-v1/network-collaboration.ts",
+    "start:demo-v2": "tsx demo-v2/structured-task-chain.ts",
+    "start:startup": "tsx startup-team/autonomous-startup-team.ts",
+    "start:memory": "tsx memory/task-history.ts",
+    "start:graph": "tsx delegation-graph/delegation-chain.ts",
+    "start:workflow": "tsx workflow/subtask-decomposition.ts",
+    "start:workflow-engine": "tsx workflow/dag-engine.ts",
+    "start:recovery": "tsx resilience/failure-recovery.ts",
+    "start:trace": "tsx observability/trace-viewer.ts",
+    "prestart:playground": "pnpm --filter @oacp/server build",
+    "start:playground": "tsx playground/live-demo.ts",
+    "start:coding-swarm": "tsx gallery/coding-swarm/coding-swarm.ts",
+    "start:research-swarm": "tsx gallery/research-swarm/research-swarm.ts",
+    "start:bug-finder-swarm": "tsx gallery/bug-finder-swarm/bug-finder-swarm.ts",
+    "prestart:sdk-remote": "pnpm --filter @oacp/sdk build",
+    "start:sdk-remote": "tsx sdk/hello-remote.ts",
+    "prestart:sdk-workflow": "pnpm --filter @oacp/sdk build",
+    "start:sdk-workflow": "tsx sdk/run-workflow.ts",
+    "prestart:langchain-delegate": "pnpm --filter @oacp/integration-langchain build",
+    "start:langchain-delegate": "tsx integrations/langchain-delegate.ts"
+  },
+  "dependencies": {
+    "@oacp/core": "workspace:*",
+    "@oacp/integration-langchain": "workspace:*",
+    "@oacp/sdk": "workspace:*",
+    "@oacp/server": "workspace:*",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}

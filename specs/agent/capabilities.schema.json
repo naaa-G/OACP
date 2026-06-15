@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/agent/capabilities.schema.json",
+  "title": "OACP Capability Declaration",
+  "description": "Declares metadata for a single agent capability.",
+  "$ref": "#/$defs/capabilityDeclaration",
+  "$defs": {
+    "capabilityDeclaration": {
+      "type": "object",
+      "description": "Rich metadata for one capability an agent provides.",
+      "properties": {
+        "id": {
+          "$ref": "../oacp.schema.json#/$defs/capability"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Human-readable capability name."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "What this capability does."
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version of this capability implementation."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "uniqueItems": true,
+          "description": "Optional tags for discovery and filtering."
+        },
+        "inputSchema": {
+          "type": "object",
+          "description": "Optional JSON Schema describing expected task input."
+        },
+        "outputSchema": {
+          "type": "object",
+          "description": "Optional JSON Schema describing task output."
+        }
+      },
+      "required": ["id", "name", "description"],
+      "additionalProperties": false
+    },
+    "agentCapabilityRegistry": {
+      "type": "object",
+      "description": "Full capability declaration bundle published by an agent.",
+      "properties": {
+        "agent_id": {
+          "$ref": "../oacp.schema.json#/$defs/agentUri"
+        },
+        "version": {
+          "$ref": "../oacp.schema.json#/$defs/protocolVersion"
+        },
+        "declarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capabilityDeclaration"
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["agent_id", "version", "declarations"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/messages/capability_query.json",
+  "title": "OACP Capability Query",
+  "description": "Discover agents that declare a given capability.",
+  "allOf": [
+    {
+      "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageEnvelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "capability_query"
+        },
+        "capability": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/capability"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10,
+          "description": "Maximum number of matching agents to return."
+        }
+      },
+      "required": ["type", "capability"]
+    }
+  ],
+  "type": "object",
+  "unevaluatedProperties": false
+}

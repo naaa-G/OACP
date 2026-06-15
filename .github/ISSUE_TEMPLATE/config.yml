@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & design discussion
+    url: https://github.com/naaa-G/OACP/discussions
+    about: Ask questions, share demos, or discuss protocol design (preferred for non-bugs)
+  - name: Security vulnerability
+    url: https://github.com/naaa-G/OACP/security/advisories/new
+    about: Report security issues privately — do not open a public issue

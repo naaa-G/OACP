@@ -1,0 +1,7 @@
+packages:
+  - 'core'
+  - 'sdk/typescript'
+  - 'server'
+  - 'cli'
+  - 'examples'
+  - 'integrations/langchain'

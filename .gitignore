@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+*.tsbuildinfo
+
+# Test & coverage
+coverage/
+
+# Turborepo
+.turbo/
+
+# VitePress
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Local OACP runtime data (SQLite memory store, etc.)
+.oacp/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Local planning docs (not published to GitHub)
+plan.md
+ROADMAP.md
+roadmap.md
+structure.md

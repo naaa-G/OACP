@@ -1,0 +1,15 @@
+{
+  "type": "delegation",
+  "version": "0.1",
+  "message_id": "550e8400-e29b-41d4-4716-446655440004",
+  "trace_id": "0c8f1e2a-7b3d-4f9e-9b1a-2d4e6f8a0c1b",
+  "from": "agent://coordinator",
+  "timestamp": "2026-06-12T12:00:00.500Z",
+  "parent_message_id": "550e8400-e29b-41d4-4716-446655440001",
+  "capability": "code.generate",
+  "input": {
+    "language": "typescript",
+    "spec": "Create a hello-world agent handler."
+  },
+  "reason": "Coordinator lacks code generation capability."
+}

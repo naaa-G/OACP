@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/messages/task_request.json",
+  "title": "OACP Task Request",
+  "description": "Request an agent (by URI) or capability to perform work.",
+  "allOf": [
+    {
+      "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageEnvelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "task_request"
+        },
+        "to": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/agentUri",
+          "description": "Optional direct recipient. When omitted, routers resolve by capability."
+        },
+        "capability": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/capability"
+        },
+        "input": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/payload"
+        },
+        "deadline_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000,
+          "description": "Optional processing deadline in milliseconds from send time."
+        }
+      },
+      "required": ["type", "capability", "input"]
+    }
+  ],
+  "type": "object",
+  "unevaluatedProperties": false
+}

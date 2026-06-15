@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/messages/task_response.json",
+  "title": "OACP Task Response",
+  "description": "Return the result or structured error for a task_request.",
+  "allOf": [
+    {
+      "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageEnvelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "task_response"
+        },
+        "in_reply_to": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageId",
+          "description": "message_id of the originating task_request."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["success", "error"],
+          "description": "Outcome of the task."
+        },
+        "output": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/payload",
+          "description": "Task result payload when status is success."
+        },
+        "error": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/taskError",
+          "description": "Structured error when status is error."
+        }
+      },
+      "required": ["type", "in_reply_to", "status"]
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "const": "success"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "type": "object",
+        "not": {
+          "type": "object",
+          "required": ["error"]
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "const": "error"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "type": "object",
+        "required": ["error"],
+        "not": {
+          "type": "object",
+          "required": ["output"]
+        }
+      }
+    }
+  ],
+  "type": "object",
+  "unevaluatedProperties": false
+}

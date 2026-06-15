@@ -1,0 +1,48 @@
+{
+  "name": "oacp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Agent Collaboration Protocol — multi-agent task execution & collaboration",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "homepage": "https://github.com/naaa-G/OACP#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naaa-G/OACP.git"
+  },
+  "bugs": {
+    "url": "https://github.com/naaa-G/OACP/issues"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "oacp": "node cli/dist/main.js",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.13"
+  }
+}

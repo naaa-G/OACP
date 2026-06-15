@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/agent/permissions.schema.json",
+  "title": "OACP Agent Permissions",
+  "description": "Scoped permissions governing what an agent may invoke, delegate, and access.",
+  "type": "object",
+  "properties": {
+    "agent_id": {
+      "$ref": "../oacp.schema.json#/$defs/agentUri"
+    },
+    "version": {
+      "$ref": "../oacp.schema.json#/$defs/protocolVersion"
+    },
+    "invoke": {
+      "type": "array",
+      "description": "Capabilities this agent is allowed to invoke on other agents.",
+      "items": {
+        "$ref": "../oacp.schema.json#/$defs/capability"
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "delegate": {
+      "type": "array",
+      "description": "Capabilities this agent is allowed to delegate to others.",
+      "items": {
+        "$ref": "../oacp.schema.json#/$defs/capability"
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "memory_scopes": {
+      "type": "array",
+      "description": "Memory scopes this agent may read or write.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9._-]*$",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "allowed_agents": {
+      "type": "array",
+      "description": "Optional allow-list of agent URIs for delegation targets.",
+      "items": {
+        "$ref": "../oacp.schema.json#/$defs/agentUri"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": ["agent_id", "version"],
+  "additionalProperties": false
+}

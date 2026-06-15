@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oacp.dev/schemas/v0.1/messages/delegation.json",
+  "title": "OACP Delegation",
+  "description": "Delegate a subtask from one agent to another agent or capability.",
+  "allOf": [
+    {
+      "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageEnvelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "delegation"
+        },
+        "parent_message_id": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageId",
+          "description": "message_id of the parent task_request or delegation being subdivided."
+        },
+        "to": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/agentUri",
+          "description": "Optional direct delegate. When omitted, routers resolve by capability."
+        },
+        "capability": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/capability"
+        },
+        "input": {
+          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/payload"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "Optional human-readable reason for the delegation."
+        }
+      },
+      "required": ["type", "parent_message_id", "capability", "input"]
+    }
+  ],
+  "type": "object",
+  "unevaluatedProperties": false
+}
