@@ -3,6 +3,10 @@ import pytest
 from oacp_sdk import AgentClient, ClientError, ClientErrorCode, create_agent_client
 from oacp_sdk.defaults import DEFAULT_DEV_PUBLIC_KEY, PROTOCOL_VERSION
 
+from oacp_sdk.testing import fixed_oacp_message_ids, register_send_task_exchange
+
+BASE_URL = 'http://127.0.0.1:3999'
+
 
 @pytest.mark.asyncio
 async def test_health(httpx_mock) -> None:
@@ -62,6 +66,27 @@ async def test_send_task_without_waiting(httpx_mock) -> None:
         )
     assert result.status == 'success'
     assert result.request['capability'] == 'text.summarize'
+
+
+@pytest.mark.asyncio
+async def test_send_task_waits_for_response(httpx_mock) -> None:
+    register_send_task_exchange(
+        httpx_mock,
+        base_url=BASE_URL,
+        from_agent='agent://coordinator',
+        output={'summary': 'done'},
+    )
+
+    async with AgentClient(BASE_URL, max_retries=0) as client:
+        with fixed_oacp_message_ids():
+            result = await client.send_task(
+                from_agent='agent://coordinator',
+                capability='text.summarize',
+                input_data={'text': 'Hello'},
+            )
+
+    assert result.status == 'success'
+    assert result.output == {'summary': 'done'}
 
 
 @pytest.mark.asyncio
