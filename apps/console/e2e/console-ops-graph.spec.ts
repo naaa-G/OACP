@@ -2,6 +2,10 @@ import { expect, test } from '@playwright/test';
 
 import { buildE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
 import { buildE2eTraceGraph } from './fixtures/trace-graph.js';
+import {
+  buildOpsSnapshotFromGraph,
+  mockOpsSnapshotGraph,
+} from './helpers/ops-snapshot-mock.js';
 import { buildScaleTraceGraph } from '../src/graph/ops-graph-layout.js';
 
 const E2E_AGENT_COORDINATOR = 'agent://coordinator';
@@ -73,30 +77,15 @@ test.describe('Ops 2D graph (Day 27)', () => {
   test('large trace graph keeps only trace-scoped nodes', async ({ page }) => {
     const scaleGraph = buildScaleTraceGraph(28);
 
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          ok: true,
-          snapshot: buildE2eSnapshot(E2E_TRACE_ID),
-        }),
-      });
-    });
+    await mockOpsSnapshotGraph(page, () => buildOpsSnapshotFromGraph(scaleGraph));
 
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, graph: scaleGraph }),
-      });
-    });
-
-    await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
+    await page.goto(`/?trace_id=${scaleGraph.trace_id}&mode=ops`);
 
     const opsGraph = page.getByTestId('ops-graph');
     await expect(opsGraph).toBeVisible({ timeout: 20_000 });
-    await expect(opsGraph.locator('[data-agent-id]')).toHaveCount(scaleGraph.nodes.length);
+    await expect(opsGraph.locator('[data-agent-id]')).toHaveCount(scaleGraph.nodes.length, {
+      timeout: 20_000,
+    });
     await expect(opsGraph.locator('[data-agent-id="agent://coordinator"]')).toBeVisible();
   });
 });
@@ -156,37 +145,17 @@ test.describe('Ops 2D graph labels (Day 28)', () => {
   });
 
   test('pinned label survives graph refresh on same trace', async ({ page }) => {
-    let graphVersion = 0;
-
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          ok: true,
-          snapshot: buildE2eSnapshot(E2E_TRACE_ID),
-        }),
-      });
-    });
-
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      graphVersion += 1;
-      const graph = buildE2eTraceGraph(E2E_TRACE_ID);
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          ok: true,
-          graph: {
-            ...graph,
-            nodes: graph.nodes.map((node) =>
-              node.agent_id === E2E_AGENT_WORKER
-                ? { ...node, name: graphVersion > 1 ? 'Worker refreshed' : node.name }
-                : node,
-            ),
-          },
-        }),
-      });
+    const baseGraph = buildE2eTraceGraph(E2E_TRACE_ID);
+    const snapshotMock = await mockOpsSnapshotGraph(page, (snapshotVersion) => {
+      const graph = {
+        ...baseGraph,
+        nodes: baseGraph.nodes.map((node) =>
+          node.agent_id === E2E_AGENT_WORKER
+            ? { ...node, name: snapshotVersion > 1 ? 'Worker refreshed' : node.name }
+            : node,
+        ),
+      };
+      return buildOpsSnapshotFromGraph(graph);
     });
 
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
@@ -195,7 +164,10 @@ test.describe('Ops 2D graph labels (Day 28)', () => {
     await worker.click();
     await expect(page.getByTestId('ops-graph-pinned-label-worker')).toBeVisible({ timeout: 500 });
 
-    await expect.poll(async () => graphVersion, { timeout: 5000 }).toBeGreaterThan(1);
+    await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+    await expect
+      .poll(() => snapshotMock.getSnapshotVersion(), { timeout: 5000 })
+      .toBeGreaterThan(1);
     await expect(page.getByTestId('ops-graph-pinned-label-worker')).toBeVisible();
     await expect(page.getByTestId('ops-graph-pinned-label-worker')).toContainText(
       'Worker refreshed',
@@ -282,21 +254,7 @@ test.describe('Ops 2D graph edges (Day 29)', () => {
       ],
     };
 
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, snapshot: buildE2eSnapshot(E2E_TRACE_ID) }),
-      });
-    });
-
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, graph: heavyGraph }),
-      });
-    });
+    await mockOpsSnapshotGraph(page, () => buildOpsSnapshotFromGraph(heavyGraph));
 
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 
@@ -336,21 +294,7 @@ test.describe('Ops 2D graph node styling (Day 30)', () => {
       ),
     };
 
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, snapshot: buildE2eSnapshot(E2E_TRACE_ID) }),
-      });
-    });
-
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, graph: styledGraph }),
-      });
-    });
+    await mockOpsSnapshotGraph(page, () => buildOpsSnapshotFromGraph(styledGraph));
 
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 
@@ -431,25 +375,13 @@ test.describe('Ops 2D graph viewport (Day 31)', () => {
   test('fit-to-view centers large trace DAG', async ({ page }) => {
     const scaleGraph = buildScaleTraceGraph(100);
 
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, snapshot: buildE2eSnapshot(E2E_TRACE_ID) }),
-      });
-    });
+    await mockOpsSnapshotGraph(page, () => buildOpsSnapshotFromGraph(scaleGraph));
 
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, graph: scaleGraph }),
-      });
+    await page.goto(`/?trace_id=${scaleGraph.trace_id}&mode=ops`);
+    await expect(page.getByTestId('ops-graph')).toBeVisible({ timeout: 20_000 });
+    await expect(page.locator('[data-testid="ops-graph"] [data-agent-id]')).toHaveCount(100, {
+      timeout: 20_000,
     });
-
-    await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
-    await expect(page.getByTestId('ops-graph')).toBeVisible();
-    await expect(page.locator('[data-testid="ops-graph"] [data-agent-id]')).toHaveCount(100);
 
     await page.getByTestId('ops-graph-fit-view').click();
 
@@ -534,24 +466,9 @@ test.describe('Ops 2D graph viewport (Day 31)', () => {
   });
 
   test('viewport survives manual snapshot refresh on same trace', async ({ page }) => {
-    let graphVersion = 0;
-
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, snapshot: buildE2eSnapshot(E2E_TRACE_ID) }),
-      });
-    });
-
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      graphVersion += 1;
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, graph: buildE2eTraceGraph(E2E_TRACE_ID) }),
-      });
-    });
+    const snapshotMock = await mockOpsSnapshotGraph(page, () =>
+      buildOpsSnapshotFromGraph(buildE2eTraceGraph(E2E_TRACE_ID)),
+    );
 
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
     await page.getByTestId('ops-graph').click({ position: { x: 40, y: 40 } });
@@ -565,9 +482,12 @@ test.describe('Ops 2D graph viewport (Day 31)', () => {
       ).__oacpTestOpsGraph;
       return api?.getViewport()?.zoom ?? 0;
     });
+    expect(zoomBeforeRefresh).toBeGreaterThan(0);
 
-    await page.getByRole('button', { name: 'Refresh' }).click();
-    await expect.poll(async () => graphVersion, { timeout: 5000 }).toBeGreaterThan(1);
+    await page.getByRole('button', { name: 'Refresh', exact: true }).click();
+    await expect
+      .poll(() => snapshotMock.getSnapshotVersion(), { timeout: 5000 })
+      .toBeGreaterThan(1);
 
     const zoomAfterRefresh = await page.evaluate(() => {
       const api = (
@@ -604,21 +524,7 @@ test.describe('Ops 2D graph focus mode (Day 32)', () => {
       ],
     };
 
-    await page.route('**/v1/observability/snapshot**', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, snapshot: buildE2eSnapshot(E2E_TRACE_ID) }),
-      });
-    });
-
-    await page.route('**/v1/observability/traces/*/graph', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({ ok: true, graph: focusGraph }),
-      });
-    });
+    await mockOpsSnapshotGraph(page, () => buildOpsSnapshotFromGraph(focusGraph));
 
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 

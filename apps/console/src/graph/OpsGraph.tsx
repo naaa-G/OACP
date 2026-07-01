@@ -117,11 +117,31 @@ function useContainerSize<T extends HTMLElement>(
   return { ref, width: size.width, height: size.height };
 }
 
+function opsNodeVisualSignature(data: OpsAgentNodeData): string {
+  return `${data.focusRole}:${data.isActive}:${data.isSelected}:${data.isDimmed}:${data.isGhost}`;
+}
+
+function opsEdgeVisualSignature(data: OpsDelegationEdgeData | undefined): string {
+  if (data === undefined) {
+    return '';
+  }
+
+  return `${data.strokeWidth.toFixed(2)}:${data.opacity.toFixed(2)}`;
+}
+
 function opsFlowElementsSignature(nodes: Node[], edges: Edge[]): string {
   const nodePart = nodes
-    .map((node) => `${node.id}:${node.position.x.toFixed(1)},${node.position.y.toFixed(1)}`)
+    .map((node) => {
+      const data = node.data as OpsAgentNodeData;
+      return `${node.id}:${node.position.x.toFixed(1)},${node.position.y.toFixed(1)}:${opsNodeVisualSignature(data)}`;
+    })
     .join('|');
-  const edgePart = edges.map((edge) => edge.id).join('|');
+  const edgePart = edges
+    .map((edge) => {
+      const data = edge.data as OpsDelegationEdgeData | undefined;
+      return `${edge.id}:${opsEdgeVisualSignature(data)}`;
+    })
+    .join('|');
   return `${nodePart}::${edgePart}`;
 }
 

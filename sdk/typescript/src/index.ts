@@ -152,7 +152,6 @@ export {
   GRAPH_MODE_QUERY_PARAM,
   TRACE_ID_QUERY_PARAM,
   buildConsoleTraceUrl,
-  buildPlaygroundTraceUrl,
 } from './mcplab/trace-url.js';
 export type { RegisterDevAgentParams } from './client/dev-helpers.js';
 export { CLIENT_ERROR_CODES, OacpClientError } from './client/errors.js';
