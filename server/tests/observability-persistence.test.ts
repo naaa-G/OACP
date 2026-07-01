@@ -7,6 +7,7 @@ import { getSchemasRoot, parseAgentIdentity } from '@oacp/core';
 import { OBSERVABILITY_SNAPSHOT_PATH } from '../src/observability/playground-service.js';
 import { SqliteObservabilityPersistence } from '../src/storage/sqlite-observability-persistence.js';
 import { createTestApp, loadSummarizerIdentity } from './helpers.js';
+import { isolatedSqlitePath } from './sqlite-test-path.js';
 
 function sqlitePersistenceAvailable(): boolean {
   try {
@@ -176,7 +177,7 @@ describe('observability import API (Day 53)', () => {
 if (SQLITE_OK) {
   describe('observability persistence with sqlite backend (Day 53)', () => {
     it('hydrates bus traces after simulated restart', async () => {
-      const sqlitePath = join(process.cwd(), `.oacp/test-restart-${Date.now()}.db`);
+      const sqlitePath = isolatedSqlitePath('test-restart');
       const first = createTestApp({
         config: { memoryBackend: 'sqlite', memorySqlitePath: sqlitePath },
       });
@@ -194,19 +195,22 @@ if (SQLITE_OK) {
         payload: { identity },
       });
 
-      const traceId = 'd53-restart-trace';
-      await first.app.inject({
+      const traceId = '550e8400-e29b-41d4-4716-4466554400d3';
+      const sendResponse = await first.app.inject({
         method: 'POST',
         url: '/send-message',
         payload: {
           ...loadTaskRequestExample(),
-          message_id: 'd53-restart-msg',
+          message_id: '550e8400-e29b-41d4-4716-4466554400d4',
           trace_id: traceId,
           from: identity.id,
           capability: 'echo',
           input: { text: 'survive restart' },
         },
       });
+
+      expect(sendResponse.statusCode).toBe(200);
+      expect(first.context.observabilityPersistence.hasTrace(traceId)).toBe(true);
 
       await first.context.observabilityPersistence.close();
       await first.context.memoryStore.close();

@@ -1,9 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { createApp } from '@oacp/server';
-
 import { AgentClient } from '../src/index.js';
 import { DEFAULT_DEV_PUBLIC_KEY } from '../src/defaults.js';
+import { createSdkTestApp } from './test-server.js';
 
 /**
  * Smoke contract for Demo v1 (Day 14).
@@ -26,7 +25,7 @@ describe('Demo v1 — network collaboration (Day 14)', () => {
 
   beforeAll(async () => {
     const { createAgentRuntime } = await import('@oacp/core');
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createSdkTestApp();
 
     const reporter = createAgentRuntime({
       identity: {

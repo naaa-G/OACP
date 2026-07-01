@@ -1,13 +1,14 @@
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { getSchemasRoot } from '@oacp/core';
-import { readFileSync } from 'node:fs';
 
 import { OBSERVABILITY_SNAPSHOT_PATH } from '../src/observability/playground-service.js';
 import { runMcplabStartupSync } from '../src/observability/mcplab-sync.js';
 import { SqliteObservabilityPersistence } from '../src/storage/sqlite-observability-persistence.js';
 import { createTestApp, loadSummarizerIdentity } from './helpers.js';
+import { isolatedSqlitePath } from './sqlite-test-path.js';
 
 function sqlitePersistenceAvailable(): boolean {
   try {
@@ -36,7 +37,7 @@ describe('MCPLab startup observability backfill (Day 53)', () => {
   });
 
   it('imports missing traces from mocked MCPLab export after recreate', async () => {
-    const sqlitePath = join(process.cwd(), `.oacp/test-mcplab-startup-${Date.now()}.db`);
+    const sqlitePath = isolatedSqlitePath('test-mcplab-startup');
     const identity = {
       ...loadSummarizerIdentity(),
       id: agentId,

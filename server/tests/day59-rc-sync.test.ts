@@ -6,7 +6,6 @@
  * 2. Fresh OACP SQLite (recreate container) → startup sync → Console snapshot lists N traces
  * 3. Second recreate → same count (idempotent backfill)
  */
-import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { OBSERVABILITY_SNAPSHOT_PATH } from '../src/observability/playground-service.js';
@@ -14,6 +13,7 @@ import { runMcplabStartupSync } from '../src/observability/mcplab-sync.js';
 import { SqliteObservabilityPersistence } from '../src/storage/sqlite-observability-persistence.js';
 import { createTestApp } from './helpers.js';
 import { DAY55_SYNC_TRACE_COUNT, buildDay55ExportBundle, day55TraceId } from './load-fixtures.js';
+import { isolatedSqlitePath } from './sqlite-test-path.js';
 
 const RC_TRACE_COUNT = DAY55_SYNC_TRACE_COUNT;
 const exportUrl = 'http://mcplab.test/internal/observability/export';
@@ -63,7 +63,7 @@ async function syncFreshOacp(sqlitePath: string) {
 
   const snapshot = await app.inject({
     method: 'GET',
-    url: OBSERVABILITY_SNAPSHOT_PATH,
+    url: `${OBSERVABILITY_SNAPSHOT_PATH}?limit=${RC_TRACE_COUNT}`,
     headers: { Accept: 'application/json' },
   });
 
@@ -82,7 +82,7 @@ describe('Day 59 RC sync (recreate OACP → backfill N traces)', () => {
 
   it(`fresh OACP RC imports ${RC_TRACE_COUNT} MCPLab traces and snapshot trace_count matches`, async () => {
     stubMcplabExport(RC_TRACE_COUNT);
-    const sqlitePath = join(process.cwd(), `.oacp/test-day59-rc-${Date.now()}.db`);
+    const sqlitePath = isolatedSqlitePath('test-day59-rc');
 
     const { app, context, syncResult, snapshot } = await syncFreshOacp(sqlitePath);
 
@@ -111,8 +111,8 @@ describe('Day 59 RC sync (recreate OACP → backfill N traces)', () => {
 
   it('recreate OACP container (new empty SQLite) re-backfills same trace count from unchanged MCPLab export', async () => {
     stubMcplabExport(RC_TRACE_COUNT);
-    const firstDb = join(process.cwd(), `.oacp/test-day59-rc-first-${Date.now()}.db`);
-    const secondDb = join(process.cwd(), `.oacp/test-day59-rc-second-${Date.now()}.db`);
+    const firstDb = isolatedSqlitePath('test-day59-rc-first');
+    const secondDb = isolatedSqlitePath('test-day59-rc-second');
 
     const first = await syncFreshOacp(firstDb);
     expect(first.syncResult?.imported_traces).toBe(RC_TRACE_COUNT);

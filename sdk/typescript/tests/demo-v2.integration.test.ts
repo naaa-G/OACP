@@ -1,10 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { DEFAULT_TASK_RECOVERY_POLICY, createAgentRuntime, PROTOCOL_VERSION } from '@oacp/core';
-import { createApp } from '@oacp/server';
-
 import { AgentClient } from '../src/index.js';
 import { DEFAULT_DEV_PUBLIC_KEY } from '../src/defaults.js';
+import { createSdkTestApp } from './test-server.js';
 
 /**
  * Smoke contract for Demo v2 (Day 21).
@@ -28,7 +27,7 @@ describe('Demo v2 — structured task chain (Day 21)', () => {
   let closeServer: () => Promise<void>;
 
   beforeAll(async () => {
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createSdkTestApp();
 
     const shared = {
       bus: context.bus,

@@ -1,10 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { createAgentRuntime, PROTOCOL_VERSION } from '@oacp/core';
-import { createApp } from '@oacp/server';
-
 import { AgentClient } from '../src/index.js';
 import { DEFAULT_DEV_PUBLIC_KEY } from '../src/defaults.js';
+import { createSdkTestApp } from './test-server.js';
 
 /**
  * Smoke contract for Day 23 Autonomous Startup Team.
@@ -25,7 +24,7 @@ describe('Autonomous Startup Team (Day 23)', () => {
   let closeServer: () => Promise<void>;
 
   beforeAll(async () => {
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createSdkTestApp();
 
     const shared = {
       bus: context.bus,

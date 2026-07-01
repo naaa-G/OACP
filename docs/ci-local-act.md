@@ -6,7 +6,7 @@ Rehearse [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) on your machi
 
 1. **Docker Desktop** — running (Linux containers / WSL2 backend on Windows).
 2. **[act](https://github.com/nektos/act)** — `act --version` (**0.2.86+**; older builds have known CVEs).
-3. **Disk space** — first run pulls runner images (`act-latest` ~500MB; `full-latest` ~17GB for e2e).
+3. **Disk space** — first run pulls runner images (`act-latest` ~2GB on disk; `full-latest` ~17GB download / **~70GB on disk** for e2e).
 
 Repo root includes [`.actrc`](../.actrc) (`act-latest` by default). E2E and Docker jobs auto-select `full-latest`.
 
@@ -58,14 +58,39 @@ pnpm ci:act verify -n
 
 ## Troubleshooting
 
-| Problem                                | Fix                                                                                                 |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `act` asks to pick an image            | Ensure `.actrc` exists in repo root; or set `%LOCALAPPDATA%\act\actrc` with the same `-P` line      |
-| Docker not running                     | Start Docker Desktop                                                                                |
-| `playwright install --with-deps` fails | E2E uses `full-latest` automatically; pre-pull: `docker pull catthehacker/ubuntu:full-latest`       |
-| Docker job cannot reach daemon         | `pnpm ci:act docker` adds `--privileged` and socket mount; restart Docker Desktop if it still fails |
-| act much slower than GitHub            | Expected — no hosted-runner cache; first pull is large                                              |
-| Prettier reports hundreds of files     | `pnpm install` in act creates `.pnpm-store/`; ignored via `.prettierignore` (do not remove)         |
+| Problem                                  | Fix                                                                                                                                                    |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `act` asks to pick an image              | Ensure `.actrc` exists in repo root; or set `%LOCALAPPDATA%\act\actrc` with the same `-P` line                                                         |
+| Docker not running                       | Start Docker Desktop                                                                                                                                   |
+| `playwright install --with-deps` fails   | E2E uses `full-latest` automatically; pre-pull: `docker pull catthehacker/ubuntu:full-latest`                                                          |
+| Docker job cannot reach daemon           | `pnpm ci:act docker` uses `--privileged` and `--container-daemon-socket` (not `-v`, which is verbose in act); restart Docker Desktop if it still fails |
+| act much slower than GitHub              | Expected — no hosted-runner cache; first pull is large                                                                                                 |
+| E2E stuck on `docker pull full-latest`   | Image may already be local; `ci:act` uses `--pull=false`. Pre-pull once: `pnpm ci:act:pull:full`                                                       |
+| Orphan `act-*` containers after cancel   | `docker ps -a --filter "name=act-"` then `docker rm -f <name>` (or stop all: see below)                                                                |
+| Prettier reports hundreds of files       | `pnpm install` in act creates `.pnpm-store/`; ignored via `.prettierignore` (do not remove)                                                            |
+| `@oacp/server#test` SQLite failures      | act sets `OACP_TEST_SQLITE_DIR=/tmp/oacp-tests` (avoid Windows bind-mount WAL quirks); re-run verify                                                   |
+| Snapshot `traces.length` < `trace_count` | Default discovery limit is **10** — use `?limit=N` on snapshot GET in tests and clients                                                                |
+
+## SQLite test paths
+
+Server integration tests that persist SQLite state use `isolatedSqlitePath()` (`server/tests/sqlite-test-path.ts`). When `OACP_TEST_SQLITE_DIR` is set (act does this to `/tmp/oacp-tests`), databases are created there instead of `.oacp/` on the repo bind mount.
+
+SDK integration tests use `createSdkTestApp()` with `memoryBackend: 'memory'` so parallel runs do not share `.oacp/memory.db`.
+
+## Clean up stale act containers
+
+If you cancel `pnpm ci:act` mid-run, act job containers may keep running:
+
+```powershell
+docker ps -a --filter "name=act-"
+docker rm -f <container-name>
+```
+
+Or remove all act containers:
+
+```powershell
+docker ps -aq --filter "name=act-" | ForEach-Object { docker rm -f $_ }
+```
 
 ## When to use act vs host commands
 

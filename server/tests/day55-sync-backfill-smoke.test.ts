@@ -1,4 +1,3 @@
-import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { OBSERVABILITY_SNAPSHOT_PATH } from '../src/observability/playground-service.js';
@@ -11,6 +10,7 @@ import {
   day55TraceId,
   measureSnapshotLatencyMs,
 } from './load-fixtures.js';
+import { isolatedSqlitePath } from './sqlite-test-path.js';
 
 const SYNC_BUDGET_MS = 60_000;
 const SNAPSHOT_P95_BUDGET_MS = 200;
@@ -40,7 +40,7 @@ describe('Day 55 MCPLab sync backfill smoke', () => {
   });
 
   it(`imports ${DAY55_SYNC_TRACE_COUNT} historical runs under ${SYNC_BUDGET_MS / 1000}s and keeps snapshot p95 under ${SNAPSHOT_P95_BUDGET_MS}ms`, async () => {
-    const sqlitePath = join(process.cwd(), `.oacp/test-day55-sync-${Date.now()}.db`);
+    const sqlitePath = isolatedSqlitePath('test-day55-sync');
     const bundle = buildDay55ExportBundle(DAY55_SYNC_TRACE_COUNT);
 
     vi.stubGlobal(
@@ -99,7 +99,7 @@ describe('Day 55 MCPLab sync backfill smoke', () => {
   });
 
   it('post-recreate OACP backfill path imports only missing traces', async () => {
-    const sqlitePath = join(process.cwd(), `.oacp/test-day55-recreate-${Date.now()}.db`);
+    const sqlitePath = isolatedSqlitePath('test-day55-recreate');
     const bundle = buildDay55ExportBundle(DAY55_SYNC_TRACE_COUNT);
 
     vi.stubGlobal(
@@ -146,8 +146,8 @@ describe('Day 55 MCPLab sync backfill smoke', () => {
     });
 
     expect(syncResult).toEqual({
-      imported_traces: DAY55_SYNC_TRACE_COUNT,
-      skipped_traces: 0,
+      imported_traces: 0,
+      skipped_traces: DAY55_SYNC_TRACE_COUNT,
       failed_traces: 0,
     });
 

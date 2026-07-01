@@ -18,7 +18,13 @@ export function createTestApp(options: CreateAppOptions = {}): OacpApp {
   return createApp({
     ...options,
     logger: false,
-    config: { memoryBackend: 'memory', ...options.config },
+    config: {
+      memoryBackend: 'memory',
+      importFromMcplabOnStartup: false,
+      enableConsoleStatic: false,
+      apiKey: '',
+      ...options.config,
+    },
   });
 }
 

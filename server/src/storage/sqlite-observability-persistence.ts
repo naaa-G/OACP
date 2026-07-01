@@ -267,6 +267,11 @@ export class SqliteObservabilityPersistence implements ObservabilityPersistence 
       return;
     }
     this.closed = true;
+    try {
+      this.db.pragma('wal_checkpoint(TRUNCATE)');
+    } catch {
+      // Best-effort flush before close (important for bind-mounted SQLite in act).
+    }
     this.db.close();
   }
 

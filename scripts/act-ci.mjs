@@ -76,7 +76,14 @@ if (unknownInline.length > 0) {
   process.exit(1);
 }
 
-const actArgs = ['push', '--env', 'FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true'];
+const actArgs = [
+  'push',
+  '--pull=false',
+  '--env',
+  'FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true',
+  '--env',
+  'OACP_TEST_SQLITE_DIR=/tmp/oacp-tests',
+];
 
 if (JOBS_NEEDING_FULL_IMAGE.has(jobKey)) {
   actArgs.push('-P', `ubuntu-latest=${FULL_IMAGE}`);
@@ -96,11 +103,10 @@ if (jobKey === 'all') {
 
 if (jobKey === 'docker' || jobKey === 'docker-compose') {
   actArgs.push('--privileged');
-  if (process.platform === 'win32') {
-    actArgs.push('-v', '//var/run/docker.sock:/var/run/docker.sock');
-  } else {
-    actArgs.push('-v', '/var/run/docker.sock:/var/run/docker.sock');
-  }
+  // act `-v` is --verbose, not a bind mount. Mount the host Docker socket explicitly.
+  const dockerSocket =
+    process.platform === 'win32' ? 'npipe:////./pipe/docker_engine' : 'unix:///var/run/docker.sock';
+  actArgs.push('--container-daemon-socket', dockerSocket);
 }
 
 actArgs.push(...inlineActArgs, ...afterDash);

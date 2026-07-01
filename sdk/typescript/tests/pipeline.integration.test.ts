@@ -1,17 +1,17 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { createAgentRuntime } from '@oacp/core';
-import { createApp } from '@oacp/server';
 
 import { AgentClient } from '../src/index.js';
 import { DEFAULT_DEV_PUBLIC_KEY } from '../src/defaults.js';
+import { createSdkTestApp } from './test-server.js';
 
 describe('remote pipeline chain integration (Day 13)', () => {
   let baseUrl: string;
   let closeServer: () => Promise<void>;
 
   beforeAll(async () => {
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createSdkTestApp();
 
     const summarizer = createAgentRuntime({
       identity: {
