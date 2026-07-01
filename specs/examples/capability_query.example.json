@@ -1,6 +1,6 @@
 {
   "type": "capability_query",
-  "version": "0.1",
+  "version": "1.0",
   "message_id": "550e8400-e29b-41d4-4716-446655440005",
   "trace_id": "0c8f1e2a-7b3d-4f9e-9b1a-2d4e6f8a0c1b",
   "from": "agent://coordinator",

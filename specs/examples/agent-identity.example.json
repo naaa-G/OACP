@@ -1,7 +1,7 @@
 {
   "id": "agent://summarizer",
   "name": "Text Summarizer",
-  "version": "0.1",
+  "version": "1.0",
   "capabilities": ["text.summarize"],
   "publicKey": {
     "kty": "EC",

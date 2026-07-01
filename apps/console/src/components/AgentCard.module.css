@@ -1,0 +1,288 @@
+.card {
+  list-style: none;
+  border: 1px solid var(--oacp-border);
+  border-left-width: 3px;
+  border-radius: var(--oacp-control-radius);
+  padding: 0.625rem 0.75rem;
+  background: color-mix(in srgb, var(--oacp-text) 2%, transparent);
+  transition:
+    border-color var(--oacp-duration-normal) var(--oacp-easing),
+    box-shadow var(--oacp-duration-normal) var(--oacp-easing),
+    background var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.ringMcplab {
+  border-left-color: var(--oacp-fleet-mcplab);
+}
+
+.ringStartup {
+  border-left-color: var(--oacp-fleet-startup);
+}
+
+.ringSystem {
+  border-left-color: var(--oacp-fleet-system);
+}
+
+.ringExternal {
+  border-left-color: var(--oacp-fleet-external);
+}
+
+.card.active {
+  border-color: var(--oacp-accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--oacp-accent) 25%, transparent);
+  background: var(--oacp-accent-dim);
+}
+
+.card.selected {
+  box-shadow:
+    0 0 0 2px var(--oacp-accent),
+    0 0 0 4px color-mix(in srgb, var(--oacp-accent) 20%, transparent);
+}
+
+.card.selected.active {
+  box-shadow:
+    0 0 0 2px var(--oacp-accent),
+    0 0 0 4px color-mix(in srgb, var(--oacp-accent) 25%, transparent);
+}
+
+.card.dimmed {
+  opacity: 0.48;
+  border-color: var(--oacp-border-subtle);
+  background: color-mix(in srgb, var(--oacp-text) 1%, transparent);
+}
+
+.card.dimmed .name,
+.card.dimmed .id {
+  color: var(--oacp-text-dim);
+}
+
+.card.pinned {
+  border-color: color-mix(in srgb, var(--oacp-accent) 35%, var(--oacp-border));
+}
+
+.cardShell {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.pinnedBadge {
+  flex-shrink: 0;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.3rem;
+  border-radius: 999px;
+  color: var(--oacp-accent);
+  border: 1px solid color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-accent) 8%, transparent);
+}
+
+.selectButton {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: inherit;
+}
+
+.selectButton:focus-visible {
+  outline: 2px solid var(--oacp-accent);
+  outline-offset: 2px;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--oacp-text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activeBadge {
+  flex-shrink: 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.125rem 0.375rem;
+  border-radius: 999px;
+  color: var(--oacp-accent);
+  border: 1px solid color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-accent) 10%, transparent);
+}
+
+.errorBadge {
+  flex-shrink: 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.125rem 0.375rem;
+  border-radius: 999px;
+  color: var(--oacp-error);
+  border: 1px solid color-mix(in srgb, var(--oacp-error) 35%, transparent);
+  background: var(--oacp-error-dim);
+}
+
+.taxonomyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.fleetBadge,
+.roleBadge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid var(--oacp-border);
+}
+
+.fleetMcplab {
+  color: var(--oacp-fleet-mcplab);
+  border-color: color-mix(in srgb, var(--oacp-fleet-mcplab) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-mcplab) 10%, transparent);
+}
+
+.fleetStartup {
+  color: var(--oacp-fleet-startup);
+  border-color: color-mix(in srgb, var(--oacp-fleet-startup) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-startup) 10%, transparent);
+}
+
+.fleetSystem {
+  color: var(--oacp-fleet-system);
+  border-color: color-mix(in srgb, var(--oacp-fleet-system) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-system) 10%, transparent);
+}
+
+.fleetExternal {
+  color: var(--oacp-fleet-external);
+  border-color: color-mix(in srgb, var(--oacp-fleet-external) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-external) 10%, transparent);
+}
+
+.roleBadge {
+  color: var(--oacp-text-muted);
+  background: color-mix(in srgb, var(--oacp-text) 4%, transparent);
+}
+
+/* Legacy alias — role chips now use RoleBadge.module.css */
+
+.id {
+  font-family: var(--oacp-font-mono);
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+  word-break: break-all;
+  line-height: 1.35;
+}
+
+.caps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.375rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cap {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.375rem;
+  border-radius: 999px;
+  background: var(--oacp-blue-dim);
+  color: color-mix(in srgb, var(--oacp-blue) 75%, var(--oacp-text));
+  border: 1px solid color-mix(in srgb, var(--oacp-blue) 25%, transparent);
+}
+
+.capMore {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.375rem;
+  border-radius: 999px;
+  color: var(--oacp-text-dim);
+  border: 1px dashed var(--oacp-border);
+}
+
+.noCaps {
+  margin: 0.375rem 0 0;
+  font-size: 0.75rem;
+  color: var(--oacp-text-dim);
+  font-style: italic;
+}
+
+.compact {
+  padding: 0.375rem 0.5rem;
+}
+
+.virtualizedCompact {
+  min-height: 50px;
+  box-sizing: border-box;
+}
+
+.virtualizedDetailed {
+  min-height: 128px;
+  box-sizing: border-box;
+}
+
+.compactRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.compactId {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--oacp-font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--oacp-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compactBadgeActive,
+.compactBadgeError {
+  flex-shrink: 0;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.3rem;
+  border-radius: 999px;
+}
+
+.compactBadgeActive {
+  color: var(--oacp-accent);
+  border: 1px solid color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+}
+
+.compactBadgeError {
+  color: var(--oacp-error);
+  border: 1px solid color-mix(in srgb, var(--oacp-error) 35%, transparent);
+}

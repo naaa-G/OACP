@@ -1,4 +1,4 @@
-# OACP Agent Schemas (`v0.1`)
+# OACP Agent Schemas (`v1.0`)
 
 Canonical JSON Schemas for agent identity, capability declarations, and permissions.
 

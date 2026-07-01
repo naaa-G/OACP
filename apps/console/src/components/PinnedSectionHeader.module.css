@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+  border-left-width: 3px;
+  border-left-color: var(--oacp-accent);
+  border-radius: var(--oacp-control-radius);
+  background: var(--oacp-accent-dim);
+  color: var(--oacp-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pinIcon {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+}
+
+.count {
+  flex-shrink: 0;
+  min-width: 1.375rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--oacp-text-muted);
+  background: color-mix(in srgb, var(--oacp-text) 6%, transparent);
+  border: 1px solid var(--oacp-border-subtle);
+}

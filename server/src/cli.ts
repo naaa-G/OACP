@@ -5,12 +5,13 @@ async function main(): Promise<void> {
   const config = loadServerConfig();
   const server = await startServer({ config, logger: true });
   console.log(`OACP reference server listening at ${server.url}`);
-  console.log('Browser: open / (redirects to playground) or /playground');
+  console.log('Browser: open /console (OACP Console) or /');
   console.log('Endpoints: POST /send-message, GET /agent/:id, POST /agents, GET /health');
   console.log('Memory: GET /memory/scopes, GET /memory/entries, GET /memory/traces/:traceId');
   console.log('Graph: GET /graph/traces/:traceId');
   console.log('Traces: GET /traces, GET /traces/:traceId, GET /trace-viewer');
-  console.log('Playground: GET /playground, GET /playground/snapshot');
+  console.log('Console: GET /console (static SPA), GET /v1/observability/snapshot');
+  console.log('Legacy: GET /playground → 302 /console, GET /playground/snapshot');
   console.log('CLI: pnpm --filter @oacp/server trace -- <trace-id>');
   console.log(
     'Workflows: GET /workflows, POST /workflows, POST /workflows/:id/run, GET /workflows/runs/:runId',

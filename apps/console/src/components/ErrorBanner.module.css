@@ -1,0 +1,79 @@
+.banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0.75rem 0.75rem 0;
+  padding: 0.75rem 0.875rem;
+  background: var(--oacp-error-dim);
+  border: 1px solid var(--oacp-error);
+  border-radius: var(--oacp-control-radius);
+  color: color-mix(in srgb, var(--oacp-error) 70%, var(--oacp-text));
+  font-size: 0.875rem;
+}
+
+.content {
+  min-width: 0;
+  flex: 1;
+}
+
+.title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--oacp-error);
+  margin-bottom: 0.25rem;
+}
+
+.message {
+  margin: 0 0 0.35rem;
+  font-family: var(--oacp-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--oacp-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.retry,
+.dismiss {
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--oacp-control-radius);
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.retry {
+  border: 1px solid var(--oacp-accent);
+  color: var(--oacp-accent);
+}
+
+.retry:hover {
+  background: var(--oacp-accent-dim);
+}
+
+.dismiss {
+  border: 1px solid color-mix(in srgb, var(--oacp-error) 50%, transparent);
+  color: inherit;
+}
+
+.dismiss:hover {
+  background: color-mix(in srgb, var(--oacp-error) 12%, transparent);
+}

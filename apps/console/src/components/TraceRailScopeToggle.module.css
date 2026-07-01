@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.button,
+.active {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--oacp-border-subtle, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: var(--oacp-text-dim);
+  cursor: pointer;
+}
+
+.active {
+  background: rgba(45, 212, 191, 0.15);
+  border-color: var(--oacp-fleet-mcplab, #2dd4bf);
+  color: var(--oacp-text-primary, #e2e8f0);
+}
+
+.button:hover {
+  color: var(--oacp-text-primary, #e2e8f0);
+}

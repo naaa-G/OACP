@@ -1,0 +1,107 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  border: 1px solid var(--oacp-border);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.compact {
+  font-size: 0.625rem;
+  padding: 0.15rem 0.4rem;
+}
+
+.detailed {
+  font-size: 0.6875rem;
+  padding: 0.2rem 0.45rem;
+}
+
+.glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.875rem;
+  font-family: var(--oacp-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.label {
+  color: inherit;
+}
+
+/* MCPLab fleet role tones — derived from --oacp-fleet-mcplab */
+.mcplabTone1 {
+  color: color-mix(in srgb, var(--oacp-fleet-mcplab) 92%, white);
+  border-color: color-mix(in srgb, var(--oacp-fleet-mcplab) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-mcplab) 12%, transparent);
+}
+
+.mcplabTone2 {
+  color: color-mix(in srgb, var(--oacp-fleet-mcplab) 80%, var(--oacp-blue));
+  border-color: color-mix(in srgb, var(--oacp-fleet-mcplab) 30%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-mcplab) 10%, transparent);
+}
+
+.mcplabTone3 {
+  color: color-mix(in srgb, var(--oacp-fleet-mcplab) 70%, var(--oacp-success));
+  border-color: color-mix(in srgb, var(--oacp-fleet-mcplab) 28%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-mcplab) 9%, transparent);
+}
+
+.mcplabTone4,
+.mcplabTone5,
+.mcplabTone6,
+.mcplabTone7,
+.mcplabTone8 {
+  color: color-mix(in srgb, var(--oacp-fleet-mcplab) 65%, var(--oacp-text));
+  border-color: color-mix(in srgb, var(--oacp-fleet-mcplab) 25%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-mcplab) 8%, transparent);
+}
+
+/* Startup demo fleet tones */
+.startupDemoTone1,
+.startupDemoTone2,
+.startupDemoTone3,
+.startupDemoTone4,
+.startupDemoTone5,
+.startupDemoTone6,
+.startupDemoTone7,
+.startupDemoTone8 {
+  color: color-mix(in srgb, var(--oacp-fleet-startup) 85%, white);
+  border-color: color-mix(in srgb, var(--oacp-fleet-startup) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-startup) 12%, transparent);
+}
+
+/* System fleet tones */
+.systemTone1,
+.systemTone2,
+.systemTone3,
+.systemTone4,
+.systemTone5,
+.systemTone6,
+.systemTone7,
+.systemTone8 {
+  color: color-mix(in srgb, var(--oacp-fleet-system) 90%, white);
+  border-color: color-mix(in srgb, var(--oacp-fleet-system) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-system) 10%, transparent);
+}
+
+/* External fleet tones */
+.externalTone1,
+.externalTone2,
+.externalTone3,
+.externalTone4,
+.externalTone5,
+.externalTone6,
+.externalTone7,
+.externalTone8 {
+  color: color-mix(in srgb, var(--oacp-fleet-external) 88%, white);
+  border-color: color-mix(in srgb, var(--oacp-fleet-external) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-fleet-external) 10%, transparent);
+}

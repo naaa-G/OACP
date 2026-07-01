@@ -9,7 +9,12 @@
  *   npx tsx examples/remote-agent/hello-remote.ts
  */
 import { createApp } from '@oacp/server';
-import { AgentClient, DEFAULT_DEV_PUBLIC_KEY, createAgentRuntime } from '@oacp/sdk';
+import {
+  AgentClient,
+  DEFAULT_DEV_PUBLIC_KEY,
+  PROTOCOL_VERSION,
+  createAgentRuntime,
+} from '@oacp/sdk';
 
 async function main(): Promise<void> {
   const { app, context } = createApp({ logger: false });
@@ -21,7 +26,7 @@ async function main(): Promise<void> {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: PROTOCOL_VERSION,
         capabilities: ['text.summarize'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -32,7 +37,7 @@ async function main(): Promise<void> {
     identity: {
       id: 'agent://summarizer',
       name: 'Summarizer',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['text.summarize'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     },
@@ -53,7 +58,7 @@ async function main(): Promise<void> {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Coordinator',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['orchestrate'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });

@@ -1,0 +1,50 @@
+{
+  "name": "@oacp/console",
+  "version": "1.0.0",
+  "description": "OACP Console — live agent graph, message flow, and delegation topology",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json --noEmit && vite build --base=/console/",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:showcase": "playwright test e2e/console-showcase-signoff.spec.ts e2e/console-showcase-graph.spec.ts e2e/console-graph-mode-sync.spec.ts",
+    "test:e2e:feed": "playwright test e2e/console-message-feed.spec.ts e2e/console-message-feed-scroll.spec.ts e2e/console-message-feed-virtual.spec.ts e2e/console-message-feed-day50.spec.ts",
+    "capture:hero": "playwright test e2e/console-graph-mode-sync.spec.ts --grep \"Showcase hero screenshot\"",
+    "test:e2e:catalog": "playwright test e2e/console-agent-catalog.spec.ts e2e/console-agent-catalog-filters.spec.ts e2e/console-agent-catalog-suite.spec.ts e2e/console-agent-search.spec.ts e2e/console-fleet-grouping.spec.ts e2e/console-role-taxonomy.spec.ts e2e/console-cross-panel-linking.spec.ts e2e/console-agent-detail-drawer.spec.ts e2e/console-agent-pins.spec.ts e2e/console-virtualized-agents.spec.ts",
+    "test:e2e:install": "playwright install chromium",
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\""
+  },
+  "dependencies": {
+    "@dagrejs/dagre": "^3.0.0",
+    "@oacp/observability-client": "workspace:*",
+    "@oacp/ui": "workspace:*",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
+    "@tanstack/react-query": "^5.64.2",
+    "@tanstack/react-virtual": "^3.13.12",
+    "@xyflow/react": "^12.11.0",
+    "d3-force-3d": "^3.0.6",
+    "html-to-image": "^1.11.13",
+    "postprocessing": "^6.39.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.184.0",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@types/three": "^0.184.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6",
+    "vitest": "^2.1.8"
+  }
+}

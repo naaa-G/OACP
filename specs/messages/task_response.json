@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oacp.dev/schemas/v0.1/messages/task_response.json",
+  "$id": "https://oacp.dev/schemas/v1.0/messages/task_response.json",
   "title": "OACP Task Response",
   "description": "Return the result or structured error for a task_request.",
   "allOf": [
     {
-      "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageEnvelope"
+      "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/messageEnvelope"
     },
     {
       "type": "object",
@@ -14,7 +14,7 @@
           "const": "task_response"
         },
         "in_reply_to": {
-          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageId",
+          "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/messageId",
           "description": "message_id of the originating task_request."
         },
         "status": {
@@ -23,11 +23,11 @@
           "description": "Outcome of the task."
         },
         "output": {
-          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/payload",
+          "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/payload",
           "description": "Task result payload when status is success."
         },
         "error": {
-          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/taskError",
+          "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/taskError",
           "description": "Structured error when status is error."
         }
       },

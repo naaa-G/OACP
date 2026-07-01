@@ -1,0 +1,31 @@
+.wrap {
+  position: relative;
+  flex: 1;
+  min-height: 15rem;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 50% 40%,
+    color-mix(in srgb, var(--oacp-blue) 8%, #0b0f14) 0%,
+    #0b0f14 62%
+  );
+}
+
+.wrapPresentation {
+  height: 100%;
+  min-height: 0;
+}
+
+.canvas {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 15rem;
+  max-height: 100%;
+  display: block;
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  background: #0b0f14;
+}

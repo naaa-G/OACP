@@ -1,4 +1,5 @@
 import type { OacpMessage } from '../protocol/message-schemas.js';
+import { inferTraceListStatusFromMessages } from '../observability/trace-list-status.js';
 
 /** Record of all messages sharing a `trace_id`. */
 export interface TraceRecord {
@@ -21,6 +22,8 @@ export interface TraceListEntry {
   readonly messageCount: number;
   readonly messageTypes: readonly string[];
   readonly agents: readonly string[];
+  readonly status?: 'running' | 'completed' | 'failed';
+  readonly completedAt?: string;
 }
 
 export interface ListTracesOptions {
@@ -121,6 +124,8 @@ export class TraceStore {
         }
       }
 
+      const lifecycle = inferTraceListStatusFromMessages(messages);
+
       entries.push({
         traceId,
         startedAt: first.timestamp,
@@ -128,6 +133,8 @@ export class TraceStore {
         messageCount: messages.length,
         messageTypes: [...messageTypes].sort(),
         agents: [...agents].sort(),
+        status: lifecycle.status,
+        ...(lifecycle.completedAt !== undefined ? { completedAt: lifecycle.completedAt } : {}),
       });
     }
 

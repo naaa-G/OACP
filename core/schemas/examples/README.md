@@ -1,6 +1,6 @@
 # OACP Protocol Examples
 
-Valid example payloads for OACP `v0.1`. These are **not** JSON Schemas — they are sample
+Valid example payloads for OACP `v1.0`. These are **not** JSON Schemas — they are sample
 documents that conform to schemas in [`../messages/`](../messages/) and [`../agent/`](../agent/).
 
 ## Message examples (Day 2)

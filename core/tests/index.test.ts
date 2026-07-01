@@ -4,7 +4,7 @@ import { PACKAGE_VERSION, PROTOCOL_VERSION } from '../src/index.js';
 
 describe('@oacp/core', () => {
   it('exports the active protocol version', () => {
-    expect(PROTOCOL_VERSION).toBe('0.1');
+    expect(PROTOCOL_VERSION).toBe('1.0');
   });
 
   it('exports a semver package version', () => {

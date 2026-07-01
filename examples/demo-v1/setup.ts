@@ -2,7 +2,7 @@
  * Shared setup for Demo v1 — document pipeline over HTTP (Day 14).
  */
 import type { AgentIdentity, AgentRuntime, InMemoryMessageBus, OacpMessage } from '@oacp/core';
-import { createAgentRuntime } from '@oacp/core';
+import { createAgentRuntime, PROTOCOL_VERSION } from '@oacp/core';
 import type { FastifyInstance } from 'fastify';
 import { DEFAULT_DEV_PUBLIC_KEY } from '@oacp/sdk';
 
@@ -25,21 +25,21 @@ export const DEMO_V1_WORKER_IDENTITIES: readonly AgentIdentity[] = [
   {
     id: 'agent://orchestrator',
     name: 'Document Orchestrator',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['document.pipeline'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: 'agent://analyzer',
     name: 'Document Analyzer',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['document.analyze'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: 'agent://reporter',
     name: 'Document Reporter',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['document.report'],
     publicKey: PUBLIC_KEY,
   },

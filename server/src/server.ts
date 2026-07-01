@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { bootstrapDevWorkflows, isDevWorkflowsEnabled } from './bootstrap/dev-workflows.js';
 import { bootstrapApp, type CreateAppOptions } from './app.js';
 import { loadServerConfig, type ServerConfig } from './config.js';
+import { resolveConsoleDistPath } from './observability/console-static.js';
 
 export interface StartServerOptions extends CreateAppOptions {
   readonly config?: Partial<ServerConfig>;
@@ -25,6 +26,12 @@ export async function startServer(options: StartServerOptions = {}): Promise<Run
 
   const devBootstrap = isDevWorkflowsEnabled() ? bootstrapDevWorkflows(context) : undefined;
 
+  if (config.enableConsoleStatic && resolveConsoleDistPath(config.consoleDistPath) === undefined) {
+    app.log.warn(
+      'OACP Console dist not found — run `pnpm --filter @oacp/console build` to serve GET /console',
+    );
+  }
+
   const address = await app.listen({ host: config.host, port: config.port });
 
   return {
@@ -33,6 +40,7 @@ export async function startServer(options: StartServerOptions = {}): Promise<Run
     close: async () => {
       devBootstrap?.stop();
       await context.memoryStore.close();
+      await context.observabilityPersistence.close();
       await app.close();
     },
   };

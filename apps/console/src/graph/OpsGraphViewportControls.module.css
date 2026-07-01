@@ -1,0 +1,42 @@
+.toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--oacp-border, #2a3441) 85%, transparent);
+  border-radius: var(--oacp-radius-sm, 0.375rem);
+  background: color-mix(in srgb, var(--oacp-surface, #121820) 65%, transparent);
+  color: var(--oacp-text-muted, #9fb0c3);
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.button:hover {
+  background: color-mix(in srgb, var(--oacp-accent, #3dd6c6) 10%, transparent);
+  border-color: color-mix(in srgb, var(--oacp-accent, #3dd6c6) 35%, transparent);
+  color: var(--oacp-text, #e6edf3);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--oacp-accent, #3dd6c6);
+  outline-offset: 2px;
+}
+
+.icon {
+  font-size: 0.75rem;
+  line-height: 1;
+  opacity: 0.9;
+}

@@ -9,7 +9,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- _(Nothing yet — track changes here for the next release.)_
+- _(Track post-v1.0.0 changes here.)_
+
+## [1.0.0-rc.1] — 2026-07-01 (Day 59 release candidate)
+
+Release candidate for joint OACP + MCPLab v1.0.0 launch (Day 60).
+
+### Added
+
+- Day 58 adoption kit: `examples/custom-agents/`, `integrate/mcp-oacp/` MCP tools server, Cursor skills, integration docs.
+- Day 59 RC gate: `pnpm test:day59`, `day59-rc-sync.test.ts` (50-trace recreate backfill), `docs/releases/v1.0.0-rc.1.md`.
+- Console trace rail **All synced / Live only** filter; `VITE_OACP_CONSOLE_FLEETS` for custom fleet labels.
+
+### Changed
+
+- Console user guide and MCPLab flagship docs consolidated for launch (`docs/mcplab.md`, `docs/bring-your-own-agents.md`).
+
+### Notes
+
+- Tag: `v1.0.0-rc.1` (pre-release). Ship `v1.0.0` on Day 60 after RC sign-off.
+- P1 backlog items in `docs/load-security-smoke.md` are **not** RC blockers.
+
+## [1.0.0] — 2026-07-01 (Day 54 freeze)
+
+Protocol and `/v1/observability/*` API freeze ahead of Day 60 joint launch.
+
+### Added
+
+- Protocol schemas tagged **v1.0** (`specs/`); validator accepts `1.0` and read-compat `0.1`.
+- Frozen OpenAPI 3.1 spec: `specs/openapi/v1.json`, served at `GET /v1/openapi.json`.
+- CI API freeze guard: `scripts/verify-api-freeze.mjs` + `specs/openapi/v1.lock.json` (required `/v1/` paths).
+- AJV live OpenAPI response validation in `server/tests/openapi-freeze.test.ts`.
+- Migration guide `docs/migration/v0.1-to-v1.0.md` and release notes `docs/releases/v1.0.0.md`.
+
+### Changed
+
+- **BREAKING (semver):** `@oacp/core`, `@oacp/sdk`, `@oacp/server`, `@oacp/observability-client`, `@oacp/console`, `@oacp/ui`, `oacp-sdk`, `oacp-examples` → **1.0.0**.
+- New outbound messages use protocol `version` **`1.0`** (`PROTOCOL_VERSION`).
+
+### Deprecated
+
+- `GET /playground/snapshot` — RFC 9745 deprecation headers; removal **Day 60**. Use `GET /v1/observability/snapshot`.
 
 ## [0.1.0-alpha] — 2026-06-13
 

@@ -1,0 +1,74 @@
+.root {
+  position: relative;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.trigger {
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-control-radius);
+  background: color-mix(in srgb, var(--oacp-text) 4%, transparent);
+  color: var(--oacp-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  color: var(--oacp-text);
+  border-color: var(--oacp-border-strong);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--oacp-accent);
+  outline-offset: 2px;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  z-index: 20;
+  min-width: 10.5rem;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-control-radius);
+  background: var(--oacp-panel);
+  box-shadow: var(--oacp-shadow-panel);
+}
+
+.menuItem {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: calc(var(--oacp-control-radius) - 2px);
+  background: transparent;
+  color: var(--oacp-text);
+  font: inherit;
+  font-size: 0.8125rem;
+  text-align: left;
+  padding: 0.45rem 0.625rem;
+  cursor: pointer;
+}
+
+.menuItem:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--oacp-text) 6%, transparent);
+}
+
+.menuItem:disabled {
+  color: var(--oacp-text-dim);
+  cursor: not-allowed;
+}
+
+.copyFeedback {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  font-size: 0.6875rem;
+  color: var(--oacp-success);
+  white-space: nowrap;
+}

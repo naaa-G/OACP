@@ -20,7 +20,7 @@ describe('capability discovery integration (Day 10)', () => {
         identity: {
           id: 'agent://summarizer',
           name: 'Summarizer',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['text.summarize'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },
@@ -31,7 +31,7 @@ describe('capability discovery integration (Day 10)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -64,7 +64,7 @@ describe('capability discovery integration (Day 10)', () => {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Coordinator',
-      version: '0.1',
+      version: '1.0',
       capabilities: ['orchestrate'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });

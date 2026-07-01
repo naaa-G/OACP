@@ -1,0 +1,93 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--oacp-border-subtle);
+  border-radius: var(--oacp-control-radius);
+  background: color-mix(in srgb, var(--oacp-text) 3%, transparent);
+  color: var(--oacp-text);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background var(--oacp-duration-normal) var(--oacp-easing),
+    border-color var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.header:hover {
+  background: color-mix(in srgb, var(--oacp-text) 5%, transparent);
+}
+
+.header:focus-visible {
+  outline: 2px solid var(--oacp-accent);
+  outline-offset: 2px;
+}
+
+.ringMcplab {
+  border-left: 3px solid var(--oacp-fleet-mcplab);
+}
+
+.ringStartup {
+  border-left: 3px solid var(--oacp-fleet-startup);
+}
+
+.ringSystem {
+  border-left: 3px solid var(--oacp-fleet-system);
+}
+
+.ringExternal {
+  border-left: 3px solid var(--oacp-fleet-external);
+}
+
+.chevron {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid var(--oacp-text-muted);
+  border-bottom: 2px solid var(--oacp-text-muted);
+  transform: rotate(45deg);
+  transition: transform var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.chevronCollapsed {
+  transform: rotate(-45deg);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+}
+
+.count {
+  flex-shrink: 0;
+  min-width: 1.375rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--oacp-text-muted);
+  background: color-mix(in srgb, var(--oacp-text) 6%, transparent);
+  border: 1px solid var(--oacp-border-subtle);
+}
+
+.list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0 0 0.25rem;
+  list-style: none;
+}

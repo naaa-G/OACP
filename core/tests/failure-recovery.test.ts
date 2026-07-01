@@ -20,7 +20,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://summarizer-01-primary',
         name: 'Primary Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey,
       },
@@ -35,7 +35,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://summarizer-02-backup',
         name: 'Backup Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey,
       },
@@ -87,7 +87,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://premium',
         name: 'Premium',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize.premium'],
         publicKey,
       },
@@ -102,7 +102,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://standard',
         name: 'Standard',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize.standard'],
         publicKey,
       },
@@ -156,7 +156,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://a',
         name: 'A',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.echo'],
         publicKey,
       },
@@ -171,7 +171,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://b',
         name: 'B',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.echo'],
         publicKey,
       },
@@ -218,7 +218,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://summarizer-01-primary',
         name: 'Primary',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey,
       },
@@ -233,7 +233,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://summarizer-02-backup',
         name: 'Backup',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey,
       },
@@ -295,7 +295,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://worker-01-primary',
         name: 'Primary Worker',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.process'],
         publicKey,
       },
@@ -310,7 +310,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://worker-02-backup',
         name: 'Backup Worker',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.process'],
         publicKey,
       },
@@ -324,7 +324,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.resilient'],
         publicKey,
       },
@@ -387,7 +387,7 @@ describe('failure recovery (Day 19)', () => {
       identity: {
         id: 'agent://flaky',
         name: 'Flaky',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.flaky'],
         publicKey,
       },

@@ -137,9 +137,17 @@ describe('message validator (Day 4)', () => {
   });
 
   it('supports custom MessageValidator with version allow-list', () => {
-    const validator = new MessageValidator({ supportedVersions: ['0.1'] });
+    const validator = new MessageValidator({ supportedVersions: ['1.0'] });
     const outcome = validator.validate(loadExample('task_request.example.json'));
     expect(outcome.valid).toBe(true);
+  });
+
+  it('accepts protocol version 0.1 during v1.0 migration read-compat', () => {
+    const legacy = {
+      ...loadExample('task_request.example.json'),
+      version: '0.1',
+    };
+    expect(validateMessage(legacy).valid).toBe(true);
   });
 
   it('exports message type constants used by validator', () => {

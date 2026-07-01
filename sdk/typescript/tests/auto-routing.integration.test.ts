@@ -17,7 +17,7 @@ describe('remote auto-routing integration (Day 11)', () => {
       identity: {
         id: 'agent://debugger',
         name: 'Code Debugger',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['code.debug'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -50,7 +50,7 @@ describe('remote auto-routing integration (Day 11)', () => {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Coordinator',
-      version: '0.1',
+      version: '1.0',
       capabilities: ['orchestrate'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });
@@ -72,7 +72,7 @@ describe('remote auto-routing integration (Day 11)', () => {
 
     const sendResult = await client.send({
       type: 'task_request',
-      version: '0.1',
+      version: '1.0',
       message_id: crypto.randomUUID(),
       trace_id: crypto.randomUUID(),
       from: 'agent://coordinator',

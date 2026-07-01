@@ -17,7 +17,7 @@ describe('remote messaging integration (Day 9)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -50,7 +50,7 @@ describe('remote messaging integration (Day 9)', () => {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Coordinator',
-      version: '0.1',
+      version: '1.0',
       capabilities: ['orchestrate'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });
@@ -73,7 +73,7 @@ describe('remote messaging integration (Day 9)', () => {
 
     const sendResult = await client.send({
       type: 'task_request',
-      version: '0.1',
+      version: '1.0',
       message_id: crypto.randomUUID(),
       trace_id: crypto.randomUUID(),
       from: 'agent://coordinator',

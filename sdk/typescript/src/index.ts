@@ -140,6 +140,20 @@ export { DEFAULT_DEV_PUBLIC_KEY } from './defaults.js';
 export { AgentClient, createAgentClient } from './client/agent-client.js';
 export type { AgentClientOptions } from './client/agent-client.js';
 export { registerDevAgent } from './client/dev-helpers.js';
+export {
+  MCPLAB_FLEET,
+  MCPLAB_ROLES,
+  buildMcplabAgentIdentity,
+  buildMcplabAgentMetadata,
+  registerMcplabAgent,
+} from './mcplab/metadata.js';
+export {
+  DEFAULT_CONSOLE_GRAPH_MODE,
+  GRAPH_MODE_QUERY_PARAM,
+  TRACE_ID_QUERY_PARAM,
+  buildConsoleTraceUrl,
+  buildPlaygroundTraceUrl,
+} from './mcplab/trace-url.js';
 export type { RegisterDevAgentParams } from './client/dev-helpers.js';
 export { CLIENT_ERROR_CODES, OacpClientError } from './client/errors.js';
 export type { ClientErrorCode, ClientErrorDetail } from './client/errors.js';

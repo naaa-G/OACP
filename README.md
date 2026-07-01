@@ -5,20 +5,35 @@
 **A multi-agent task-execution system you can watch working live.**
 
 OACP gives autonomous AI agents a common way to discover each other, exchange tasks,
-delegate work, and collaborate — with a **live visual playground** so you can _see_ the
-collaboration happen, not just read it in logs.
+delegate work, and collaborate — with the **OACP Console** (Showcase + Ops modes) so you can
+_see_ the collaboration happen, not just read it in logs.
 
-[![Status: Alpha](https://img.shields.io/badge/status-alpha-orange.svg)](#-project-status)
+[![Status: v1.0](https://img.shields.io/badge/status-v1.0-blue.svg)](#-project-status)
 [![GitHub](https://img.shields.io/badge/GitHub-naaa--G%2FOACP-181717?logo=github)](https://github.com/naaa-G/OACP)
-[![Release](https://img.shields.io/badge/release-v0.1.0--alpha-blue.svg)](https://github.com/naaa-G/OACP/releases/tag/v0.1.0-alpha)
-[![Spec Version](https://img.shields.io/badge/protocol-v0.1-blue.svg)](./specs)
+[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](./docs/releases/v1.0.0.md)
+[![Spec Version](https://img.shields.io/badge/protocol-v1.0-blue.svg)](./specs)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](./LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 [![TypeScript](https://img.shields.io/badge/built%20with-TypeScript-3178c6.svg)](https://www.typescriptlang.org/)
 
-[Quick Start](#-quick-start) · [Docs](https://naaa-g.github.io/OACP) · [Architecture](#-architecture) · [Examples](#-examples) · [Roadmap](#-roadmap) · [Contributing](./CONTRIBUTING.md)
+[Quick Start](#-quick-start) · [Run the demo](./docs/demo-scripts.md) · [Docs](https://naaa-g.github.io/OACP) · [Architecture](#-architecture) · [Examples](#-examples) · [Roadmap](#-roadmap) · [Contributing](./CONTRIBUTING.md)
 
 </div>
+
+<p align="center">
+  <a href="#-quick-start">
+    <img
+      src="./docs/public/screenshots/console-showcase-hero.png"
+      alt="OACP Console Showcase — MCPLab multi-agent fleet in 3D"
+      width="920"
+    />
+  </a>
+  <br />
+  <strong>OACP Console Showcase</strong> — MCPLab crews on OACP v1.0
+  · <a href="./docs/demo-scripts.md">Run the demo</a>
+</p>
+
+<div align="center">
 
 ---
 
@@ -33,7 +48,8 @@ collaboration happen, not just read it in logs.
 - [The Protocol](#-the-protocol)
 - [SDKs](#-sdks)
 - [Examples](#-examples)
-- [The Playground](#-the-playground)
+- [The Console](#-the-console)
+- [Legacy Playground](#-legacy-playground)
 - [Project Structure](#-project-structure)
 - [Roadmap](#-roadmap)
 - [Comparison & Interoperability](#-comparison--interoperability)
@@ -56,7 +72,7 @@ OACP standardizes the boring-but-critical parts of multi-agent collaboration:
 - **Capability-based routing** — "find an agent that can debug code" routes automatically.
 - **Delivery guarantees** — retries, timeouts, and fallback routing built in.
 - **Shared memory & delegation graphs** — agents remember decisions and track who did what.
-- **A live playground** — visualize agents as nodes and watch messages and delegations flow in real time.
+- **The OACP Console** — Showcase 3D graph + Ops hierarchy for live and historical traces
 
 > **Positioning:** OACP is a _collaboration & orchestration layer_, not a replacement for
 > model or tool protocols. It's designed to **interoperate** with emerging standards (e.g.
@@ -66,10 +82,9 @@ OACP standardizes the boring-but-critical parts of multi-agent collaboration:
 
 ## 🚧 Project Status
 
-> **OACP v0.1.0-alpha is publicly available** at [github.com/naaa-G/OACP](https://github.com/naaa-G/OACP).
-> The protocol surface, APIs, and schemas are **unstable and may change**. Suitable for
-> experimentation and contribution, **not production**. Pin exact versions and expect breaking
-> changes until `v1.0`. Docs: [naaa-g.github.io/OACP](https://naaa-g.github.io/OACP).
+> **OACP v1.0.0** — protocol freeze, Docker platform, enterprise API key auth, MCPLab↔OACP sync,
+> and Console Showcase as the launch demo surface. Docs: [naaa-g.github.io/OACP](https://naaa-g.github.io/OACP).
+> Migration from `v0.1`: [docs/migration/v0.1-to-v1.0.md](./docs/migration/v0.1-to-v1.0.md).
 
 ---
 
@@ -78,10 +93,10 @@ OACP standardizes the boring-but-critical parts of multi-agent collaboration:
 | Area                | Capability                                                |     Status     |
 | ------------------- | --------------------------------------------------------- | :------------: |
 | **Monorepo**        | pnpm + Turborepo, strict TypeScript, ESLint, Prettier, CI |    🟢 Done     |
-| **Protocol**        | Versioned JSON-Schema message types (`v0.1`)              | 🟢 Day 2 done  |
+| **Protocol**        | Versioned JSON-Schema message types (`v1.0`)              |    🟢 Done     |
 | **Schema registry** | Load bundled schemas via `@oacp/core`                     |    🟢 Done     |
 | **Identity**        | Agent identity model with public keys & capabilities      | 🟢 Day 3 done  |
-| **Validation**      | Message validator (JSON Schema + type + version `0.1`)    | 🟢 Day 4 done  |
+| **Validation**      | Message validator (JSON Schema + type + version `1.0`)    | 🟢 Day 4 done  |
 | **Routing**         | In-memory message bus + capability-based routing          | 🟢 Day 5 done  |
 | **Runtime**         | `Agent.sendTask()` / `receiveTask()` / `respond()`        | 🟢 Day 6 done  |
 | **Integration**     | Multi-agent E2E tests (Agent A → Agent B in one process)  | 🟢 Day 7 done  |
@@ -89,7 +104,8 @@ OACP standardizes the boring-but-critical parts of multi-agent collaboration:
 | **Reliability**     | Retries, timeouts, at-least-once HTTP delivery            | 🟢 Day 12 done |
 | **Memory**          | Shared task history (SQLite/Postgres + HTTP API)          | 🟢 Day 15 done |
 | **Orchestration**   | DAG workflow engine                                       |    ✅ Done     |
-| **Playground**      | Live web visualization of agents & messages               | 🟢 Day 22 done |
+| **Console**         | Showcase + Ops observability UI (`/console`)              |    🟢 v1.0     |
+| **Playground**      | Legacy web visualization (deprecated for launch)          |   🟡 Legacy    |
 | **SDKs**            | TypeScript + Python HTTP clients                          | 🟢 Day 27 done |
 | **Adapters**        | LangChain + AutoGen integration bridges                   | 🟢 Day 28 done |
 
@@ -98,6 +114,52 @@ Legend: 🟢 stable · 🟡 in progress · ⚪ planned
 ---
 
 ## ⚡ Quick Start
+
+### Docker (fastest — Day 51)
+
+**Under 5 minutes** with Docker only — OACP server + Console, no local Node build:
+
+```bash
+git clone https://github.com/naaa-G/OACP.git
+cd OACP
+docker compose up --build -d
+```
+
+Open **http://127.0.0.1:3847/console/?mode=showcase**. Seed demo traces:
+
+```bash
+docker compose --profile demo up --build      # single research trace
+docker compose --profile demo-full run --rm seed-demo-full   # three crews (Day 56)
+pnpm demo:fallback   # host-side, no Docker profile
+```
+
+**Run the demo:** [demo scripts](./docs/demo-scripts.md) · `pnpm docker:mcplab`
+
+### Adoption kit (Day 58)
+
+Integrate OACP without MCPLab:
+
+```bash
+pnpm --filter oacp-examples start:custom-agents
+```
+
+| Resource                                    | Link                                                             |
+| ------------------------------------------- | ---------------------------------------------------------------- |
+| Bring-your-own agents                       | [docs/bring-your-own-agents.md](./docs/bring-your-own-agents.md) |
+| Integration surfaces (SDK vs MCP vs skills) | [docs/integration-surfaces.md](./docs/integration-surfaces.md)   |
+| Cursor skills                               | [.cursor/skills/](./.cursor/skills/)                             |
+| MCP tools server                            | [integrate/mcp-oacp/](./integrate/mcp-oacp/)                     |
+
+**With MCPLab** (clone to `./MCPLab`, client-only — no embedded OACP server):
+
+```bash
+git clone <mcplab-repo> MCPLab
+pnpm docker:mcplab
+```
+
+See [docs/docker-compose.md](./docs/docker-compose.md) and [integrate/mcplab/MIGRATION.md](./integrate/mcplab/MIGRATION.md).
+
+### Local development
 
 **Under 5 minutes** — clone, build, run the Autonomous Startup Team, open the playground:
 
@@ -142,8 +204,8 @@ Verify the SDK is wired:
 ```ts
 import { PROTOCOL_VERSION, SDK_VERSION } from '@oacp/sdk';
 
-console.log(PROTOCOL_VERSION); // "0.1"
-console.log(SDK_VERSION); // "0.1.0"
+console.log(PROTOCOL_VERSION); // "1.0"
+console.log(SDK_VERSION); // "1.0.0"
 ```
 
 Full developer guide: [`docs/development.md`](./docs/development.md).
@@ -353,7 +415,7 @@ against them.
 ```json
 {
   "type": "task_request",
-  "version": "0.1",
+  "version": "1.0",
   "trace_id": "0c8f1e2a-...-9b",
   "from": "agent://coordinator",
   "capability": "text.summarize",
@@ -416,10 +478,43 @@ SDK guide: [`examples/sdk/README.md`](./examples/sdk/README.md). Integrations: [
 
 ---
 
-## 🎮 The Playground
+## 🖥 The Console
 
-The playground is OACP's signature experience: a web app that renders agents as nodes and
-animates messages and task delegations **as they happen**.
+The **OACP Console** is the v1 launch observability surface — served from the platform at
+`/console` (Docker: port **3847**).
+
+| Mode         | URL param        | Best for                                        |
+| ------------ | ---------------- | ----------------------------------------------- |
+| **Showcase** | `?mode=showcase` | Demos, README hero, conference (3D fleet graph) |
+| **Ops**      | `?mode=ops`      | Delegation drill-down, incident crews           |
+
+```bash
+docker compose up -d
+# → http://127.0.0.1:3847/console/?mode=showcase
+```
+
+**MCPLab full stack:**
+
+```bash
+pnpm docker:mcplab
+# Research crew → Console deep link from MCPLab web or CLI
+```
+
+Features:
+
+- **Live SSE feed** + snapshot reconcile (`GET /v1/observability/snapshot`)
+- **MCPLab fleet** — `metadata.fleet=mcplab`, role badges, Showcase fleet filter
+- **Deep links** — `/console/?trace_id=<uuid>&mode=showcase`
+- **Enterprise auth** — `OACP_API_KEY` via gateway ([production-deployment.md](./docs/production-deployment.md))
+
+Guides: [console-spec.md](./docs/console-spec.md) · [demo-scripts.md](./docs/demo-scripts.md)
+
+---
+
+## 🎮 Legacy Playground
+
+The standalone **playground** (`pnpm --filter oacp-examples start:playground`) remains for
+Week 1–4 examples. **Launch demos use the Console**, not `/playground`.
 
 ```bash
 pnpm build
@@ -434,14 +529,7 @@ Features:
 - **Live message flow** — timeline feed with configurable polling
 - **Deep links** — `?trace_id=<uuid>` from demo or CLI output
 
-Full guide: [`docs/playground.md`](./docs/playground.md).
-
-Flagship demo (Day 23) — **Autonomous Startup Team**:
-
-1. You type a prompt: _"Build a habit tracker app."_
-2. OACP spawns **PM**, **Backend**, **Frontend**, and **Tester** agents.
-3. They discuss, delegate, and produce a working project structure.
-4. You watch the entire collaboration unfold live.
+Full guide: [`docs/playground.md`](./docs/playground.md) (redirect notice to Console).
 
 ---
 
@@ -488,7 +576,7 @@ oacp/
 | **M7**    | Trust & deployability     | Message signing, server auth, Docker Compose      |   ⚪ Planned   |
 | **M8**    | Stability & observability | API policy, OpenTelemetry, persistent registry    |   ⚪ Planned   |
 
-**M5 focus (remaining):** demo video, README hero GIF, GitHub Discussions, then one outreach channel (Show HN or Reddit).
+**M5 focus (remaining):** adoption kit + docs (Day 58), GitHub Discussions, release tags (Days 59–60).
 
 **M7–M8 focus:** teams can run OACP on a private network with signing, Docker, and clearer semver — still **not** production until `v1.0`.
 

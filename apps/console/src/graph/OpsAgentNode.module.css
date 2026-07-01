@@ -1,0 +1,170 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 2px solid #556680;
+  background: var(--oacp-node-idle);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--oacp-text) 8%, transparent);
+  cursor: pointer;
+  transition:
+    width var(--oacp-duration-normal) var(--oacp-easing),
+    height var(--oacp-duration-normal) var(--oacp-easing),
+    border-color var(--oacp-duration-normal) var(--oacp-easing),
+    box-shadow var(--oacp-duration-normal) var(--oacp-easing),
+    opacity var(--oacp-duration-normal) var(--oacp-easing),
+    transform var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.dot {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--oacp-text) 35%, transparent);
+  transition:
+    width var(--oacp-duration-normal) var(--oacp-easing),
+    height var(--oacp-duration-normal) var(--oacp-easing),
+    background var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.idle {
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.72;
+  border-color: color-mix(in srgb, #556680 70%, transparent);
+  background: color-mix(in srgb, var(--oacp-node-idle) 88%, transparent);
+}
+
+.idle .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: color-mix(in srgb, var(--oacp-text) 22%, transparent);
+}
+
+.active {
+  width: 3.25rem;
+  height: 3.25rem;
+  background: var(--oacp-node-active);
+  border-color: #9ec5ff;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--oacp-node-active) 35%, transparent),
+    0 0 16px color-mix(in srgb, var(--oacp-node-active) 45%, transparent);
+}
+
+.active .dot {
+  width: 0.875rem;
+  height: 0.875rem;
+  background: color-mix(in srgb, #ffffff 55%, var(--oacp-node-active));
+}
+
+.pulse {
+  animation: opsNodePulse 2.4s ease-in-out infinite;
+}
+
+.selected {
+  width: 3.25rem;
+  height: 3.25rem;
+  background: var(--oacp-node-active);
+  border-color: var(--oacp-accent);
+  box-shadow:
+    0 0 0 2px var(--oacp-accent),
+    0 0 0 5px color-mix(in srgb, var(--oacp-accent) 22%, transparent),
+    0 0 18px color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+}
+
+.selected .dot {
+  width: 0.875rem;
+  height: 0.875rem;
+  background: color-mix(in srgb, #ffffff 60%, var(--oacp-accent));
+}
+
+.dimmed {
+  opacity: 0.2;
+  border-color: color-mix(in srgb, #556680 55%, transparent);
+  box-shadow: none;
+  animation: none;
+}
+
+.idle.dimmed,
+.active.dimmed,
+.selected.dimmed {
+  opacity: 0.2;
+}
+
+.ghost {
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.42;
+  border-style: dashed;
+  border-width: 1.5px;
+  border-color: color-mix(in srgb, #556680 55%, transparent);
+  background: color-mix(in srgb, var(--oacp-node-idle) 55%, transparent);
+  box-shadow: none;
+  animation: none;
+}
+
+.ghost .dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  background: color-mix(in srgb, var(--oacp-text) 18%, transparent);
+}
+
+.ghost.dimmed {
+  opacity: 0.2;
+}
+
+.fleetMcplab {
+  border-left-color: var(--oacp-fleet-mcplab);
+}
+
+.fleetStartup {
+  border-left-color: var(--oacp-fleet-startup);
+}
+
+.fleetSystem {
+  border-left-color: var(--oacp-fleet-system);
+}
+
+.fleetExternal {
+  border-left-color: var(--oacp-fleet-external);
+}
+
+.handle {
+  opacity: 0;
+  width: 0.25rem;
+  height: 0.25rem;
+  min-width: 0;
+  min-height: 0;
+  border: none;
+  background: transparent;
+}
+
+.toolbar {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+@keyframes opsNodePulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--oacp-node-active) 35%, transparent),
+      0 0 12px color-mix(in srgb, var(--oacp-node-active) 35%, transparent);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--oacp-pulse) 35%, transparent),
+      0 0 22px color-mix(in srgb, var(--oacp-pulse) 55%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+
+  .root {
+    transition: none;
+  }
+}

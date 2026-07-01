@@ -12,11 +12,19 @@ import {
 
 import { registerHttpRoutes } from './api/http/routes.js';
 import type { ServerContext } from './api/http/types.js';
+import { registerApiKeyAuth } from './auth/api-key-auth.js';
 import { loadServerConfig, type ServerConfig } from './config.js';
 import { SERVER_ERROR_CODES, OacpServerError } from './errors.js';
+import { attachRedisObservabilityFanout } from './observability/create-event-bus.js';
+import { InMemoryObservabilityEventBus } from './observability/observability-event-bus.js';
+import { wireObservabilityEventEmitter } from './observability/wire-observability-event-emitter.js';
+import { registerConsoleStatic, resolveConsoleDistPath } from './observability/console-static.js';
 import { AgentRegistry } from './registry/agent-registry.js';
 import { CapabilityRouter } from './routing/capability-router.js';
 import { createMemoryStore } from './storage/create-memory-store.js';
+import { createObservabilityPersistence } from './storage/sqlite-observability-persistence.js';
+import { hydrateObservabilityFromPersistence } from './observability/observability-import.js';
+import { runMcplabStartupSync } from './observability/mcplab-sync.js';
 
 export interface CreateAppOptions {
   readonly config?: Partial<ServerConfig>;
@@ -27,11 +35,13 @@ export interface CreateAppOptions {
 export interface OacpApp {
   readonly app: FastifyInstance;
   readonly context: ServerContext;
+  closeObservabilityFanout?: () => Promise<void>;
 }
 
 /** Create a configured Fastify application without listening. */
 export function createApp(options: CreateAppOptions = {}): OacpApp {
-  const config = options.config ?? {};
+  const resolvedConfig: ServerConfig = { ...loadServerConfig(), ...options.config };
+  const config = resolvedConfig;
   const bus =
     options.context?.bus ??
     createMessageBus({
@@ -53,6 +63,14 @@ export function createApp(options: CreateAppOptions = {}): OacpApp {
   const delegationGraphRecorder =
     options.context?.delegationGraphRecorder ?? createDelegationGraphRecorder();
   const workflowEngine = options.context?.workflowEngine ?? createWorkflowEngine();
+  const observabilityEventBus =
+    options.context?.observabilityEventBus ?? new InMemoryObservabilityEventBus();
+  const observabilityPersistence =
+    options.context?.observabilityPersistence ??
+    createObservabilityPersistence({
+      backend: config.memoryBackend,
+      sqlitePath: config.memorySqlitePath,
+    });
   const context: ServerContext = {
     bus,
     registry,
@@ -61,6 +79,8 @@ export function createApp(options: CreateAppOptions = {}): OacpApp {
     taskRecorder,
     delegationGraphRecorder,
     workflowEngine,
+    observabilityEventBus,
+    observabilityPersistence,
   };
 
   const app = Fastify({
@@ -104,21 +124,77 @@ export function createApp(options: CreateAppOptions = {}): OacpApp {
     return reply.status(500).send(serverError.toJSON());
   });
 
+  registerApiKeyAuth(app, { apiKey: resolvedConfig.apiKey });
   registerHttpRoutes(app, context);
+  wireObservabilityEventEmitter(context, resolvedConfig);
+
+  if (observabilityPersistence.enabled) {
+    hydrateObservabilityFromPersistence(context);
+  }
 
   return { app, context };
 }
 
-/**
- * Bootstrap app with configured persistent memory backend (SQLite/Postgres).
- * Use for production `startServer`; tests may use synchronous `createApp`.
- */
 export async function bootstrapApp(options: CreateAppOptions = {}): Promise<OacpApp> {
-  if (options.context?.memoryStore !== undefined) {
-    return createApp(options);
+  const config: ServerConfig = { ...loadServerConfig(), ...options.config };
+
+  const oacpApp =
+    options.context?.memoryStore !== undefined
+      ? createApp({ ...options, config })
+      : await createAppWithPersistentMemory(options, config);
+
+  if (config.enableConsoleStatic) {
+    const distPath = resolveConsoleDistPath(config.consoleDistPath);
+    if (distPath !== undefined) {
+      await registerConsoleStatic(oacpApp.app, { distPath });
+    }
   }
 
-  const config: ServerConfig = { ...loadServerConfig(), ...options.config };
+  if (config.observabilityRedisUrl !== undefined && config.observabilityRedisUrl.length > 0) {
+    const fanout = await attachRedisObservabilityFanout(oacpApp.context.observabilityEventBus, {
+      redisUrl: config.observabilityRedisUrl,
+      ...(config.observabilityRedisChannel !== undefined
+        ? { channel: config.observabilityRedisChannel }
+        : {}),
+    });
+
+    let syncResult: Awaited<ReturnType<typeof runMcplabStartupSync>>;
+    try {
+      syncResult = await runMcplabStartupSync(oacpApp.context, config);
+    } catch (error) {
+      oacpApp.app.log.warn({ err: error }, 'MCPLab observability startup sync failed');
+      syncResult = undefined;
+    }
+    if (syncResult !== undefined && oacpApp.app.log) {
+      oacpApp.app.log.info({ sync: syncResult }, 'MCPLab observability startup sync complete');
+    }
+
+    return {
+      ...oacpApp,
+      closeObservabilityFanout: async () => {
+        await fanout.close();
+      },
+    };
+  }
+
+  let syncResult: Awaited<ReturnType<typeof runMcplabStartupSync>>;
+  try {
+    syncResult = await runMcplabStartupSync(oacpApp.context, config);
+  } catch (error) {
+    oacpApp.app.log.warn({ err: error }, 'MCPLab observability startup sync failed');
+    syncResult = undefined;
+  }
+  if (syncResult !== undefined && oacpApp.app.log) {
+    oacpApp.app.log.info({ sync: syncResult }, 'MCPLab observability startup sync complete');
+  }
+
+  return oacpApp;
+}
+
+async function createAppWithPersistentMemory(
+  options: CreateAppOptions,
+  config: ServerConfig,
+): Promise<OacpApp> {
   const memoryStore = await createMemoryStore({
     backend: config.memoryBackend,
     sqlitePath: config.memorySqlitePath,

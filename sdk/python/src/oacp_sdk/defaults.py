@@ -1,6 +1,6 @@
 """Development defaults — not for production."""
 
-PROTOCOL_VERSION = '0.1'
+PROTOCOL_VERSION = '1.0'
 
 DEFAULT_DEV_PUBLIC_KEY: dict[str, str] = {
     'kty': 'EC',

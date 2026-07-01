@@ -41,7 +41,7 @@ Root entry point for browsers and API discovery.
 {
   "ok": true,
   "service": "oacp-reference-server",
-  "protocol_version": "0.1",
+  "protocol_version": "1.0",
   "registered_agents": 6,
   "ui": { "playground": "/playground", "trace_viewer": "/trace-viewer" },
   "api": { "health": "/health", "agents": "/agents", "send_message": "/send-message" }
@@ -56,7 +56,7 @@ Liveness probe for load balancers and orchestrators.
 {
   "ok": true,
   "status": "healthy",
-  "protocol_version": "0.1",
+  "protocol_version": "1.0",
   "registered_agents": 2,
   "bus_open": true
 }
@@ -110,7 +110,7 @@ Look up a registered agent. The `:id` parameter accepts:
     "id": "agent://summarizer",
     "name": "Text Summarizer",
     "capabilities": ["text.summarize"],
-    "version": "0.1",
+    "version": "1.0",
     "publicKey": { "kty": "EC", "...": "..." }
   }
 }
@@ -185,11 +185,13 @@ Persistent task history. See [memory-system.md](./memory-system.md).
 
 Environment variables:
 
-| Variable                   | Default           | Description                       |
-| -------------------------- | ----------------- | --------------------------------- |
-| `OACP_MEMORY_BACKEND`      | `memory`          | `memory`, `sqlite`, or `postgres` |
-| `OACP_MEMORY_SQLITE_PATH`  | `.oacp/memory.db` | SQLite file path                  |
-| `OACP_MEMORY_POSTGRES_URL` | —                 | PostgreSQL connection URL         |
+| Variable                           | Default                     | Description                                |
+| ---------------------------------- | --------------------------- | ------------------------------------------ |
+| `OACP_MEMORY_BACKEND`              | `memory`                    | `memory`, `sqlite`, or `postgres`          |
+| `OACP_MEMORY_SQLITE_PATH`          | `.oacp/memory.db`           | SQLite file path                           |
+| `OACP_MEMORY_POSTGRES_URL`         | —                           | PostgreSQL connection URL                  |
+| `OACP_OBSERVABILITY_REDIS_URL`     | —                           | Optional Redis SSE fanout (multi-instance) |
+| `OACP_OBSERVABILITY_REDIS_CHANNEL` | `oacp:observability:events` | Redis pub/sub channel                      |
 
 ## Delegation graph API (Day 16)
 
@@ -225,24 +227,58 @@ Unified trace inspection for ops and debugging. See [observability.md](./observa
 | `GET /traces/:traceId` | Full trace bundle (messages, timeline, graph) |
 | `GET /trace-viewer`    | Lightweight web UI                            |
 
-## Playground API (Day 22)
+## OACP Console (Day 7)
 
-Live agent graph and message flow visualization. See [playground.md](./playground.md).
+Production observability UI served as a static SPA.
 
-| Endpoint                   | Description                           |
-| -------------------------- | ------------------------------------- |
-| `GET /playground`          | Self-contained web UI (live polling)  |
-| `GET /playground/snapshot` | Unified poll payload (agents + trace) |
+| Endpoint          | Description                                                      |
+| ----------------- | ---------------------------------------------------------------- |
+| `GET /console/`   | Built Console (`apps/console/dist`)                              |
+| `GET /console`    | Redirect to `/console/`                                          |
+| `GET /playground` | **Deprecated** — `302` redirect to `/console/` (query preserved) |
+| `GET /` (HTML)    | Redirect to `/console/`                                          |
 
-```
-GET /playground/snapshot?trace_id=<uuid>&limit=25
-```
-
-Runnable demo:
+Build and run:
 
 ```bash
-pnpm --filter oacp-examples start:playground
+pnpm build
+pnpm --filter @oacp/server start
+# http://127.0.0.1:3847/console/?trace_id=<uuid>
 ```
+
+See [console.md](./console.md) and [console-spec.md](./console-spec.md).
+
+## Observability snapshot API (Day 6)
+
+Canonical poll endpoint for the OACP Console. See [console-spec.md](./console-spec.md).
+
+| Endpoint                                      | Description                                                     |
+| --------------------------------------------- | --------------------------------------------------------------- |
+| `GET /v1/observability/snapshot`              | **Canonical** — agents, traces, active trace, agent links       |
+| `GET /v1/observability/traces/:traceId/graph` | Trace-scoped agent graph for Ops 2D (Day 26)                    |
+| `GET /v1/observability/events`                | SSE stream — `message.appended`, `trace.started`, etc. (Day 46) |
+| `GET /playground/snapshot`                    | Legacy alias (identical response; deprecated Day 60)            |
+
+```
+GET /v1/observability/snapshot?trace_id=<uuid>&limit=25
+GET /v1/observability/traces/<uuid>/graph
+```
+
+Console dev (Vite proxies `/v1` to the server):
+
+```bash
+pnpm --filter @oacp/server start
+pnpm --filter @oacp/console dev
+```
+
+## Playground API (Day 22)
+
+Legacy live UI (deprecated → OACP Console). See [playground.md](./playground.md).
+
+| Endpoint                   | Description                          |
+| -------------------------- | ------------------------------------ |
+| `GET /playground`          | Self-contained web UI (live polling) |
+| `GET /playground/snapshot` | Legacy snapshot alias (use v1 path)  |
 
 ## Workflow API (Day 18)
 
@@ -287,14 +323,16 @@ pnpm --filter @oacp/server start
 
 Environment variables:
 
-| Variable                       | Default           |
-| ------------------------------ | ----------------- |
-| `OACP_SERVER_HOST`             | `0.0.0.0`         |
-| `OACP_SERVER_PORT`             | `3847`            |
-| `OACP_DEV_WORKFLOWS`           | (off)             |
-| `OACP_CAPABILITY_ROUTING_MODE` | `first`           |
-| `OACP_MEMORY_BACKEND`          | `memory`          |
-| `OACP_MEMORY_SQLITE_PATH`      | `.oacp/memory.db` |
+| Variable                           | Default                     |
+| ---------------------------------- | --------------------------- |
+| `OACP_SERVER_HOST`                 | `0.0.0.0`                   |
+| `OACP_SERVER_PORT`                 | `3847`                      |
+| `OACP_DEV_WORKFLOWS`               | (off)                       |
+| `OACP_CAPABILITY_ROUTING_MODE`     | `first`                     |
+| `OACP_MEMORY_BACKEND`              | `memory`                    |
+| `OACP_MEMORY_SQLITE_PATH`          | `.oacp/memory.db`           |
+| `OACP_OBSERVABILITY_REDIS_URL`     | (off)                       |
+| `OACP_OBSERVABILITY_REDIS_CHANNEL` | `oacp:observability:events` |
 
 Set `OACP_DEV_WORKFLOWS=1` to register `echo-workflow` and `document-dag` with in-process workers (local dev only).
 

@@ -1,0 +1,260 @@
+.headerActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.body {
+  padding: 0 !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 17.5rem;
+  overflow: hidden;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 15rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--oacp-text-muted);
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--oacp-blue) 4%, transparent) 0%,
+      transparent 55%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      color-mix(in srgb, var(--oacp-text) 2%, transparent) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 23px,
+      color-mix(in srgb, var(--oacp-text) 2%, transparent) 24px
+    );
+}
+
+.hiddenCanvasLayer {
+  position: absolute;
+  inset: 0;
+  flex: 1;
+  min-height: 15rem;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.canvasWrap {
+  position: relative;
+  flex: 1;
+  min-height: 15rem;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 15rem;
+  display: block;
+}
+
+.overlayMessage {
+  position: absolute;
+  inset: auto 0 1rem 0;
+  margin: 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--oacp-text-muted);
+}
+
+.loadingRing {
+  animation: graphPulse 1.6s ease-in-out infinite;
+}
+
+.loadingNode {
+  fill: var(--oacp-node-idle);
+  opacity: 0.55;
+  animation: graphPulse 1.6s ease-in-out infinite;
+}
+
+.placeholderEdge {
+  stroke: var(--oacp-edge);
+  stroke-width: 1.5;
+  opacity: 0.65;
+}
+
+.placeholderNode {
+  fill: var(--oacp-node-idle);
+  stroke: #556680;
+  stroke-width: 2;
+}
+
+.placeholderNodeActive {
+  fill: var(--oacp-node-active);
+  stroke: #9ec5ff;
+  stroke-width: 2;
+}
+
+.placeholderCaption {
+  fill: var(--oacp-text-muted);
+  font-size: 11px;
+  font-family: var(--oacp-font-mono);
+}
+
+@keyframes graphPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingRing,
+  .loadingNode {
+    animation: none;
+    opacity: 0.75;
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+}
+
+.legend span::before {
+  content: '';
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.legendIdle::before {
+  background: var(--oacp-node-idle);
+}
+
+.legendActive::before {
+  background: var(--oacp-node-active);
+}
+
+.legendEdge::before {
+  border-radius: 0;
+  width: 0.875rem;
+  height: 2px;
+  background: var(--oacp-blue);
+}
+
+.legendEdgeKinds {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.legendEdgeKind::before {
+  content: '';
+  display: inline-block;
+  width: 0.875rem;
+  height: 2px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+  border-radius: 1px;
+  background: var(--ops-edge-legend-color, var(--oacp-edge));
+}
+
+.legendMode {
+  margin-left: auto;
+  font-family: var(--oacp-font-mono);
+  font-size: 0.6875rem;
+}
+
+.legendSelected::before {
+  background: var(--oacp-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--oacp-accent) 25%, transparent);
+}
+
+.registryBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--oacp-border) 65%, transparent);
+}
+
+.ghostBadge {
+  font-size: 0.6875rem;
+  font-family: var(--oacp-font-mono);
+  color: var(--oacp-warning, #e6b84d);
+  background: color-mix(in srgb, var(--oacp-warning, #e6b84d) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--oacp-warning, #e6b84d) 35%, transparent);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+}
+
+.legendGhost::before {
+  border-radius: 999px;
+  border: 1.5px dashed #6b7a90;
+  background: color-mix(in srgb, var(--oacp-node-idle) 45%, transparent);
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
+.selectedHint {
+  margin: 0.75rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--oacp-text);
+}
+
+.standardPanel {
+  min-height: 0;
+  max-height: 100%;
+  height: auto;
+}
+
+.presentationPanel :global(.oacp-panel__header),
+.presentationPanel :global(.oacp-panel__footer) {
+  display: none;
+}
+
+.presentationPanel {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  height: 100%;
+}
+
+.presentationBody {
+  min-height: 0;
+  height: 100%;
+}
+
+.presentationCanvasWrap {
+  min-height: 0;
+  height: 100%;
+}

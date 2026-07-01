@@ -1,0 +1,75 @@
+.hover,
+.pinned {
+  min-width: 9.5rem;
+  max-width: 13rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid color-mix(in srgb, var(--oacp-border) 80%, transparent);
+  background: color-mix(in srgb, var(--oacp-surface) 92%, #0b0f14);
+  box-shadow: var(--oacp-shadow-panel);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hover {
+  border-color: color-mix(in srgb, var(--oacp-accent) 35%, var(--oacp-border));
+}
+
+.pinned {
+  border-color: color-mix(in srgb, var(--oacp-accent) 55%, var(--oacp-border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--oacp-accent) 25%, transparent),
+    var(--oacp-shadow-panel);
+}
+
+.name {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--oacp-text);
+}
+
+.meta {
+  margin: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.35rem;
+  align-items: baseline;
+  font-size: 0.625rem;
+}
+
+.row dt {
+  margin: 0;
+  color: var(--oacp-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.row dd {
+  margin: 0;
+  color: var(--oacp-text);
+}
+
+.mono {
+  font-family: var(--oacp-font-mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pinBadge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.5625rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oacp-accent);
+  background: color-mix(in srgb, var(--oacp-accent) 12%, transparent);
+}

@@ -20,11 +20,14 @@ Validates:
 
 ## Test locations
 
-| Suite         | Path                                                     | Focus                                 |
-| ------------- | -------------------------------------------------------- | ------------------------------------- |
-| Core E2E      | `core/tests/integration/multi-agent.test.ts`             | `AgentRuntime` + `InMemoryMessageBus` |
-| SDK E2E       | `sdk/typescript/tests/multi-agent.integration.test.ts`   | `Agent` + `LocalBus`                  |
-| Unit coverage | `core/tests/*.test.ts`, `sdk/typescript/tests/*.test.ts` | Layer-specific behaviour              |
+| Suite                  | Path                                                     | Focus                                  |
+| ---------------------- | -------------------------------------------------------- | -------------------------------------- |
+| Core E2E               | `core/tests/integration/multi-agent.test.ts`             | `AgentRuntime` + `InMemoryMessageBus`  |
+| SDK E2E                | `sdk/typescript/tests/multi-agent.integration.test.ts`   | `Agent` + `LocalBus`                   |
+| MCPLab full-loop       | `server/tests/mcplab-full-loop.test.ts`                  | Console URL + v1 snapshot (Day 15)     |
+| Day 55 smoke           | `server/tests/day55-*.test.ts`                           | Snapshot p95, sync backfill, SSE, auth |
+| MCPLab live (optional) | `sdk/python/tests/integration/test_full_loop.py`         | Against `MCPLAB_OACP_SERVER_URL`       |
+| Unit coverage          | `core/tests/*.test.ts`, `sdk/typescript/tests/*.test.ts` | Layer-specific behaviour               |
 
 ## Run integration tests
 
@@ -66,6 +69,33 @@ CI runs `pnpm verify`, which executes the full test suite.
 
 See [`examples/multi-agent/hello-agents.ts`](../examples/multi-agent/hello-agents.ts) for a
 copy-paste script mirroring the milestone flow.
+
+## MCPLab full-loop (Day 15)
+
+See [docs/mcplab-full-loop.md](../../docs/mcplab-full-loop.md) for the end-to-end MCPLab × Console verification workflow.
+
+```bash
+pnpm --filter @oacp/server test -- mcplab-full-loop
+cd sdk/python && pytest tests/test_observability.py tests/test_mcplab_trace_url.py -v
+```
+
+## Day 55 load + security smoke
+
+See [load-security-smoke.md](./load-security-smoke.md).
+
+```bash
+pnpm test:day55
+pnpm test:day55:live   # + live security audits when stacks are running
+```
+
+## Day 56 demo rehearsal
+
+See [demo-scripts.md](./demo-scripts.md).
+
+```bash
+pnpm demo:rehearse
+pnpm --filter @oacp/server test -- demo-rehearsal
+```
 
 ## Related
 

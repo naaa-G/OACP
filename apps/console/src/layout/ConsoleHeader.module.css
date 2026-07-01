@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-height: var(--oacp-header-height);
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--oacp-border);
+  background: var(--oacp-panel);
+}
+
+.brand {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0.125rem 0 0;
+  color: var(--oacp-text-muted);
+  font-size: 0.8125rem;
+}

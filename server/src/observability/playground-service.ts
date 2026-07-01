@@ -1,11 +1,13 @@
-import {
-  PROTOCOL_VERSION,
-  type AgentIdentity,
-  type TraceBundle,
-  type TraceListEntry,
-} from '@oacp/core';
+import { PROTOCOL_VERSION, type TraceBundle, type TraceListEntry } from '@oacp/core';
 
 import type { AgentRegistry } from '../registry/agent-registry.js';
+import type { ObservabilityPersistence } from './observability-persistence.js';
+import { aggregateAgentLinksFromGraph } from './agent-link-aggregator.js';
+import {
+  activeAgentIdsFromTrace,
+  enrichAgentsForSnapshot,
+  type AgentObservabilityRecord,
+} from './agent-enrichment.js';
 import { listActiveTraces, resolveTraceBundle, type TraceServiceContext } from './trace-service.js';
 
 /** Agent-to-agent link aggregated from a delegation graph (for playground rendering). */
@@ -17,7 +19,7 @@ export interface PlaygroundAgentLink {
   readonly message_count: number;
 }
 
-/** Unified playground poll payload — one round trip for live UI refresh. */
+/** Unified observability poll payload — one round trip for Console live refresh. */
 export interface PlaygroundSnapshot {
   readonly server: {
     readonly status: 'healthy';
@@ -25,65 +27,62 @@ export interface PlaygroundSnapshot {
     readonly registered_agents: number;
     readonly bus_open: boolean;
   };
-  readonly agents: readonly AgentIdentity[];
+  readonly agents: readonly AgentObservabilityRecord[];
   readonly traces: readonly TraceListEntry[];
   readonly trace_count: number;
   readonly active_trace?: TraceBundle;
   readonly agent_links: readonly PlaygroundAgentLink[];
 }
 
-export interface PlaygroundServiceContext extends TraceServiceContext {
-  readonly registry: AgentRegistry;
-}
+/** Canonical v1 snapshot API path. */
+export const OBSERVABILITY_SNAPSHOT_PATH = '/v1/observability/snapshot' as const;
+
+/**
+ * Legacy playground snapshot path — backward compatible until Day 60.
+ * @deprecated Prefer {@link OBSERVABILITY_SNAPSHOT_PATH}.
+ */
+export const LEGACY_PLAYGROUND_SNAPSHOT_PATH = '/playground/snapshot' as const;
+
+/** v1 alias — same shape as {@link PlaygroundSnapshot}. */
+export type ObservabilitySnapshot = PlaygroundSnapshot;
 
 export interface BuildPlaygroundSnapshotOptions {
   readonly traceId?: string;
   readonly traceLimit?: number;
 }
 
+/** v1 alias for {@link BuildPlaygroundSnapshotOptions}. */
+export type BuildObservabilitySnapshotOptions = BuildPlaygroundSnapshotOptions;
+
 function aggregateAgentLinks(trace: TraceBundle | undefined): readonly PlaygroundAgentLink[] {
-  const graph = trace?.graph;
-  if (!graph || graph.edges.length === 0) {
-    return [];
-  }
-
-  const linkMap = new Map<string, PlaygroundAgentLink>();
-
-  for (const edge of graph.edges) {
-    const toAgent = edge.to_agent;
-    if (!toAgent || edge.from_agent === toAgent) {
-      continue;
-    }
-
-    const key = `${edge.from_agent}\0${toAgent}\0${edge.kind}\0${edge.capability ?? ''}`;
-    const existing = linkMap.get(key);
-    if (existing) {
-      linkMap.set(key, {
-        ...existing,
-        message_count: existing.message_count + 1,
-      });
-      continue;
-    }
-
-    linkMap.set(key, {
-      from_agent: edge.from_agent,
-      to_agent: toAgent,
-      kind: edge.kind,
-      ...(edge.capability !== undefined ? { capability: edge.capability } : {}),
-      message_count: 1,
-    });
-  }
-
-  return [...linkMap.values()].sort((left, right) =>
-    left.from_agent.localeCompare(right.from_agent),
-  );
+  return aggregateAgentLinksFromGraph(trace?.graph);
 }
 
-/** Build a unified snapshot for the playground UI (agents, traces, optional active trace). */
-export async function buildPlaygroundSnapshot(
+export interface PlaygroundServiceContext extends TraceServiceContext {
+  readonly registry: AgentRegistry;
+}
+
+function buildPersistedLastSeen(persistence: ObservabilityPersistence): Map<string, string> {
+  const lastSeen = new Map<string, string>();
+  if (!persistence.enabled) {
+    return lastSeen;
+  }
+
+  for (const agent of persistence.listAgents()) {
+    const seenAt = persistence.getAgentLastSeen(agent.id);
+    if (seenAt !== undefined) {
+      lastSeen.set(agent.id, seenAt);
+    }
+  }
+
+  return lastSeen;
+}
+
+/** Build unified observability snapshot (agents, traces, optional active trace). */
+export async function buildObservabilitySnapshot(
   context: PlaygroundServiceContext,
-  options: BuildPlaygroundSnapshotOptions = {},
-): Promise<PlaygroundSnapshot> {
+  options: BuildObservabilitySnapshotOptions = {},
+): Promise<ObservabilitySnapshot> {
   const limit = options.traceLimit ?? 25;
   const traceListing = listActiveTraces(context, { limit, offset: 0 });
   const stats = context.bus.getStats();
@@ -93,6 +92,15 @@ export async function buildPlaygroundSnapshot(
     activeTrace = await resolveTraceBundle(context, options.traceId);
   }
 
+  const activeAgentIds = activeAgentIdsFromTrace(activeTrace);
+  const agents = enrichAgentsForSnapshot({
+    agents: context.registry.list(),
+    traces: traceListing.traces,
+    activeTrace,
+    activeAgentIds,
+    persistedLastSeen: buildPersistedLastSeen(context.observabilityPersistence),
+  });
+
   return {
     server: {
       status: 'healthy',
@@ -100,10 +108,21 @@ export async function buildPlaygroundSnapshot(
       registered_agents: context.registry.size,
       bus_open: stats.isOpen,
     },
-    agents: context.registry.list(),
+    agents,
     traces: traceListing.traces,
     trace_count: traceListing.total,
     ...(activeTrace !== undefined ? { active_trace: activeTrace } : {}),
     agent_links: aggregateAgentLinks(activeTrace),
   };
 }
+
+/** @deprecated Use {@link buildObservabilitySnapshot}. */
+export const buildPlaygroundSnapshot = buildObservabilitySnapshot;
+
+export type { AgentObservabilityRecord, AgentObservabilityStatus } from './agent-enrichment.js';
+export {
+  activeAgentIdsFromTrace,
+  enrichAgentsForSnapshot,
+  parseAgentFleet,
+  parseAgentRole,
+} from './agent-enrichment.js';

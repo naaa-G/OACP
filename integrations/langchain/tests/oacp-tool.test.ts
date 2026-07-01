@@ -13,7 +13,7 @@ import {
 
 describe('executeOacpCapabilityTask', () => {
   it('returns task output from remote worker', async () => {
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createApp({ logger: false, config: { memoryBackend: 'memory' } });
 
     await app.inject({
       method: 'POST',
@@ -22,7 +22,7 @@ describe('executeOacpCapabilityTask', () => {
         identity: {
           id: 'agent://summarizer',
           name: 'Summarizer',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['text.summarize'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },
@@ -34,7 +34,7 @@ describe('executeOacpCapabilityTask', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -57,7 +57,7 @@ describe('executeOacpCapabilityTask', () => {
         {
           id: 'agent://lc-coordinator',
           name: 'LC Coordinator',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['orchestrate'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },
@@ -78,7 +78,7 @@ describe('executeOacpCapabilityTask', () => {
   });
 
   it('throws OacpToolError on task failure', async () => {
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createApp({ logger: false, config: { memoryBackend: 'memory' } });
 
     await app.inject({
       method: 'POST',
@@ -87,7 +87,7 @@ describe('executeOacpCapabilityTask', () => {
         identity: {
           id: 'agent://fail-worker',
           name: 'Fail Worker',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['work.fail'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },
@@ -99,7 +99,7 @@ describe('executeOacpCapabilityTask', () => {
       identity: {
         id: 'agent://fail-worker',
         name: 'Fail Worker',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.fail'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -116,7 +116,7 @@ describe('executeOacpCapabilityTask', () => {
         {
           id: 'agent://lc-coordinator',
           name: 'LC Coordinator',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['orchestrate'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },
@@ -146,7 +146,7 @@ describe('capabilityToToolName', () => {
 
 describe('createOacpTool', () => {
   it('invokes LangChain tool against OACP worker', async () => {
-    const { app, context } = createApp({ logger: false });
+    const { app, context } = createApp({ logger: false, config: { memoryBackend: 'memory' } });
 
     await app.inject({
       method: 'POST',
@@ -155,7 +155,7 @@ describe('createOacpTool', () => {
         identity: {
           id: 'agent://summarizer',
           name: 'Summarizer',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['text.summarize'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },
@@ -167,7 +167,7 @@ describe('createOacpTool', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -190,7 +190,7 @@ describe('createOacpTool', () => {
         {
           id: 'agent://lc-coordinator',
           name: 'LC Coordinator',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['orchestrate'],
           publicKey: DEFAULT_DEV_PUBLIC_KEY,
         },

@@ -4,7 +4,7 @@ OACP messages are validated against canonical JSON Schemas in `specs/messages/` 
 **AJV 2020-12** in `@oacp/core`. Validation enforces:
 
 1. **Structure** — payload must be a JSON object
-2. **Protocol version** — `version` must be in the supported set (`0.1`)
+2. **Protocol version** — `version` must be in the supported set (`1.0`, read-compat `0.1`)
 3. **Message type** — `type` must be a known Day 2 core type
 4. **Schema conformance** — all required fields and formats (UUID, date-time, etc.)
 

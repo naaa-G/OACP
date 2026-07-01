@@ -8,12 +8,12 @@ dependency direction: **specs → core → SDK/server → applications**.
 ```text
 ┌──────────────────────────────────────────────────────────────┐
 │                    Applications & Demos                         │
-│         playground/ · examples/ · CLI (tools/cli/)            │
+│    apps/console/ · playground/ (legacy) · examples/ · CLI   │
 └───────────────────────────────┬──────────────────────────────┘
                                 │ uses
 ┌───────────────────────────────▼──────────────────────────────┐
-│                      Client SDKs (@oacp/sdk)                    │
-│              TypeScript (primary) · Python · Rust               │
+│              Client SDKs & UI (@oacp/sdk · @oacp/ui)          │
+│         TypeScript SDK · Python SDK · design system           │
 └───────────────────────────────┬──────────────────────────────┘
                                 │ uses
 ┌───────────────────────────────▼──────────────────────────────┐
@@ -82,9 +82,20 @@ Uses `@oacp/core` message bus and validation internally.
 | `GET /playground`, `/playground/snapshot` | ✅ Day 22 |
 | Remote client SDK                         | ✅ Day 9  |
 
-### `playground/` (Day 22)
+### `@oacp/console` (v1.0 — in progress)
 
-Live web visualization served by `@oacp/server` at `GET /playground`. See [playground.md](./playground.md).
+React observability SPA at `apps/console/`. Served at `GET /console` (Day 7+). Replaces the legacy playground.
+
+| Package         | Path            | Role                                          |
+| --------------- | --------------- | --------------------------------------------- |
+| `@oacp/console` | `apps/console/` | Agent catalog, delegation graph, message flow |
+| `@oacp/ui`      | `packages/ui/`  | Design tokens, theme CSS, shared primitives   |
+
+See [console.md](./console.md) and [console-architecture.md](./console-architecture.md).
+
+### `playground/` (Day 22 — legacy)
+
+Deprecated inline HTML UI. Redirects to Console. See [playground.md](./playground.md).
 
 ## Design principles
 
@@ -99,14 +110,15 @@ Live web visualization served by `@oacp/server` at `GET /playground`. See [playg
 - `specs/` has no code dependencies.
 - `@oacp/core` may read schemas from `specs/` at build or runtime.
 - `@oacp/sdk` depends on `@oacp/core` only (no circular deps).
-- `server/`, `playground/`, and `examples/` depend on SDK and/or core.
+- `server/`, `apps/console/`, `packages/ui/`, `playground/`, and `examples/` depend on SDK and/or core.
 - Integration adapters (`integrations/`) wrap external frameworks; they do not belong in core.
 
-## Current state (Day 29)
+## Current state (v1.0 build)
 
-- Week 1–3 milestones complete (M1–M3). Week 4 adoption layer in progress (M4).
+- **OACP Console** — Day 1 scaffold: `apps/console/`, `packages/ui/` ([version1.md](./version1.md)).
+- **MCPLab** — flagship MCP × OACP lab; joint launch with OACP v1.0.
+- Week 1–4 milestones complete (M1–M4). v1.0 Console program in progress.
 - **Integration adapters** — LangChain (`@oacp/integration-langchain`) and AutoGen (`oacp-autogen`).
-- **Demo v1** (`examples/demo-v1/`) — remote coordinator + document pipeline over HTTP.
 - **Demo v2** (`examples/demo-v2/`) — DAG workflow with memory, graph, recovery, and traces.
 - Run: `pnpm --filter oacp-examples start:demo-v2` — see [demo-v2.md](./demo-v2.md).
 

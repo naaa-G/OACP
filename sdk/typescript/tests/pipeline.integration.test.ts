@@ -17,7 +17,7 @@ describe('remote pipeline chain integration (Day 13)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -32,7 +32,7 @@ describe('remote pipeline chain integration (Day 13)', () => {
       identity: {
         id: 'agent://transformer',
         name: 'Transformer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.transform'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -56,7 +56,7 @@ describe('remote pipeline chain integration (Day 13)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.pipeline'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -102,7 +102,7 @@ describe('remote pipeline chain integration (Day 13)', () => {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Coordinator',
-      version: '0.1',
+      version: '1.0',
       capabilities: ['orchestrate'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });

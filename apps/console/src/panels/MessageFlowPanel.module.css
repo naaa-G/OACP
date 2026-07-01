@@ -1,0 +1,111 @@
+.body {
+  padding: 0.5rem 0.75rem !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden !important;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.exportActions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.exportButton {
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-control-radius);
+  background: color-mix(in srgb, var(--oacp-text) 4%, transparent);
+  color: var(--oacp-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.45rem;
+  cursor: pointer;
+}
+
+.exportButton:hover {
+  color: var(--oacp-text);
+  border-color: color-mix(in srgb, var(--oacp-accent) 40%, transparent);
+}
+
+.filterBar {
+  margin: 0 0 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+  background: var(--oacp-accent-dim);
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+  flex-shrink: 0;
+}
+
+.filterBar strong {
+  color: var(--oacp-text);
+  font-weight: 600;
+}
+
+.pausedNote {
+  margin: 0 0 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid color-mix(in srgb, var(--oacp-warning) 35%, transparent);
+  background: color-mix(in srgb, var(--oacp-warning) 10%, transparent);
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+  flex-shrink: 0;
+}
+
+.pausedAction {
+  border: none;
+  padding: 0;
+  background: none;
+  color: var(--oacp-accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.pausedAction:hover {
+  color: var(--oacp-text);
+}
+
+.hoverNote {
+  margin: 0 0 0.5rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid color-mix(in srgb, var(--oacp-accent) 25%, transparent);
+  background: color-mix(in srgb, var(--oacp-accent) 8%, transparent);
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+  flex-shrink: 0;
+}
+
+.scrollRoot {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollViewport {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.footerNote {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--oacp-text-dim);
+}

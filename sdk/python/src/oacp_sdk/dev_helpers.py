@@ -15,6 +15,7 @@ async def register_dev_agent(
     name: str,
     capabilities: list[str],
     description: str | None = None,
+    metadata: dict[str, Any] | None = None,
     replace: bool = True,
 ) -> dict[str, Any]:
     """Register an agent using the shared development public key.
@@ -30,4 +31,6 @@ async def register_dev_agent(
     }
     if description is not None:
         identity['description'] = description
+    if metadata is not None:
+        identity['metadata'] = metadata
     return await client.register_agent(identity, replace=replace)

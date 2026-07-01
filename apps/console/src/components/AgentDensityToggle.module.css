@@ -1,0 +1,36 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.75rem 0.625rem;
+  flex-shrink: 0;
+}
+
+.option {
+  border: 1px solid var(--oacp-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--oacp-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.625rem;
+  cursor: pointer;
+}
+
+.option:hover {
+  color: var(--oacp-text);
+  border-color: var(--oacp-border-strong);
+}
+
+.optionActive {
+  color: var(--oacp-text);
+  border-color: color-mix(in srgb, var(--oacp-accent) 45%, transparent);
+  background: var(--oacp-accent-dim);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--oacp-accent);
+  outline-offset: 2px;
+}

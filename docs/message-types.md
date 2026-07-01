@@ -24,7 +24,7 @@ All messages include:
 | Field        | Type              | Required | Description                            |
 | ------------ | ----------------- | :------: | -------------------------------------- |
 | `type`       | string            |    ✅    | Message type discriminator             |
-| `version`    | string            |    ✅    | Protocol version (`"0.1"`)             |
+| `version`    | string            |    ✅    | Protocol version (`"1.0"`)             |
 | `message_id` | string (UUID)     |    ✅    | Unique ID for this message             |
 | `trace_id`   | string (UUID)     |    ✅    | Correlation ID for distributed tracing |
 | `from`       | string (URI)      |    ✅    | Sender agent URI (`agent://…`)         |
@@ -48,7 +48,7 @@ Ask an agent or capability to perform work.
 ```json
 {
   "type": "task_request",
-  "version": "0.1",
+  "version": "1.0",
   "message_id": "550e8400-e29b-41d4-a716-446655440001",
   "trace_id": "0c8f1e2a-7b3d-4f9e-9b1a-2d4e6f8a0c1b",
   "from": "agent://coordinator",

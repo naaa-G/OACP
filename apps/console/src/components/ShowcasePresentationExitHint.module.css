@@ -1,0 +1,35 @@
+.root {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+  background: color-mix(in srgb, var(--oacp-bg) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--oacp-border) 70%, transparent);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.label {
+  letter-spacing: 0.02em;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-family: var(--oacp-font-mono);
+  font-size: 0.6875rem;
+  color: var(--oacp-text);
+  background: color-mix(in srgb, var(--oacp-text) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--oacp-border) 80%, transparent);
+}

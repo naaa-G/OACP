@@ -1,0 +1,130 @@
+# OACP v1.0 unified stack — one OACP server + Console; MCPLab is a separate client stack (Day 51+)
+#
+# Platform only (recommended default):
+#   docker compose up --build -d
+#   open http://127.0.0.1:3847/console/
+#
+# Enterprise auth (no API key in Console bundle):
+#   openssl rand -base64 32   # add to .env as OACP_API_KEY=
+#   docker compose up --build -d
+#   # nginx gateway injects Authorization on all proxied requests
+#
+# Demo trace without MCPLab (single research trace):
+#   docker compose --profile demo up --build
+#
+# Three-crew fallback fixtures (Day 56, no LLM):
+#   pnpm demo:fallback
+#
+# Full MCPLab showcase (requires ./MCPLab — separate compose file, no embedded OACP):
+#   pnpm docker:mcplab
+#   # or: docker compose up -d && docker compose -f MCPLab/docker-compose.yml up -d --build
+
+name: oacp
+
+services:
+  oacp:
+    container_name: oacp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: oacp/server-console:${OACP_IMAGE_TAG:-latest}
+    expose:
+      - '3847'
+    environment:
+      OACP_SERVER_HOST: 0.0.0.0
+      OACP_SERVER_PORT: 3847
+      OACP_MEMORY_BACKEND: ${OACP_MEMORY_BACKEND:-sqlite}
+      OACP_MEMORY_SQLITE_PATH: /data/memory.db
+      OACP_CONSOLE_DIST: /app/apps/console/dist
+      OACP_CONSOLE_STATIC: '1'
+      OACP_SERVER_LOG_LEVEL: ${OACP_SERVER_LOG_LEVEL:-info}
+      OACP_API_KEY: ${OACP_API_KEY:-}
+      OACP_IMPORT_FROM_MCPLAB: ${OACP_IMPORT_FROM_MCPLAB:-0}
+      MCPLAB_OBSERVABILITY_EXPORT_URL: ${MCPLAB_OBSERVABILITY_EXPORT_URL:-}
+      MCPLAB_SYNC_SECRET: ${MCPLAB_SYNC_SECRET:-}
+      MCPLAB_TRACE_STATUS_WEBHOOK_URL: ${MCPLAB_TRACE_STATUS_WEBHOOK_URL:-}
+    volumes:
+      - oacp-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:3847/health').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+
+  oacp-gateway:
+    container_name: oacp-gateway
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    image: oacp/gateway:${OACP_IMAGE_TAG:-latest}
+    ports:
+      - '${OACP_PUBLISH_PORT:-3847}:8080'
+    environment:
+      OACP_UPSTREAM: http://oacp:3847
+      OACP_API_KEY: ${OACP_API_KEY:-}
+    depends_on:
+      oacp:
+        condition: service_healthy
+    restart: unless-stopped
+
+  seed-demo:
+    profiles: [demo]
+    image: node:20-bookworm-slim
+    depends_on:
+      oacp:
+        condition: service_healthy
+    environment:
+      OACP_SERVER_URL: http://oacp:3847
+      OACP_PUBLIC_URL: ${OACP_PUBLIC_URL:-http://127.0.0.1:3847}
+      OACP_API_KEY: ${OACP_API_KEY:-}
+    volumes:
+      - ./docker:/scripts:ro
+    command: ['node', '/scripts/seed-mcplab-demo.mjs']
+    restart: 'no'
+
+  seed-demo-full:
+    profiles: [demo-full]
+    image: node:20-bookworm-slim
+    depends_on:
+      oacp:
+        condition: service_healthy
+    environment:
+      OACP_SERVER_URL: http://oacp:3847
+      OACP_PUBLIC_URL: ${OACP_PUBLIC_URL:-http://127.0.0.1:3847}
+      OACP_API_KEY: ${OACP_API_KEY:-}
+    volumes:
+      - ./scripts:/scripts:ro
+    command: ['node', '/scripts/demo-fallback-seed.mjs']
+    restart: 'no'
+
+  oacp-mcplab-sync:
+    profiles: [mcplab-sync]
+    image: node:20-bookworm-slim
+    depends_on:
+      oacp:
+        condition: service_healthy
+    environment:
+      OACP_SERVER_URL: http://oacp:3847
+      OACP_API_KEY: ${OACP_API_KEY:-}
+      MCPLAB_OBSERVABILITY_EXPORT_URL: ${MCPLAB_OBSERVABILITY_EXPORT_URL:-}
+      MCPLAB_SYNC_SECRET: ${MCPLAB_SYNC_SECRET:-}
+    volumes:
+      - ./docker:/scripts:ro
+    command: ['node', '/scripts/oacp-mcplab-sync.mjs']
+    restart: 'no'
+
+volumes:
+  oacp-data:
+    name: oacp-data
+
+networks:
+  default:
+    name: oacp-network

@@ -6,9 +6,9 @@ OACP defines a versioned message protocol for multi-agent task execution and col
 
 | Layer        | Current version | Location                           |
 | ------------ | --------------- | ---------------------------------- |
-| Protocol     | `0.1`           | Message `version` field + `specs/` |
-| `@oacp/core` | `0.1.0`         | npm package                        |
-| `@oacp/sdk`  | `0.1.0`         | npm package                        |
+| Protocol     | `1.0`           | Message `version` field + `specs/` |
+| `@oacp/core` | `1.0.0`         | npm package                        |
+| `@oacp/sdk`  | `1.0.0`         | npm package                        |
 
 ### Version policy
 
@@ -16,7 +16,7 @@ OACP defines a versioned message protocol for multi-agent task execution and col
 - **Minor** — backward-compatible message fields or new optional message types.
 - **Major** — breaking schema or semantic changes (requires protocol version bump).
 
-During alpha (`0.x`), breaking changes are expected. Pin exact package versions.
+**v1.0 freeze (Day 54):** `/v1/observability/*` OpenAPI is locked; breaking API changes require `info.version` bump. See [`specs/openapi/v1.json`](../specs/openapi/v1.json) and [migration guide](./migration/v0.1-to-v1.0.md).
 
 ## Message envelope
 
@@ -26,7 +26,7 @@ Type-specific fields are defined in [`specs/messages/`](../specs/messages/).
 ```json
 {
   "type": "task_request",
-  "version": "0.1",
+  "version": "1.0",
   "message_id": "550e8400-e29b-41d4-4716-446655440001",
   "trace_id": "0c8f1e2a-7b3d-4f9e-9b1a-2d4e6f8a0c1b",
   "from": "agent://coordinator",
@@ -34,16 +34,16 @@ Type-specific fields are defined in [`specs/messages/`](../specs/messages/).
 }
 ```
 
-| Field        | Required | Description                                   |
-| ------------ | :------: | --------------------------------------------- |
-| `type`       |    ✅    | Message type discriminator                    |
-| `version`    |    ✅    | Protocol version (`"0.1"`)                    |
-| `message_id` |    ✅    | Unique ID for this message (UUID)             |
-| `trace_id`   |    ✅    | Correlation ID across related messages (UUID) |
-| `from`       |    ✅    | Sender agent URI (`agent://…`)                |
-| `timestamp`  |    ✅    | ISO 8601 UTC creation time                    |
+| Field        | Required | Description                                                   |
+| ------------ | :------: | ------------------------------------------------------------- |
+| `type`       |    ✅    | Message type discriminator                                    |
+| `version`    |    ✅    | Protocol version (`"1.0"`; `"0.1"` accepted during migration) |
+| `message_id` |    ✅    | Unique ID for this message (UUID)                             |
+| `trace_id`   |    ✅    | Correlation ID across related messages (UUID)                 |
+| `from`       |    ✅    | Sender agent URI (`agent://…`)                                |
+| `timestamp`  |    ✅    | ISO 8601 UTC creation time                                    |
 
-## Core message types (`v0.1`)
+## Core message types (`v1.0`)
 
 | Type               | Purpose                                  | Schema                                 | Status |
 | ------------------ | ---------------------------------------- | -------------------------------------- | :----: |
@@ -104,7 +104,7 @@ import { validateMessage, parseMessageType } from '@oacp/core';
 const task = parseMessageType(payload, 'task_request');
 ```
 
-Enforces JSON Schema conformance, protocol version (`0.1`), and message-type discrimination.
+Enforces JSON Schema conformance, protocol version (`1.0`, read-compat `0.1`), and message-type discrimination.
 Full API: [message-validation.md](./message-validation.md).
 
 ## Interoperability

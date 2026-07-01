@@ -23,6 +23,13 @@ pnpm --filter @oacp/server start
 
 Default listen address: `http://0.0.0.0:3847`
 
+Production Console is served at `/console/` when `apps/console/dist` is present (see [docker-compose.md](../docs/docker-compose.md)).
+
+```bash
+docker compose up --build -d
+# → http://127.0.0.1:3847/console/
+```
+
 ## Environment
 
 | Variable                         | Default   | Description        |

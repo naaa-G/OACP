@@ -19,7 +19,7 @@ function loadTaskRequestExample(): Record<string, unknown> {
 }
 
 describe('HTTP reference server (Day 8)', () => {
-  it('GET / redirects browsers to the playground', async () => {
+  it('GET / redirects browsers to the Console', async () => {
     const { app } = createTestApp();
     const response = await app.inject({
       method: 'GET',
@@ -28,7 +28,7 @@ describe('HTTP reference server (Day 8)', () => {
     });
 
     expect(response.statusCode).toBe(302);
-    expect(response.headers.location).toBe('/playground');
+    expect(response.headers.location).toBe('/console/');
   });
 
   it('GET / returns a JSON service index for API clients', async () => {
@@ -43,7 +43,7 @@ describe('HTTP reference server (Day 8)', () => {
     expect(response.json()).toMatchObject({
       ok: true,
       service: 'oacp-reference-server',
-      ui: { playground: '/playground', trace_viewer: '/trace-viewer' },
+      ui: { console: '/console', playground: '/playground', trace_viewer: '/trace-viewer' },
       api: { health: '/health', send_message: '/send-message' },
     });
   });
@@ -122,7 +122,7 @@ describe('HTTP reference server (Day 8)', () => {
     const response = await app.inject({
       method: 'POST',
       url: '/send-message',
-      payload: { type: 'task_request', version: '0.1' },
+      payload: { type: 'task_request', version: '1.0' },
     });
 
     expect(response.statusCode).toBe(400);

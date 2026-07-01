@@ -27,7 +27,7 @@ describe('AgentClient', () => {
     });
 
     const health = await client.health();
-    expect(health.protocol_version).toBe('0.1');
+    expect(health.protocol_version).toBe('1.0');
     expect(health.bus_open).toBe(true);
   });
 
@@ -55,7 +55,7 @@ describe('AgentClient', () => {
 
     const result = await client.send({
       type: 'task_request',
-      version: '0.1',
+      version: '1.0',
       message_id: 'msg-1',
       trace_id: 'trace-1',
       from: 'agent://coordinator',

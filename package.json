@@ -1,6 +1,6 @@
 {
   "name": "oacp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Open Agent Collaboration Protocol — multi-agent task execution & collaboration",
   "license": "Apache-2.0",
@@ -27,23 +27,40 @@
     "format:check": "prettier --check .",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean",
-    "verify": "pnpm format:check && pnpm build && pnpm lint && pnpm typecheck && pnpm test",
+    "verify": "pnpm format:check && pnpm build && pnpm lint && pnpm typecheck && pnpm test && node scripts/verify-api-freeze.mjs",
     "oacp": "node cli/dist/main.js",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "docker:up": "docker compose up --build -d",
+    "docker:demo": "docker compose --profile demo up --build",
+    "docker:mcplab": "node docker/scripts/require-mcplab.mjs && node docker/scripts/start-mcplab-stack.mjs",
+    "docker:down": "node docker/scripts/stop-mcplab-stack.mjs",
+    "test:day55": "pnpm --filter @oacp/server test -- day55",
+    "test:day55:live": "node scripts/run-day55-smoke.mjs --live",
+    "audit:security": "node scripts/security-audit.mjs",
+    "audit:mcplab": "node scripts/mcplab-security-audit.mjs",
+    "demo:fallback": "node scripts/demo-fallback-seed.mjs",
+    "demo:rehearse": "node scripts/rehearse-demo.mjs --rounds=2",
+    "capture:hero": "pnpm --filter @oacp/console capture:hero",
+    "demo:custom-agents": "pnpm --filter oacp-examples start:custom-agents",
+    "verify:rc": "node scripts/verify-rc.mjs",
+    "test:day59": "node scripts/run-day59-rc.mjs",
+    "test:day59:live": "node scripts/run-day59-rc.mjs --live"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.2",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
+    "globals": "^17.7.0",
     "prettier": "^3.4.2",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.1",
     "vitepress": "^1.6.4",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "yaml": "^2.9.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

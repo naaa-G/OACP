@@ -106,6 +106,8 @@ Returns:
 
 The server maintains an in-process `DelegationGraphRecorder` and falls back to reconstructing from `MemoryStore` entries when needed.
 
+**Console Ops graph (Day 26):** `GET /v1/observability/traces/:traceId/graph` returns agent-level nodes with `depth`, `fleet`, `role`, and `status` for trace participants only. See [console-spec.md](./console-spec.md#trace-agent-graph-day-26).
+
 Combine with memory endpoints:
 
 - `GET /memory/traces/:traceId` — raw task history

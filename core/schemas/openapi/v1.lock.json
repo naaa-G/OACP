@@ -1,0 +1,12 @@
+{
+  "apiVersion": "1.0.0",
+  "schemaFingerprint": "414468f275200bc6e88991c3175782d807c1915ca215773bc0d0183facf2fb87",
+  "paths": [
+    "/v1/observability/events",
+    "/v1/observability/import",
+    "/v1/observability/runtime-config",
+    "/v1/observability/snapshot",
+    "/v1/observability/traces/{traceId}/graph",
+    "/v1/openapi.json"
+  ]
+}

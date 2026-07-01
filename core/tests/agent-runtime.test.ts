@@ -146,7 +146,7 @@ describe('agent runtime (Day 6)', () => {
 
     const task = {
       type: 'task_request' as const,
-      version: '0.1',
+      version: '1.0',
       message_id: crypto.randomUUID(),
       trace_id: crypto.randomUUID(),
       from: 'agent://coordinator',

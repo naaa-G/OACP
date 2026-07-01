@@ -32,7 +32,7 @@ bus.register('agent://coordinator', async (message) => {
 
 const request: TaskRequestMessage = {
   type: 'task_request',
-  version: '0.1',
+  version: '1.0',
   message_id: crypto.randomUUID(),
   trace_id: crypto.randomUUID(),
   from: 'agent://coordinator',

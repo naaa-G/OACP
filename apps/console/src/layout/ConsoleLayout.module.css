@@ -1,0 +1,107 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--oacp-bg);
+}
+
+.main {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: var(--oacp-sidebar-width) 1fr var(--oacp-feed-width);
+  grid-template-rows: minmax(20rem, 1fr) auto;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  height: calc(100vh - var(--oacp-header-height));
+}
+
+.agentsColumn {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.graphColumn {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedColumn {
+  grid-column: 3;
+  grid-row: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.traceColumn {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  max-height: var(--oacp-trace-rail-height);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.agentsColumn > *,
+.graphColumn > *,
+.feedColumn > *,
+.traceColumn > * {
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 68.75rem) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+    min-height: calc(100vh - var(--oacp-header-height));
+  }
+
+  .agentsColumn,
+  .graphColumn,
+  .feedColumn,
+  .traceColumn {
+    grid-column: 1;
+    grid-row: auto;
+    max-height: none;
+  }
+
+  .graphColumn {
+    min-height: 20rem;
+  }
+}
+
+.presentationRoot {
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.presentationMain {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: 100vh;
+  padding: 0;
+  gap: 0;
+}
+
+.presentationGraphColumn {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.presentationGraphColumn > * {
+  flex: 1;
+  min-height: 0;
+}

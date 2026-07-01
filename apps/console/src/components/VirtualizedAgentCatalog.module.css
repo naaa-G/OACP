@@ -1,0 +1,25 @@
+.scroller {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 0.75rem 0.75rem;
+  contain: layout style paint;
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+}
+
+.row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 0.5rem;
+  z-index: 0;
+}
+
+.row:has([data-menu-open='true']) {
+  z-index: 12;
+}

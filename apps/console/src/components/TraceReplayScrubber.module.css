@@ -1,0 +1,71 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border-top: 1px solid var(--oacp-border);
+  background: color-mix(in srgb, var(--oacp-text) 2%, transparent);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 2rem;
+  height: 1.75rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-control-radius);
+  background: var(--oacp-surface);
+  color: var(--oacp-text);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: color-mix(in srgb, var(--oacp-accent) 35%, var(--oacp-border));
+}
+
+.button[aria-pressed='true'] {
+  border-color: var(--oacp-accent);
+  color: var(--oacp-accent);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+}
+
+.slider {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--oacp-accent);
+}
+
+.label {
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  font-family: var(--oacp-font-mono);
+  color: var(--oacp-text-muted);
+  min-width: 5.5rem;
+  text-align: right;
+}
+
+.liveBadge {
+  color: var(--oacp-success);
+}

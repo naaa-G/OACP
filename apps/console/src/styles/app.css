@@ -1,0 +1,12 @@
+body {
+  font-family: var(--oacp-font-sans);
+  background: var(--oacp-bg);
+  color: var(--oacp-text);
+  line-height: 1.45;
+  min-height: 100vh;
+}
+
+code,
+.mono {
+  font-family: var(--oacp-font-mono);
+}

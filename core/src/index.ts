@@ -365,6 +365,19 @@ export { messagesFromDelegationGraph } from './observability/graph-messages.js';
 
 export { buildTraceBundle, buildTraceBundleFromRecord } from './observability/trace-bundle.js';
 export type { BuildTraceBundleInput, TraceBundle } from './observability/trace-bundle.js';
+export { inferTraceListStatusFromMessages } from './observability/trace-list-status.js';
+export type { TraceListStatus, TraceListStatusResult } from './observability/trace-list-status.js';
+
+export {
+  MCPLAB_FLEET,
+  MCPLAB_ROLES,
+  agentUriSlug,
+  buildMcplabAgentMetadata,
+  inferMcplabRole,
+  isMcplabAgentUri,
+  resolveAgentObservabilityTaxonomy,
+} from './observability/mcplab-metadata.js';
+export type { AgentObservabilityTaxonomy, McplabRole } from './observability/mcplab-metadata.js';
 
 export { TraceClient, TraceClientError, createTraceClient } from './observability/trace-client.js';
 export type {

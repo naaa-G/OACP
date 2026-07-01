@@ -1,0 +1,49 @@
+.wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 15rem;
+}
+
+.wrap :global(.react-flow) {
+  background: transparent;
+}
+
+.wrap :global(.react-flow__edges) {
+  z-index: 0;
+}
+
+.wrap :global(.react-flow__nodes) {
+  z-index: 1;
+}
+
+.wrap :global(.react-flow__edge-path) {
+  fill: none;
+}
+
+.minimap:global(.react-flow__minimap) {
+  margin: 0.5rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--oacp-border, #2a3441) 85%, transparent);
+  border-radius: var(--oacp-radius-sm, 0.375rem);
+  background: #121820;
+  box-shadow: var(--oacp-shadow-sm, 0 2px 8px rgb(0 0 0 / 35%));
+}
+
+.minimap:global(.react-flow__minimap)::before {
+  content: 'Overview';
+  display: block;
+  padding: 0.25rem 0.45rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--oacp-border, #2a3441) 70%, transparent);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oacp-text-muted, #9fb0c3);
+  background: color-mix(in srgb, var(--oacp-surface, #121820) 92%, transparent);
+}
+
+.minimap :global(.react-flow__minimap-svg) {
+  display: block;
+  width: 168px;
+  height: 112px;
+}

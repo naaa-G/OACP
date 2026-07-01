@@ -1,6 +1,8 @@
-# Playground
+# Playground (legacy)
 
-The OACP **playground** is the primary adoption differentiator: a web UI that renders registered agents as nodes and animates message flow and delegation edges as collaboration happens.
+> **v1.0:** The **OACP Console** at `/console` replaces the playground for launch demos, README hero, and adoption. The playground remains for Week 1–4 examples only. See [console.md](./console.md) and [bring-your-own-agents.md](./bring-your-own-agents.md).
+
+The OACP **playground** was the original web UI that rendered registered agents as nodes and animated message flow and delegation edges as collaboration happened.
 
 ## Architecture
 
@@ -91,7 +93,7 @@ GET /playground/snapshot?trace_id=<uuid>&limit=25
   "snapshot": {
     "server": {
       "status": "healthy",
-      "protocol_version": "0.1",
+      "protocol_version": "1.0",
       "registered_agents": 6,
       "bus_open": true
     },

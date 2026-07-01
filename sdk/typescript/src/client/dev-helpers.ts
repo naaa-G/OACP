@@ -9,6 +9,7 @@ export interface RegisterDevAgentParams {
   readonly name: string;
   readonly capabilities: readonly string[];
   readonly description?: string;
+  readonly metadata?: Readonly<Record<string, unknown>>;
 }
 
 /**
@@ -30,6 +31,7 @@ export async function registerDevAgent(
       capabilities: [...params.capabilities],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
       ...(params.description !== undefined ? { description: params.description } : {}),
+      ...(params.metadata !== undefined ? { metadata: params.metadata } : {}),
     },
     { replace: true, ...options },
   );

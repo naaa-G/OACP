@@ -1,0 +1,27 @@
+{
+  "trace_id": "feee4d89-636f-4cc7-93a9-1af6d2dc86d9",
+  "topic": "WebAssembly edge survey",
+  "topic_slug": "webassembly-edge-survey",
+  "source_count": 2,
+  "sources_cited": [
+    {
+      "label": "MCPLab README",
+      "source": {
+        "path": "README.md",
+        "tool": "read_file",
+        "server_id": "filesystem"
+      }
+    },
+    {
+      "label": "Example.com reference",
+      "source": {
+        "url": "https://example.com/",
+        "tool": "http_get",
+        "server_id": "fetch"
+      }
+    }
+  ],
+  "markdown_path": "artifacts\\research\\2026-06-19-webassembly-edge-survey.md",
+  "summary": "Synthesized 2 sources for 'WebAssembly edge survey'",
+  "published_at": "2026-06-19T15:53:49.182381+00:00"
+}

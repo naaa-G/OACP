@@ -1,0 +1,52 @@
+.panel {
+  position: fixed;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 9999;
+  width: min(520px, calc(100vw - 1rem));
+  max-height: 40vh;
+  overflow: auto;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--oacp-border, #2a3a4a);
+  border-radius: 6px;
+  background: rgba(8, 12, 18, 0.94);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #b8d4e8;
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.35rem;
+  color: #7ec8e3;
+}
+
+.hint {
+  color: #6a8a9a;
+  font-weight: normal;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.line {
+  word-break: break-all;
+  margin: 0.15rem 0;
+  color: #d0e0ea;
+}
+
+.lineHighlight {
+  color: #ffe6a7;
+}
+
+.lineDanger {
+  color: #ffb4b4;
+  font-weight: 600;
+}

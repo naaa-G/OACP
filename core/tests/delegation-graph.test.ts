@@ -28,7 +28,7 @@ describe('delegation graph (Day 16)', () => {
       identity: {
         id: 'agent://c',
         name: 'C',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.c'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -41,7 +41,7 @@ describe('delegation graph (Day 16)', () => {
       identity: {
         id: 'agent://b',
         name: 'B',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.b'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -63,7 +63,7 @@ describe('delegation graph (Day 16)', () => {
       identity: {
         id: 'agent://a',
         name: 'A',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.a'],
         publicKey: createCoordinatorIdentity().publicKey,
       },

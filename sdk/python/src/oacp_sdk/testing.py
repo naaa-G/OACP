@@ -7,6 +7,8 @@ from typing import Any, Iterator
 from unittest.mock import patch
 from urllib.parse import quote
 
+from oacp_sdk.defaults import PROTOCOL_VERSION
+
 FIXED_MESSAGE_ID = 'msg-1'
 FIXED_TRACE_ID = 'trace-1'
 DEFAULT_BASE_URL = 'http://127.0.0.1:3999'
@@ -66,7 +68,7 @@ def register_send_task_exchange(
 
     message: dict[str, Any] = {
         'type': 'task_response',
-        'version': '0.1',
+        'version': PROTOCOL_VERSION,
         'message_id': 'resp-1',
         'trace_id': trace_id,
         'from': 'agent://worker',

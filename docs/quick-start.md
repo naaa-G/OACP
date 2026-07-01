@@ -2,7 +2,30 @@
 
 Get OACP running locally and watch a multi-agent team complete a task in **under 5 minutes**.
 
-## Prerequisites
+## Docker (fastest — no Node required)
+
+```bash
+git clone https://github.com/naaa-G/OACP.git
+cd OACP
+docker compose up --build -d
+```
+
+Open **http://127.0.0.1:3847/console/**. Seed a MCPLab-style demo trace:
+
+```bash
+docker compose --profile demo up --build
+```
+
+Full showcase with MCPLab (client-only — no embedded OACP in MCPLab):
+
+```bash
+git clone <mcplab-repo> MCPLab
+pnpm docker:mcplab
+```
+
+See [docker-compose.md](./docker-compose.md).
+
+## Prerequisites (local development)
 
 | Tool    | Version |
 | ------- | ------- |

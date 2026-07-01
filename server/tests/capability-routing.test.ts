@@ -31,7 +31,7 @@ describe('capability auto-routing (Day 11)', () => {
       identity: {
         id: 'agent://debugger',
         name: 'Debugger',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['code.debug'],
         publicKey: devPublicKey(),
       },
@@ -80,7 +80,7 @@ describe('capability auto-routing (Day 11)', () => {
         identity: {
           id: 'agent://summarizer',
           name: 'Summarizer',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['text.summarize'],
           publicKey: devPublicKey(),
         },
@@ -110,7 +110,7 @@ describe('capability auto-routing (Day 11)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: devPublicKey(),
       },
@@ -133,7 +133,7 @@ describe('capability auto-routing (Day 11)', () => {
         identity: {
           id: 'agent://summarizer',
           name: 'Summarizer',
-          version: '0.1',
+          version: '1.0',
           capabilities: ['text.summarize'],
           publicKey: devPublicKey(),
         },
@@ -163,7 +163,7 @@ describe('capability auto-routing (Day 11)', () => {
           identity: {
             id,
             name: id,
-            version: '0.1',
+            version: '1.0',
             capabilities: ['code.debug'],
             publicKey: devPublicKey(),
           },

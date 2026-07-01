@@ -1,0 +1,49 @@
+{
+  "ok": true,
+  "version": "1.0",
+  "description": "Day 56 fallback demo traces — no LLM required (import via POST /v1/observability/import)",
+  "crews": [
+    {
+      "id": "research",
+      "label": "Research crew",
+      "trace_id": "d5610001-0001-4000-8000-000000000001",
+      "console_query": "trace_id=d5610001-0001-4000-8000-000000000001&mode=showcase&showcase_fleet=mcplab",
+      "goal": "Edge AI inference trends for enterprise rollout",
+      "agents": [
+        { "role": "coordinator", "capability": "orchestrate" },
+        { "role": "planner", "capability": "plan" },
+        { "role": "researcher", "capability": "research" },
+        { "role": "synthesizer", "capability": "synthesize" },
+        { "role": "publisher", "capability": "publish" }
+      ]
+    },
+    {
+      "id": "code_patch",
+      "label": "Code patch crew",
+      "trace_id": "d5610002-0002-4000-8000-000000000002",
+      "console_query": "trace_id=d5610002-0002-4000-8000-000000000002&mode=showcase&showcase_fleet=mcplab",
+      "goal": "Add rate limiting middleware to auth service",
+      "agents": [
+        { "role": "coordinator", "capability": "orchestrate" },
+        { "role": "planner", "capability": "plan" },
+        { "role": "coder", "capability": "code" },
+        { "role": "reviewer", "capability": "review" },
+        { "role": "deliverer", "capability": "deliver" }
+      ]
+    },
+    {
+      "id": "ops",
+      "label": "Ops crew",
+      "trace_id": "d5610003-0003-4000-8000-000000000003",
+      "console_query": "trace_id=d5610003-0003-4000-8000-000000000003&mode=ops",
+      "goal": "Investigate elevated 5xx on checkout API",
+      "agents": [
+        { "role": "coordinator", "capability": "orchestrate" },
+        { "role": "ops", "capability": "ops" },
+        { "role": "researcher", "capability": "research" },
+        { "role": "coder", "capability": "code" },
+        { "role": "deliverer", "capability": "deliver" }
+      ]
+    }
+  ]
+}

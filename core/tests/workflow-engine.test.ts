@@ -33,7 +33,7 @@ describe('workflow engine (Day 18)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey,
       },
@@ -49,7 +49,7 @@ describe('workflow engine (Day 18)', () => {
       identity: {
         id: 'agent://analyzer',
         name: 'Analyzer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['analyze.text'],
         publicKey,
       },
@@ -66,7 +66,7 @@ describe('workflow engine (Day 18)', () => {
       identity: {
         id: 'agent://tokenizer',
         name: 'Tokenizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.tokenize'],
         publicKey,
       },
@@ -82,7 +82,7 @@ describe('workflow engine (Day 18)', () => {
       identity: {
         id: 'agent://classifier',
         name: 'Classifier',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.classify'],
         publicKey,
       },

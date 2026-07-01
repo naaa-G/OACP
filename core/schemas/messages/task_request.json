@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oacp.dev/schemas/v0.1/messages/task_request.json",
+  "$id": "https://oacp.dev/schemas/v1.0/messages/task_request.json",
   "title": "OACP Task Request",
   "description": "Request an agent (by URI) or capability to perform work.",
   "allOf": [
     {
-      "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/messageEnvelope"
+      "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/messageEnvelope"
     },
     {
       "type": "object",
@@ -14,14 +14,14 @@
           "const": "task_request"
         },
         "to": {
-          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/agentUri",
+          "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/agentUri",
           "description": "Optional direct recipient. When omitted, routers resolve by capability."
         },
         "capability": {
-          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/capability"
+          "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/capability"
         },
         "input": {
-          "$ref": "https://oacp.dev/schemas/v0.1/oacp.schema.json#/$defs/payload"
+          "$ref": "https://oacp.dev/schemas/v1.0/oacp.schema.json#/$defs/payload"
         },
         "deadline_ms": {
           "type": "integer",

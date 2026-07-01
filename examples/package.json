@@ -1,6 +1,6 @@
 {
   "name": "oacp-examples",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Runnable OACP examples (local and remote multi-agent flows)",
   "type": "module",
@@ -27,7 +27,9 @@
     "prestart:sdk-workflow": "pnpm --filter @oacp/sdk build",
     "start:sdk-workflow": "tsx sdk/run-workflow.ts",
     "prestart:langchain-delegate": "pnpm --filter @oacp/integration-langchain build",
-    "start:langchain-delegate": "tsx integrations/langchain-delegate.ts"
+    "start:langchain-delegate": "tsx integrations/langchain-delegate.ts",
+    "prestart:custom-agents": "pnpm --filter @oacp/sdk build",
+    "start:custom-agents": "tsx custom-agents/trace-demo.ts"
   },
   "dependencies": {
     "@oacp/core": "workspace:*",

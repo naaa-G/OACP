@@ -1,4 +1,4 @@
-# OACP Message Schemas (`v0.1`)
+# OACP Message Schemas (`v1.0`)
 
 Canonical JSON Schemas for OACP message types. All schemas use **JSON Schema draft 2020-12**
 and compose shared definitions from [`../oacp.schema.json`](../oacp.schema.json).
@@ -30,5 +30,5 @@ JSON Schema 2020-12 validator with these files.
 
 ## `$id` URLs
 
-Schemas use stable `$id` URLs under `https://oacp.dev/schemas/v0.1/`. Relative `$ref`
+Schemas use stable `$id` URLs under `https://oacp.dev/schemas/v1.0/`. Relative `$ref`
 paths resolve correctly when validating from the repository filesystem.

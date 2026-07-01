@@ -1,0 +1,7 @@
+.mark {
+  padding: 0;
+  border-radius: 0.125rem;
+  color: inherit;
+  background: color-mix(in srgb, var(--oacp-accent) 28%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--oacp-accent) 22%, transparent);
+}

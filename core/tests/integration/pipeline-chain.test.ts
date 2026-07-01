@@ -23,7 +23,7 @@ describe('multi-agent pipeline chain A → B → C (Day 13)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -38,7 +38,7 @@ describe('multi-agent pipeline chain A → B → C (Day 13)', () => {
       identity: {
         id: 'agent://transformer',
         name: 'Transformer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.transform'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -69,7 +69,7 @@ describe('multi-agent pipeline chain A → B → C (Day 13)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.pipeline'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -141,7 +141,7 @@ describe('multi-agent pipeline chain A → B → C (Day 13)', () => {
       identity: {
         id: 'agent://extractor',
         name: 'Extractor',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.extract'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -156,7 +156,7 @@ describe('multi-agent pipeline chain A → B → C (Day 13)', () => {
       identity: {
         id: 'agent://transformer',
         name: 'Transformer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.transform'],
         publicKey: createCoordinatorIdentity().publicKey,
       },
@@ -171,7 +171,7 @@ describe('multi-agent pipeline chain A → B → C (Day 13)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey: createCoordinatorIdentity().publicKey,
       },

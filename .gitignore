@@ -1,5 +1,7 @@
 # Dependencies
 node_modules/
+__pycache__/
+*.py[cod]
 
 # Build outputs
 dist/
@@ -40,6 +42,12 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 
+# ATDN — separate product (local only; not part of OACP repo)
+ATDN/
+
+# MCPLab — MCP × OACP reference lab (local only; not part of OACP repo yet)
+MCPLab/
+
 # Local / internal planning docs (not published to GitHub)
 plan.md
 ROADMAP.md
@@ -57,6 +65,7 @@ docs/screenshots.md
 scripts/capture-launch-assets.ps1
 scripts/capture-launch-assets.sh
 docs/public/screenshots/*.png
+!docs/public/screenshots/console-showcase-hero.png
 docs/public/screenshots/*.jpg
 docs/public/screenshots/*.jpeg
 docs/public/screenshots/*.webp

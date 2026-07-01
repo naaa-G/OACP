@@ -1,0 +1,20 @@
+.button {
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-control-radius);
+  background: color-mix(in srgb, var(--oacp-text) 3%, transparent);
+  color: var(--oacp-text-muted);
+  font-size: 0.6875rem;
+  font-family: var(--oacp-font-mono);
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  color: var(--oacp-text);
+  border-color: color-mix(in srgb, var(--oacp-accent) 35%, var(--oacp-border));
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

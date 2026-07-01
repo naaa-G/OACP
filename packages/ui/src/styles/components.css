@@ -1,0 +1,322 @@
+/**
+ * @oacp/ui component styles — all values from theme CSS variables.
+ */
+
+/* ── Panel ───────────────────────────────────────────────────────────── */
+
+.oacp-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--oacp-panel);
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-panel-radius);
+  box-shadow: var(--oacp-shadow-panel), var(--oacp-shadow-panel-glow);
+}
+
+.oacp-panel__header {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--oacp-border);
+  background: color-mix(in srgb, var(--oacp-text) 2%, transparent);
+}
+
+.oacp-panel__headerMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.oacp-panel__title {
+  margin: 0;
+  padding: 0.65rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--oacp-text-muted);
+  flex: 1;
+  min-width: 0;
+}
+
+.oacp-panel__headerActions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.oacp-panel__body {
+  flex: 1;
+  min-height: 0;
+  padding: 0.75rem;
+  overflow: auto;
+}
+
+.oacp-panel__footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--oacp-border);
+  padding: 0.5rem 0.875rem;
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+}
+
+/* ── Badge ───────────────────────────────────────────────────────────── */
+
+.oacp-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--oacp-border);
+  color: var(--oacp-text-muted);
+  line-height: 1.2;
+}
+
+.oacp-badge--live {
+  color: var(--oacp-success);
+  border-color: color-mix(in srgb, var(--oacp-success) 40%, transparent);
+  background: var(--oacp-success-dim);
+}
+
+.oacp-badge--paused {
+  color: var(--oacp-text-muted);
+  border-color: var(--oacp-border);
+}
+
+.oacp-badge--success {
+  color: var(--oacp-success);
+  border-color: color-mix(in srgb, var(--oacp-success) 35%, transparent);
+  background: var(--oacp-success-dim);
+}
+
+.oacp-badge--warning {
+  color: var(--oacp-warning);
+  border-color: color-mix(in srgb, var(--oacp-warning) 35%, transparent);
+  background: var(--oacp-warning-dim);
+}
+
+.oacp-badge--error {
+  color: var(--oacp-error);
+  border-color: color-mix(in srgb, var(--oacp-error) 35%, transparent);
+  background: var(--oacp-error-dim);
+}
+
+/* ── Stat ────────────────────────────────────────────────────────────── */
+
+.oacp-stat {
+  background: color-mix(in srgb, var(--oacp-text) 3%, transparent);
+  border-radius: var(--oacp-control-radius);
+  padding: 0.5rem 0.625rem;
+}
+
+.oacp-stat__label {
+  font-size: 0.6875rem;
+  color: var(--oacp-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.oacp-stat__value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-top: 0.125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Button ──────────────────────────────────────────────────────────── */
+
+.oacp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid var(--oacp-border);
+  background: var(--oacp-panel-2);
+  color: var(--oacp-text);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    border-color var(--oacp-duration-fast) var(--oacp-easing),
+    background var(--oacp-duration-fast) var(--oacp-easing),
+    box-shadow var(--oacp-duration-fast) var(--oacp-easing);
+}
+
+.oacp-btn:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--oacp-accent) 40%, var(--oacp-border));
+}
+
+.oacp-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--oacp-shadow-focus);
+}
+
+.oacp-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.oacp-btn--primary {
+  background: var(--oacp-accent);
+  border-color: var(--oacp-accent);
+  color: var(--oacp-bg);
+}
+
+.oacp-btn--primary:hover:not(:disabled) {
+  background: var(--oacp-accent-hover);
+  border-color: var(--oacp-accent-hover);
+}
+
+.oacp-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--oacp-text-muted);
+}
+
+.oacp-btn--ghost:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--oacp-text) 4%, transparent);
+  border-color: var(--oacp-border);
+  color: var(--oacp-text);
+}
+
+/* ── Toggle ──────────────────────────────────────────────────────────── */
+
+.oacp-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--oacp-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.oacp-toggle__input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--oacp-accent);
+  cursor: pointer;
+}
+
+.oacp-toggle__label {
+  line-height: 1.2;
+}
+
+/* ── Search ──────────────────────────────────────────────────────────── */
+
+.oacp-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.oacp-search__icon {
+  position: absolute;
+  left: 0.625rem;
+  color: var(--oacp-text-dim);
+  font-size: 0.875rem;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.oacp-search__input {
+  width: 100%;
+  padding: 0.45rem 2rem 0.45rem 1.75rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid var(--oacp-border);
+  background: var(--oacp-panel-2);
+  color: var(--oacp-text);
+  font-size: 0.875rem;
+}
+
+.oacp-search__input::placeholder {
+  color: var(--oacp-text-dim);
+}
+
+.oacp-search__input:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--oacp-accent) 50%, var(--oacp-border));
+  box-shadow: var(--oacp-shadow-focus);
+}
+
+.oacp-search__clear {
+  position: absolute;
+  right: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--oacp-control-radius);
+  background: transparent;
+  color: var(--oacp-text-muted);
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.oacp-search__clear:hover {
+  color: var(--oacp-text);
+  background: color-mix(in srgb, var(--oacp-text) 6%, transparent);
+}
+
+/* ── Shared empty state ──────────────────────────────────────────────── */
+
+.oacp-empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--oacp-text-muted);
+  text-align: center;
+  padding: 1rem 0.5rem;
+  line-height: 1.5;
+}
+
+/* ── Stats grid (agent panel) ────────────────────────────────────────── */
+
+.oacp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--oacp-border);
+  flex-shrink: 0;
+}
+
+/* ── Select (header poll interval) ─────────────────────────────────── */
+
+.oacp-select {
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid var(--oacp-border);
+  background: var(--oacp-panel-2);
+  color: var(--oacp-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.oacp-select:focus {
+  outline: none;
+  box-shadow: var(--oacp-shadow-focus);
+}
+
+/* ── Header actions row ──────────────────────────────────────────────── */
+
+.oacp-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}

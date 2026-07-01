@@ -18,9 +18,21 @@ import { normalizeAgentUriParam } from '../../utils/agent-uri.js';
 import { runServerWorkflow } from '../../orchestration/workflow-runner.js';
 import { listActiveTraces, resolveTraceBundle } from '../../observability/trace-service.js';
 import { TRACE_VIEWER_HTML } from '../../observability/trace-viewer-html.js';
-import { buildPlaygroundSnapshot } from '../../observability/playground-service.js';
-import { PLAYGROUND_HTML } from '../../observability/playground-html.js';
+import { buildConsoleEntryUrl } from '../../observability/console-static.js';
 import { buildServerIndexResponse, prefersHtmlResponse } from '../../observability/server-index.js';
+import {
+  applyLegacySnapshotDeprecationHeaders,
+  registerOpenApiRoute,
+} from '../../observability/openapi.js';
+import { createSnapshotHandler } from '../../observability/snapshot-route.js';
+import { createTraceGraphHandler } from '../../observability/trace-graph-route.js';
+import { registerObservabilityEventsRoute } from '../../observability/events-route.js';
+import { publishAgentRegisteredEvent } from '../../observability/observability-event-emitter.js';
+import {
+  importObservabilityTrace,
+  registerAgentWithPersistence,
+} from '../../observability/observability-import.js';
+import type { ObservabilityImportTrace } from '../../observability/observability-persistence.js';
 import { assertValidCapabilityId, parseDiscoveryLimit } from '../../utils/capability-id.js';
 import type {
   AgentLookupResponse,
@@ -37,7 +49,6 @@ import type {
   WorkflowRunRecordResponse,
   TraceListResponse,
   TraceDetailResponse,
-  PlaygroundSnapshotResponse,
   RegisterAgentRequest,
   RegisterAgentResponse,
   SendMessageSuccessResponse,
@@ -142,9 +153,12 @@ function mapWorkflowErrorToHttp(error: OacpWorkflowError): OacpServerError {
 
 /** Register OACP reference HTTP routes on a Fastify instance. */
 export function registerHttpRoutes(app: FastifyInstance, context: ServerContext): void {
+  registerOpenApiRoute(app);
+  registerObservabilityEventsRoute(app, context);
+
   app.get('/', (request, reply) => {
     if (prefersHtmlResponse(request.headers.accept)) {
-      return reply.redirect('/playground', 302);
+      return reply.redirect(buildConsoleEntryUrl(request.url), 302);
     }
 
     const response: ServerIndexResponse = buildServerIndexResponse(context.registry.size);
@@ -234,7 +248,9 @@ export function registerHttpRoutes(app: FastifyInstance, context: ServerContext)
   app.post<{ Body: RegisterAgentRequest }>('/agents', (request) => {
     const body = request.body;
     const identity = parseAgentIdentity(body.identity);
-    const agent = context.registry.register(identity, { replace: body.replace ?? false });
+    const agent = registerAgentWithPersistence(context, identity, {
+      replace: body.replace ?? false,
+    });
 
     const registered = context.registry.get(agent.id);
     if (registered) {
@@ -243,6 +259,8 @@ export function registerHttpRoutes(app: FastifyInstance, context: ServerContext)
         useMailbox: true,
       });
     }
+
+    publishAgentRegisteredEvent(context.observabilityEventBus, agent);
 
     const response: RegisterAgentResponse = { ok: true, agent };
     return response;
@@ -393,21 +411,49 @@ export function registerHttpRoutes(app: FastifyInstance, context: ServerContext)
     return reply.type('text/html; charset=utf-8').send(TRACE_VIEWER_HTML);
   });
 
-  app.get('/playground', (_request, reply) => {
-    return reply.type('text/html; charset=utf-8').send(PLAYGROUND_HTML);
+  app.get('/playground', (request, reply) => {
+    return reply.redirect(buildConsoleEntryUrl(request.url), 302);
+  });
+
+  const snapshotHandler = createSnapshotHandler(context, {
+    parseLimit: parseMemoryLimit,
   });
 
   app.get<{ Querystring: { trace_id?: string; limit?: string } }>(
+    '/v1/observability/snapshot',
+    snapshotHandler,
+  );
+
+  app.get<{ Querystring: { trace_id?: string; limit?: string } }>(
     '/playground/snapshot',
-    async (request) => {
-      const traceId = request.query.trace_id?.trim();
-      const snapshot = await buildPlaygroundSnapshot(context, {
-        traceLimit: parseMemoryLimit(request.query.limit),
-        ...(traceId !== undefined && traceId.length > 0 ? { traceId } : {}),
-      });
-      const response: PlaygroundSnapshotResponse = { ok: true, snapshot };
-      return response;
+    async (request, reply) => {
+      applyLegacySnapshotDeprecationHeaders(reply);
+      return snapshotHandler(request);
     },
+  );
+
+  app.post<{ Body: ObservabilityImportTrace }>('/v1/observability/import', async (request) => {
+    const body = request.body;
+    if (body.trace_id === undefined || body.trace_id.length === 0) {
+      throw new OacpServerError(400, SERVER_ERROR_CODES.VALIDATION_FAILED, 'trace_id is required');
+    }
+    if (!Array.isArray(body.messages)) {
+      throw new OacpServerError(
+        400,
+        SERVER_ERROR_CODES.VALIDATION_FAILED,
+        'messages must be an array',
+      );
+    }
+
+    const result = await importObservabilityTrace(context, body);
+    return { ok: true, result };
+  });
+
+  const traceGraphHandler = createTraceGraphHandler(context);
+
+  app.get<{ Params: { traceId: string } }>(
+    '/v1/observability/traces/:traceId/graph',
+    traceGraphHandler,
   );
 
   app.get<{ Params: { traceId: string } }>('/graph/traces/:traceId', async (request) => {

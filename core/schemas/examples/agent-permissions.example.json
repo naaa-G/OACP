@@ -1,6 +1,6 @@
 {
   "agent_id": "agent://coordinator",
-  "version": "0.1",
+  "version": "1.0",
   "invoke": ["text.summarize", "code.generate"],
   "delegate": ["text.summarize", "code.generate", "code.review"],
   "memory_scopes": ["workflow.default", "team.shared"],

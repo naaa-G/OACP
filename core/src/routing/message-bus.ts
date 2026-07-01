@@ -264,6 +264,20 @@ export class InMemoryMessageBus {
     });
   }
 
+  /**
+   * Record a historical message in the trace store without routing (Day 53 import / hydrate).
+   * Idempotent when the same `message_id` is replayed.
+   */
+  replayTraceMessage(message: OacpMessage): void {
+    if (!this.recordTraces) {
+      return;
+    }
+    if (this.traceStore.getMessageById(message.message_id) !== undefined) {
+      return;
+    }
+    this.traceStore.record(message);
+  }
+
   /** Get trace record by `trace_id`. */
   getTrace(traceId: string): TraceRecord | undefined {
     return this.traceStore.getTrace(traceId);

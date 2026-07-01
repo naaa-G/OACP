@@ -18,7 +18,7 @@
  *   --verify           — exit 0 only when output matches expected (CI smoke)
  */
 import { createApp } from '@oacp/server';
-import { AgentClient, DEFAULT_DEV_PUBLIC_KEY } from '@oacp/sdk';
+import { AgentClient, DEFAULT_DEV_PUBLIC_KEY, PROTOCOL_VERSION } from '@oacp/sdk';
 
 import {
   DEMO_V1_EXPECTED_OUTPUT,
@@ -90,7 +90,7 @@ async function main(): Promise<void> {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Remote Coordinator',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['orchestrate.remote'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });

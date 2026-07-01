@@ -173,7 +173,7 @@ describe('message bus (Day 5)', () => {
     const bus = createMessageBus();
     bus.register('agent://summarizer', () => {});
 
-    const outcome = await bus.sendRaw({ type: 'task_request', version: '0.1' });
+    const outcome = await bus.sendRaw({ type: 'task_request', version: '1.0' });
     expect(outcome.ok).toBe(false);
     if (!outcome.ok) {
       expect(outcome.error.code).toBe(VALIDATION_ERROR_CODES.SCHEMA_VALIDATION_FAILED);

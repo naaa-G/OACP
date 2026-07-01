@@ -1,6 +1,6 @@
 {
   "name": "@oacp/integration-langchain",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "LangChain tools adapter for OACP — delegate tasks to agent capabilities",
   "license": "Apache-2.0",
   "type": "module",

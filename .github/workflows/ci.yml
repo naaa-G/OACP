@@ -35,8 +35,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Verify (format, build, lint, typecheck, test)
+      - name: Verify (format, build, lint, typecheck, test, API freeze)
         run: pnpm verify
+
+      - name: Day 55 load + security smoke
+        run: pnpm test:day55
+
+      - name: Day 56 demo rehearsal
+        run: pnpm --filter @oacp/server test -- demo-rehearsal
+
+      - name: Day 59 RC sync smoke
+        run: pnpm --filter @oacp/server test -- day59-rc-sync
 
       - name: Build documentation site
         run: pnpm docs:build
@@ -57,3 +66,78 @@ jobs:
 
       - name: Verify Python packages
         run: bash scripts/verify-python.sh
+
+  console-e2e:
+    name: Console E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Console dependencies
+        run: |
+          pnpm --filter @oacp/ui build
+          pnpm --filter @oacp/observability-client build
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @oacp/console exec playwright install chromium --with-deps
+
+      - name: Console Playwright smoke
+        run: pnpm --filter @oacp/console test:e2e
+
+  docker-compose:
+    name: Docker Compose
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Compose file
+        run: docker compose config
+
+      - name: Build OACP image
+        run: docker compose build oacp
+
+      - name: Start OACP stack
+        run: docker compose up -d oacp
+
+      - name: Wait for health
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:3847/health >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose logs oacp
+          exit 1
+
+      - name: Console static assets
+        run: curl -sf http://127.0.0.1:3847/console/ | grep -q '<html'
+
+      - name: Seed demo trace
+        run: docker compose --profile demo up seed-demo
+
+      - name: Snapshot API after seed
+        run: |
+          curl -sf http://127.0.0.1:3847/v1/observability/snapshot | grep -q mcplab
+
+      - name: Stop stack
+        if: always()
+        run: docker compose down -v

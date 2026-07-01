@@ -17,7 +17,7 @@ specs/
 
 ## Version
 
-- **Protocol:** `0.1` (alpha)
+- **Protocol:** `1.0` (v1.0 freeze — Day 54)
 - **JSON Schema draft:** [2020-12](https://json-schema.org/draft/2020-12/schema)
 
 ## Status

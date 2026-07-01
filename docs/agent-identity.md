@@ -12,11 +12,11 @@ Every agent has a stable identity defined in [`specs/agent/identity.schema.json`
 | -------------- | :------: | -------------------------------------------- |
 | `id`           |    ✅    | Stable URI (`agent://summarizer`)            |
 | `name`         |    ✅    | Human-readable name                          |
-| `version`      |    ✅    | Protocol version (`"0.1"`)                   |
+| `version`      |    ✅    | Protocol version (`"1.0"`)                   |
 | `capabilities` |    ✅    | Capability IDs this agent performs (unique)  |
 | `publicKey`    |    ✅    | PEM string or JWK for signature verification |
 | `description`  |    —     | Optional description                         |
-| `metadata`     |    —     | Optional opaque metadata                     |
+| `metadata`     |    —     | Optional opaque metadata (see below)         |
 
 Example: [`specs/examples/agent-identity.example.json`](../specs/examples/agent-identity.example.json)
 
@@ -30,6 +30,46 @@ if (outcome.valid) {
 
 const identity = parseAgentIdentity(identityJson); // throws on invalid
 ```
+
+## Observability metadata (Day 9+)
+
+The Console snapshot API surfaces selected `metadata` keys as top-level agent fields for fleet catalog rendering. Registration is unchanged — only the snapshot response is enriched.
+
+| Metadata key | Snapshot field | Description                                                                 |
+| ------------ | -------------- | --------------------------------------------------------------------------- |
+| `fleet`      | `fleet`        | Logical fleet or deployment group (e.g. `mcplab`, `startup-demo`, `system`) |
+| `role`       | `role`         | Agent role within a fleet (e.g. `planner`, `coordinator`, `worker`)         |
+
+**Console catalog buckets (Day 17):** known fleets render under matching section headers. Any other value (or missing `fleet`) is grouped under **External** while still displaying the raw fleet badge when present. See [console.md](./console.md#fleet-grouping-day-17).
+
+**Role resolution (Day 18):** the Console resolves display roles in order: explicit `role` metadata → URI/name tokens → capability prefix. Inferred roles show `data-role-source` on the role badge. See [console.md](./console.md#role-taxonomy-day-18).
+
+Example registration:
+
+```json
+{
+  "id": "agent://mcplab-planner",
+  "name": "MCPLab Planner",
+  "version": "1.0",
+  "capabilities": ["plan"],
+  "publicKey": { "kty": "OKP", "crv": "Ed25519", "x": "…" },
+  "metadata": {
+    "fleet": "mcplab",
+    "role": "planner"
+  }
+}
+```
+
+The server also derives:
+
+| Field          | Source                                                                                                                                       |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `status`       | `active` when the agent appears in the selected trace roster or timeline; `error` when it emitted a failed `task_response`; otherwise `idle` |
+| `last_seen_at` | Latest `lastActivityAt` across trace listings, refined by `active_trace.timeline` timestamps                                                 |
+
+See [console-spec.md](./console-spec.md) for the full `AgentObservabilityRecord` schema.
+
+See [mcplab-integration.md](./mcplab-integration.md) for MCPLab fleet/role registration and role taxonomy.
 
 ## Capability declarations
 

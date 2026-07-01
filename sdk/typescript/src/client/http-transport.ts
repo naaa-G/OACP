@@ -43,7 +43,9 @@ function mapServerError(status: number, body: unknown): OacpClientError {
     ).error;
 
     let code: ClientErrorCode = CLIENT_ERROR_CODES.SERVER_ERROR;
-    if (status === 400) {
+    if (status === 401) {
+      code = CLIENT_ERROR_CODES.UNAUTHORIZED;
+    } else if (status === 400) {
       code = CLIENT_ERROR_CODES.VALIDATION_FAILED;
     } else if (status === 404) {
       code =

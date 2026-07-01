@@ -1,0 +1,63 @@
+.path {
+  fill: none;
+  transition:
+    stroke-width var(--oacp-duration-normal) var(--oacp-easing),
+    opacity var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.tooltip {
+  pointer-events: none;
+  position: absolute;
+  min-width: 9rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: var(--oacp-radius-md, 0.5rem);
+  background: var(--oacp-surface-raised, #1a2233);
+  border: 1px solid var(--oacp-border);
+  box-shadow: var(--oacp-shadow-md, 0 8px 24px rgb(0 0 0 / 35%));
+  color: var(--oacp-text);
+  font-size: 0.75rem;
+  animation: opsGraphEdgeTooltipIn 120ms var(--oacp-easing, ease) forwards;
+}
+
+@keyframes opsGraphEdgeTooltipIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+}
+
+.tooltipTitle {
+  margin: 0 0 0.3rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.tooltipMeta {
+  margin: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.row dt {
+  margin: 0;
+  color: color-mix(in srgb, var(--oacp-text) 55%, transparent);
+  font-weight: 500;
+}
+
+.row dd {
+  margin: 0;
+  font-family: var(--oacp-font-mono, ui-monospace, monospace);
+  font-size: 0.6875rem;
+}

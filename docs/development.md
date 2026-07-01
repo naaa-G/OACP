@@ -25,11 +25,14 @@ pnpm verify
 
 This repository uses **pnpm workspaces** and **Turborepo**.
 
-| Package        | Path              | Description                                    |
-| -------------- | ----------------- | ---------------------------------------------- |
-| `@oacp/core`   | `core/`           | Protocol engine (validation, routing, runtime) |
-| `@oacp/sdk`    | `sdk/typescript/` | TypeScript SDK for agent authors               |
-| `@oacp/server` | `server/`         | Reference HTTP server (Day 8+)                 |
+| Package                      | Path                             | Description                                    |
+| ---------------------------- | -------------------------------- | ---------------------------------------------- |
+| `@oacp/core`                 | `core/`                          | Protocol engine (validation, routing, runtime) |
+| `@oacp/sdk`                  | `sdk/typescript/`                | TypeScript SDK for agent authors               |
+| `@oacp/server`               | `server/`                        | Reference HTTP server                          |
+| `@oacp/console`              | `apps/console/`                  | OACP Console — React observability UI (v1.0)   |
+| `@oacp/ui`                   | `packages/ui/`                   | Console design system and tokens               |
+| `@oacp/observability-client` | `packages/observability-client/` | Snapshot client + React Query hooks            |
 
 Workspace packages reference each other with `workspace:*` in `package.json`.
 
@@ -68,11 +71,45 @@ See [integration-testing.md](./integration-testing.md) for scenario coverage.
 
 ```bash
 pnpm --filter @oacp/server build
-pnpm --filter @oacp/server start   # http://0.0.0.0:3847
+pnpm --filter @oacp/server start       # http://127.0.0.1:3847 — SQLite memory (default)
+pnpm --filter @oacp/server start:dev   # in-memory only — no better-sqlite3 native module
 pnpm --filter @oacp/server test
 ```
 
+**`better-sqlite3` / `ERR_DLOPEN_FAILED`:** The default server uses SQLite via a native addon. If you see `NODE_MODULE_VERSION` mismatch, your Node version changed since `pnpm install` (e.g. `.nvmrc` says Node 20 but the addon was built for Node 22). Fix either way:
+
+```bash
+# Option A — align Node with .nvmrc and rebuild the native module
+nvm use
+pnpm rebuild better-sqlite3
+pnpm --filter @oacp/server start
+
+# Option B — skip SQLite (fine for Console / API dev)
+pnpm --filter @oacp/server start:dev
+```
+
+PowerShell equivalent for Option B:
+
+```powershell
+$env:OACP_MEMORY_BACKEND = "memory"
+pnpm --filter @oacp/server start
+```
+
 API reference: [http-server.md](./http-server.md).
+
+### Docker unified stack (Day 51)
+
+Run OACP server + Console without local Node tooling:
+
+```bash
+docker compose up --build -d
+# Console → http://127.0.0.1:3847/console/
+
+docker compose --profile demo up --build   # seed MCPLab-style demo trace
+pnpm docker:mcplab                          # platform + MCPLab (requires ./MCPLab)
+```
+
+See [docker-compose.md](./docker-compose.md). MCPLab client migration: [integrate/mcplab/MIGRATION.md](../integrate/mcplab/MIGRATION.md).
 
 ### Remote client (Day 9)
 
@@ -159,7 +196,72 @@ pnpm --filter @oacp/cli test
 
 See [cli.md](./cli.md).
 
-### Playground — live visualization (Day 22)
+### OACP Console — v1.0 observability UI
+
+```bash
+pnpm --filter @oacp/ui build
+pnpm --filter @oacp/observability-client build
+pnpm --filter @oacp/observability-client test
+pnpm --filter @oacp/console dev
+pnpm --filter @oacp/console test          # ring layout unit tests
+pnpm --filter @oacp/console test:e2e      # Playwright smoke (Day 10)
+pnpm --filter @oacp/console build
+pnpm --filter @oacp/console typecheck
+```
+
+Open http://127.0.0.1:5173.
+
+**Unified Docker (Day 51 — recommended for demos):**
+
+```bash
+docker compose up --build -d
+# → http://127.0.0.1:3847/console/
+```
+
+See [docker-compose.md](./docker-compose.md).
+
+**MCPLab Docker (legacy `:3001`):** Prefer the unified stack on `:3847` — see [docker-compose.md](./docker-compose.md). For Console dev against an external API:
+
+```bash
+# Unified stack (recommended)
+docker compose up --build -d
+
+# Console dev only — point proxy at OACP
+VITE_OACP_API_PROXY=http://127.0.0.1:3847 pnpm --filter @oacp/console dev
+```
+
+**Graph mode:** `VITE_GRAPH_MODE=legacy` (default) renders the playground ring graph. `ops` renders the React Flow DAG (Week 7). `showcase` renders the Three.js force layout from trace graph (Week 8, Day 37).
+
+**Playwright (first run):** `pnpm --filter @oacp/console test:e2e:install` then `test:e2e`.
+
+See [console.md](./console.md), [console-spec.md](./console-spec.md), [mcplab-integration.md](./mcplab-integration.md), [mcplab-full-loop.md](./mcplab-full-loop.md), [observability-client.md](./observability-client.md), [console-architecture.md](./console-architecture.md), and [version1.md](./version1.md).
+
+### MCPLab full-loop verification (Day 15)
+
+```bash
+pnpm --filter @oacp/server test -- mcplab-full-loop
+pnpm --filter @oacp/sdk test -- mcplab
+cd sdk/python && pip install -e ".[dev]" && pytest tests/test_observability.py tests/test_mcplab_trace_url.py -v
+```
+
+Optional live test against MCPLab Docker:
+
+```bash
+export MCPLAB_OACP_SERVER_URL=http://127.0.0.1:3001
+export MCPLAB_OACP_CONSOLE_URL=http://127.0.0.1:5173
+cd sdk/python && pytest tests/integration/test_full_loop.py -m integration -v
+```
+
+```powershell
+# Windows PowerShell
+$env:MCPLAB_OACP_SERVER_URL = "http://127.0.0.1:3001"
+$env:MCPLAB_OACP_CONSOLE_URL = "http://127.0.0.1:5173"
+cd sdk/python; pytest tests/integration/test_full_loop.py -m integration -v
+```
+
+See [mcplab-full-loop.md](./mcplab-full-loop.md).
+
+### Playground — legacy visualization (Day 22)
 
 ```bash
 pnpm --filter oacp-examples start:playground
@@ -167,7 +269,7 @@ pnpm --filter oacp-examples start:playground -- --loop
 pnpm --filter @oacp/server test -- playground-api
 ```
 
-Open `http://127.0.0.1:3000/playground`. See [playground.md](./playground.md).
+Open `http://127.0.0.1:3000/playground` (redirects to Console in v1.0). See [playground.md](./playground.md).
 
 ### Shared memory (Day 15)
 

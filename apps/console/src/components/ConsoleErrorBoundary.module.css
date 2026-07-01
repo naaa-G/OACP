@@ -1,0 +1,60 @@
+.fallback {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: var(--oacp-bg);
+  color: var(--oacp-text);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.message {
+  margin: 0;
+  max-width: 40rem;
+  font-family: var(--oacp-font-mono);
+  font-size: 0.875rem;
+  color: var(--oacp-error);
+}
+
+.hint {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.875rem;
+  color: var(--oacp-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.primary,
+.secondary {
+  padding: 0.5rem 1rem;
+  border-radius: var(--oacp-control-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary {
+  border: 1px solid var(--oacp-accent);
+  background: var(--oacp-accent-dim);
+  color: var(--oacp-accent);
+}
+
+.secondary {
+  border: 1px solid var(--oacp-border);
+  background: transparent;
+  color: var(--oacp-text-muted);
+}

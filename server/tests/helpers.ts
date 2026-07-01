@@ -15,7 +15,11 @@ export function loadSummarizerIdentity(): AgentIdentity {
 }
 
 export function createTestApp(options: CreateAppOptions = {}): OacpApp {
-  return createApp({ logger: false, ...options });
+  return createApp({
+    ...options,
+    logger: false,
+    config: { memoryBackend: 'memory', ...options.config },
+  });
 }
 
 /** Dev public key for test agent identities (matches SDK example key). */

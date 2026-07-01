@@ -84,7 +84,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://summarizer',
         name: 'Summarizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.summarize'],
         publicKey,
       },
@@ -100,7 +100,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://analyzer',
         name: 'Analyzer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['analyze.text'],
         publicKey,
       },
@@ -116,7 +116,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://tokenizer',
         name: 'Tokenizer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['text.tokenize'],
         publicKey,
       },
@@ -132,7 +132,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.decompose'],
         publicKey,
       },
@@ -229,7 +229,7 @@ describe('subtask plan execution (Day 17)', () => {
         identity: {
           id: `agent://${stepId}`,
           name: stepId,
-          version: '0.1',
+          version: '1.0',
           capabilities: [`work.${stepId}`],
           publicKey,
         },
@@ -249,7 +249,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.parallel'],
         publicKey,
       },
@@ -319,7 +319,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://worker',
         name: 'Worker',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.echo'],
         publicKey,
       },
@@ -331,7 +331,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.plan'],
         publicKey,
       },
@@ -389,7 +389,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://failing',
         name: 'Failing',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['work.fail'],
         publicKey,
       },
@@ -404,7 +404,7 @@ describe('subtask plan execution (Day 17)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['orchestrate.plan'],
         publicKey,
       },

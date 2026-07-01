@@ -62,7 +62,7 @@ const client = new AgentClient({ baseUrl: 'http://localhost:3847' });
 await client.registerAgent({
   id: 'agent://coordinator',
   name: 'Coordinator',
-  version: '0.1',
+  version: '1.0',
   capabilities: ['orchestrate'],
   publicKey: {
     /* JWK or PEM */

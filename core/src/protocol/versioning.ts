@@ -1,7 +1,7 @@
 import { PROTOCOL_VERSION } from './constants.js';
 
-/** Protocol versions accepted by the message validator. */
-export const SUPPORTED_PROTOCOL_VERSIONS = [PROTOCOL_VERSION] as const;
+/** Protocol versions accepted by the message validator (0.1 read-compat during migration). */
+export const SUPPORTED_PROTOCOL_VERSIONS = [PROTOCOL_VERSION, '0.1'] as const;
 
 export type SupportedProtocolVersion = (typeof SUPPORTED_PROTOCOL_VERSIONS)[number];
 

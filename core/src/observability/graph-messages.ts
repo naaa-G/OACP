@@ -1,4 +1,5 @@
 import type { DelegationGraph, DelegationNode } from '../memory/delegation-graph-types.js';
+import { PROTOCOL_VERSION } from '../protocol/constants.js';
 import type { OacpMessage } from '../protocol/message-schemas.js';
 
 /** Reconstruct minimal protocol messages from delegation graph nodes (post-restart fallback). */
@@ -13,7 +14,7 @@ export function messagesFromDelegationGraph(graph: DelegationGraph): readonly Oa
 function nodeToMessage(node: DelegationNode, traceId: string): OacpMessage {
   const timestamp = node.timestamp ?? new Date(0).toISOString();
   const base = {
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     message_id: node.message_id,
     trace_id: traceId,
     from: node.agent_id,

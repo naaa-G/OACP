@@ -41,12 +41,13 @@ describe('playground HTTP API (Day 22)', () => {
     await app.close();
   });
 
-  it('serves the playground UI at GET /playground', async () => {
-    const response = await app.inject({ method: 'GET', url: '/playground' });
-    expect(response.statusCode).toBe(200);
-    expect(response.headers['content-type']).toContain('text/html');
-    expect(response.body).toContain('OACP Playground');
-    expect(response.body).toContain('Delegation graph');
+  it('redirects GET /playground to /console with query passthrough (Day 7)', async () => {
+    const response = await app.inject({
+      method: 'GET',
+      url: '/playground?trace_id=trace-1',
+    });
+    expect(response.statusCode).toBe(302);
+    expect(response.headers.location).toBe('/console/?trace_id=trace-1');
   });
 
   it('returns unified snapshot via GET /playground/snapshot', async () => {

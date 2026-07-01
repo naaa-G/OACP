@@ -1,0 +1,17 @@
+.root {
+  position: sticky;
+  bottom: 0.5rem;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  margin-top: -2.5rem;
+}
+
+.chip {
+  pointer-events: auto;
+  box-shadow: var(--oacp-shadow-panel);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}

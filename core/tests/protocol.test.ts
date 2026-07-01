@@ -17,8 +17,9 @@ import {
 describe('protocol schemas (Day 2)', () => {
   it('exports protocol version matching schemas', () => {
     const base = loadBaseSchema();
-    const defs = base.$defs as Record<string, { const?: string }>;
-    expect(defs['protocolVersion']?.const).toBe(PROTOCOL_VERSION);
+    const defs = base.$defs as Record<string, { enum?: string[]; const?: string }>;
+    const protocolVersion = defs['protocolVersion'];
+    expect(protocolVersion?.enum ?? [protocolVersion?.const]).toContain(PROTOCOL_VERSION);
   });
 
   it('loads base schema with JSON Schema 2020-12 and shared $defs', () => {

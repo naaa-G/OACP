@@ -15,14 +15,14 @@ async def test_health(httpx_mock) -> None:
         json={
             'ok': True,
             'status': 'healthy',
-            'protocol_version': '0.1',
+            'protocol_version': '1.0',
             'registered_agents': 0,
             'bus_open': True,
         },
     )
     async with AgentClient('http://127.0.0.1:3999') as client:
         health = await client.health()
-    assert health['protocol_version'] == '0.1'
+    assert health['protocol_version'] == '1.0'
 
 
 @pytest.mark.asyncio

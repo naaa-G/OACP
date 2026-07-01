@@ -12,6 +12,7 @@ import type {
 } from '@oacp/core';
 import {
   DEFAULT_TASK_RECOVERY_POLICY,
+  PROTOCOL_VERSION,
   createAgentRuntime,
   createConsoleLogger,
   createDelegationGraphRecorder,
@@ -207,7 +208,7 @@ export function createDemoV2Workers(
     identity: {
       id: 'agent://intake',
       name: 'Incident Intake',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['incident.intake'],
       publicKey: PUBLIC_KEY,
     },
@@ -229,7 +230,7 @@ export function createDemoV2Workers(
     identity: {
       id: CLASSIFIER_PRIMARY_ID,
       name: 'Classifier Primary',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['incident.classify'],
       publicKey: PUBLIC_KEY,
     },
@@ -250,7 +251,7 @@ export function createDemoV2Workers(
     identity: {
       id: CLASSIFIER_BACKUP_ID,
       name: 'Classifier Backup',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['incident.classify'],
       publicKey: PUBLIC_KEY,
     },
@@ -265,7 +266,7 @@ export function createDemoV2Workers(
     identity: {
       id: 'agent://enricher',
       name: 'Incident Enricher',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['incident.enrich'],
       publicKey: PUBLIC_KEY,
     },
@@ -285,7 +286,7 @@ export function createDemoV2Workers(
     identity: {
       id: 'agent://synthesizer',
       name: 'Incident Synthesizer',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['incident.synthesize'],
       publicKey: PUBLIC_KEY,
     },
@@ -330,7 +331,7 @@ export function createDemoV2Workers(
     identity: {
       id: 'agent://publisher',
       name: 'Incident Publisher',
-      version: '0.1',
+      version: PROTOCOL_VERSION,
       capabilities: ['incident.publish'],
       publicKey: PUBLIC_KEY,
     },
@@ -391,42 +392,42 @@ export const DEMO_V2_WORKER_IDENTITIES: readonly AgentIdentity[] = [
   {
     id: 'agent://intake',
     name: 'Incident Intake',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['incident.intake'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: CLASSIFIER_PRIMARY_ID,
     name: 'Classifier Primary',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['incident.classify'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: CLASSIFIER_BACKUP_ID,
     name: 'Classifier Backup',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['incident.classify'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: 'agent://enricher',
     name: 'Incident Enricher',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['incident.enrich'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: 'agent://synthesizer',
     name: 'Incident Synthesizer',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['incident.synthesize'],
     publicKey: PUBLIC_KEY,
   },
   {
     id: 'agent://publisher',
     name: 'Incident Publisher',
-    version: '0.1',
+    version: PROTOCOL_VERSION,
     capabilities: ['incident.publish'],
     publicKey: PUBLIC_KEY,
   },

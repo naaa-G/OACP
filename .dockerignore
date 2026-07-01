@@ -1,0 +1,52 @@
+# Dependencies and build outputs (rebuilt in image)
+node_modules/
+**/node_modules/
+dist/
+**/.turbo/
+.turbo/
+coverage/
+
+# Git and IDE
+.git/
+.gitignore
+.github/
+.idea/
+.vscode/
+*.md
+!specs/**/*.md
+
+# Local / external repos — keep MCPLab sources for MCPLab Compose builds; exclude heavy paths
+MCPLab/artifacts/
+MCPLab/data/lab.db
+MCPLab/data/*.db
+MCPLab/.venv/
+MCPLab/**/__pycache__/
+MCPLab/.pytest_cache/
+MCPLab/.mypy_cache/
+MCPLab/.ruff_cache/
+MCPLab/apps/web/node_modules/
+MCPLab/apps/web/.next/
+ATDN/
+plan.md
+ROADMAP.md
+roadmap.md
+structure.md
+
+# Runtime data and secrets
+.oacp/
+.env
+.env.*
+!.env.example
+
+# Docs site (not served by server image)
+docs/.vitepress/
+
+# Console E2E artifacts (large; not needed for production image)
+apps/console/e2e/
+apps/console/playwright-report/
+apps/console/test-results/
+
+# OS noise
+.DS_Store
+Thumbs.db
+*.log

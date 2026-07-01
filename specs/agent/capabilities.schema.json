@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oacp.dev/schemas/v0.1/agent/capabilities.schema.json",
+  "$id": "https://oacp.dev/schemas/v1.0/agent/capabilities.schema.json",
   "title": "OACP Capability Declaration",
   "description": "Declares metadata for a single agent capability.",
   "$ref": "#/$defs/capabilityDeclaration",

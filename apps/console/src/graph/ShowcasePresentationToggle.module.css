@@ -1,0 +1,48 @@
+.toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem;
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-control-radius);
+  background: color-mix(in srgb, var(--oacp-text) 3%, transparent);
+}
+
+.button,
+.buttonPresent {
+  border: none;
+  border-radius: calc(var(--oacp-control-radius) - 2px);
+  background: transparent;
+  color: var(--oacp-text-muted);
+  font-size: 0.6875rem;
+  font-family: var(--oacp-font-mono);
+  padding: 0.25rem 0.45rem;
+  cursor: pointer;
+}
+
+.button:hover,
+.buttonPresent:hover {
+  color: var(--oacp-text);
+}
+
+.button:disabled,
+.buttonPresent:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.button[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--oacp-accent) 16%, transparent);
+  color: var(--oacp-accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--oacp-accent) 35%, transparent);
+}
+
+.buttonPresent {
+  color: var(--oacp-text);
+  font-weight: 600;
+}
+
+.buttonPresent:hover {
+  background: color-mix(in srgb, var(--oacp-accent) 12%, transparent);
+  color: var(--oacp-accent);
+}

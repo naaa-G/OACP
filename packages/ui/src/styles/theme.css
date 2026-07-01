@@ -1,0 +1,87 @@
+@import './components.css';
+
+/**
+ * OACP Console — CSS custom properties generated from @oacp/ui tokens.
+ * Import after reset.css in the Console app entry.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Background & surfaces */
+  --oacp-bg: #0b0f14;
+  --oacp-bg-elevated: #0f141c;
+  --oacp-panel: #141b26;
+  --oacp-panel-2: #1a2332;
+  --oacp-border: #2a364a;
+  --oacp-border-subtle: #1e2838;
+
+  /* Text */
+  --oacp-text: #e8edf5;
+  --oacp-text-muted: #8b9cb3;
+  --oacp-text-dim: #5c6b82;
+
+  /* Accent */
+  --oacp-accent: #2dd4bf;
+  --oacp-accent-hover: #5eead4;
+  --oacp-accent-dim: rgba(45, 212, 191, 0.12);
+  --oacp-accent-glow: rgba(45, 212, 191, 0.35);
+  --oacp-blue: #5b9cf5;
+  --oacp-blue-dim: rgba(91, 156, 245, 0.15);
+  --oacp-pulse: #7ec8ff;
+
+  /* Semantic */
+  --oacp-success: #3dd68c;
+  --oacp-success-dim: rgba(61, 214, 140, 0.12);
+  --oacp-warning: #f5a623;
+  --oacp-warning-dim: rgba(245, 166, 35, 0.12);
+  --oacp-error: #f07178;
+  --oacp-error-dim: rgba(240, 113, 120, 0.12);
+
+  /* Graph */
+  --oacp-node-idle: #3a4a63;
+  --oacp-node-active: #2dd4bf;
+  --oacp-edge: #4a5f7a;
+
+  /* Fleet */
+  --oacp-fleet-mcplab: #2dd4bf;
+  --oacp-fleet-startup: #f5a623;
+  --oacp-fleet-system: #8b9cb3;
+  --oacp-fleet-external: #a78bfa;
+
+  /* Typography */
+  --oacp-font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --oacp-font-mono: ui-monospace, 'Cascadia Code', 'Segoe UI Mono', Consolas, monospace;
+
+  /* Layout */
+  --oacp-header-height: 4.5rem;
+  --oacp-trace-rail-height: 11.25rem;
+  --oacp-sidebar-width: 16.25rem;
+  --oacp-feed-width: 20rem;
+  --oacp-panel-radius: 0.625rem;
+  --oacp-control-radius: 0.375rem;
+
+  /* Motion */
+  --oacp-duration-fast: 150ms;
+  --oacp-duration-normal: 250ms;
+  --oacp-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --oacp-shadow-panel: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  --oacp-shadow-panel-glow: 0 0 24px rgba(45, 212, 191, 0.06);
+  --oacp-shadow-focus: 0 0 0 2px rgba(45, 212, 191, 0.45);
+}
+
+/** Glass HUD panel utility — legacy alias; prefer .oacp-panel component */
+.oacp-glass-panel {
+  background: var(--oacp-panel);
+  border: 1px solid var(--oacp-border);
+  border-radius: var(--oacp-panel-radius);
+  box-shadow: var(--oacp-shadow-panel), var(--oacp-shadow-panel-glow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --oacp-duration-fast: 0ms;
+    --oacp-duration-normal: 0ms;
+  }
+}

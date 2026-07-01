@@ -6,7 +6,24 @@ import { join } from 'node:path';
 import { createSqliteMemoryStore } from '../src/storage/sqlite-memory-store.js';
 import { DEFAULT_MEMORY_SCOPE } from '@oacp/core';
 
+function sqliteMemoryStoreAvailable(): boolean {
+  try {
+    const probe = createSqliteMemoryStore({ path: ':memory:' });
+    void probe.close();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const SQLITE_OK = sqliteMemoryStoreAvailable();
+
 describe('SqliteMemoryStore (Day 15)', () => {
+  if (!SQLITE_OK) {
+    it.skip('requires better-sqlite3 native module', () => {});
+    return;
+  }
+
   let store = createSqliteMemoryStore({ path: ':memory:' });
 
   afterEach(async () => {

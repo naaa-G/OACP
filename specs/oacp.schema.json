@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oacp.dev/schemas/v0.1/oacp.schema.json",
+  "$id": "https://oacp.dev/schemas/v1.0/oacp.schema.json",
   "title": "OACP Base Definitions",
-  "description": "Shared definitions and message envelope for OACP protocol v0.1.",
+  "description": "Shared definitions and message envelope for OACP protocol v1.0.",
   "$defs": {
     "protocolVersion": {
       "type": "string",
-      "const": "0.1",
-      "description": "OACP protocol version. Must match the active spec release."
+      "enum": ["1.0", "0.1"],
+      "description": "OACP protocol version. Use 1.0 for new messages; 0.1 accepted during migration (Day 54 freeze)."
     },
     "messageId": {
       "type": "string",

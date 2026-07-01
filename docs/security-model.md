@@ -19,7 +19,7 @@ interface AgentIdentity {
   name: string;
   capabilities: string[];
   publicKey: string | JsonWebKey; // PEM or JWK
-  version: '0.1';
+  version: '1.0';
 }
 ```
 
@@ -41,6 +41,28 @@ Scoped permissions limit what an agent may do:
 Schema: [`specs/agent/permissions.schema.json`](../specs/agent/permissions.schema.json)
 
 Helpers: `canInvoke()`, `canDelegate()`, `assertCanInvoke()`, `assertCanDelegate()`
+
+## HTTP API authentication ✅ (Day 52)
+
+Optional shared-secret auth protects observability and mutating routes when `OACP_API_KEY` is set.
+
+| Credential                    | Usage                                       |
+| ----------------------------- | ------------------------------------------- |
+| `Authorization: Bearer <key>` | Preferred for HTTP clients and SDK          |
+| `X-Api-Key: <key>`            | Alternative header                          |
+| `?api_key=<key>`              | SSE only (`EventSource` cannot set headers) |
+
+Public endpoints: `GET /health`, `GET /v1/observability/runtime-config`, Console static assets.
+
+When `OACP_API_KEY` is unset, auth is disabled for local development.
+
+See [production-deployment.md](./production-deployment.md) for Docker (`oacp-gateway` nginx), Console, and reverse-proxy guidance. Full OIDC/SSO is Phase 2.
+
+## Observability SSE abuse controls ✅ (Day 55)
+
+`GET /v1/observability/events` enforces a fixed limit of **10 concurrent SSE connections per client IP** (first `X-Forwarded-For` hop when present). Additional connections receive HTTP **429** with `RATE_LIMITED`.
+
+Use `?api_key=` for authenticated SSE when `OACP_API_KEY` is configured. See [load-security-smoke.md](./load-security-smoke.md).
 
 ## Message signing (planned)
 

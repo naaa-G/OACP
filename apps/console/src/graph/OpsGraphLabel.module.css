@@ -1,0 +1,87 @@
+.hover,
+.pinned {
+  pointer-events: none;
+  min-width: 10rem;
+  max-width: 14rem;
+  padding: 0.5rem 0.625rem;
+  border-radius: var(--oacp-radius-md, 0.5rem);
+  background: var(--oacp-surface-raised, #1a2233);
+  border: 1px solid var(--oacp-border);
+  box-shadow: var(--oacp-shadow-md, 0 8px 24px rgb(0 0 0 / 35%));
+  color: var(--oacp-text);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.hover {
+  animation: opsGraphTooltipIn 120ms var(--oacp-easing, ease) forwards;
+}
+
+.pinned {
+  border-color: color-mix(in srgb, var(--oacp-accent) 55%, var(--oacp-border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--oacp-accent) 25%, transparent),
+    var(--oacp-shadow-md, 0 8px 24px rgb(0 0 0 / 35%));
+}
+
+@keyframes opsGraphTooltipIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.name {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.meta {
+  margin: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.row dt {
+  margin: 0;
+  color: color-mix(in srgb, var(--oacp-text) 55%, transparent);
+  font-weight: 500;
+}
+
+.row dd {
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--oacp-font-mono, ui-monospace, monospace);
+  font-size: 0.6875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pinBadge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--oacp-accent) 18%, transparent);
+  color: var(--oacp-accent);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}

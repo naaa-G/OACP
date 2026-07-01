@@ -94,7 +94,7 @@ describe('memory system (Day 15)', () => {
       identity: {
         id: 'agent://worker',
         name: 'Worker',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['echo'],
         publicKey: createCoordinatorIdentity().publicKey,
       },

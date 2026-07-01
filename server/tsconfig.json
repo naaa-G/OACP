@@ -5,5 +5,5 @@
     "noEmit": true
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "vitest.config.ts"],
-  "references": [{ "path": "../core" }]
+  "references": [{ "path": "../core" }, { "path": "../packages/observability-client" }]
 }

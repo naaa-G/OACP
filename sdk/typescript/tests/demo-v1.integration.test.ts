@@ -32,7 +32,7 @@ describe('Demo v1 — network collaboration (Day 14)', () => {
       identity: {
         id: 'agent://reporter',
         name: 'Document Reporter',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['document.report'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -59,7 +59,7 @@ describe('Demo v1 — network collaboration (Day 14)', () => {
       identity: {
         id: 'agent://analyzer',
         name: 'Document Analyzer',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['document.analyze'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -91,7 +91,7 @@ describe('Demo v1 — network collaboration (Day 14)', () => {
       identity: {
         id: 'agent://orchestrator',
         name: 'Document Orchestrator',
-        version: '0.1',
+        version: '1.0',
         capabilities: ['document.pipeline'],
         publicKey: DEFAULT_DEV_PUBLIC_KEY,
       },
@@ -146,7 +146,7 @@ describe('Demo v1 — network collaboration (Day 14)', () => {
     await client.registerAgent({
       id: 'agent://coordinator',
       name: 'Remote Coordinator',
-      version: '0.1',
+      version: '1.0',
       capabilities: ['orchestrate.remote'],
       publicKey: DEFAULT_DEV_PUBLIC_KEY,
     });

@@ -11,11 +11,11 @@ import {
 
 describe('@oacp/sdk', () => {
   it('re-exports the protocol version from core', () => {
-    expect(PROTOCOL_VERSION).toBe('0.1');
+    expect(PROTOCOL_VERSION).toBe('1.0');
   });
 
   it('re-exports the core package version', () => {
-    expect(CORE_VERSION).toBe('0.1.0');
+    expect(CORE_VERSION).toBe('1.0.0');
   });
 
   it('exports an SDK version', () => {

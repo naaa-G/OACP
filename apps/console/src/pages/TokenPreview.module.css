@@ -1,0 +1,235 @@
+.page {
+  min-height: 100vh;
+  padding: var(--oacp-spacing-4, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(91, 156, 245, 0.04) 0%, transparent 40%),
+    var(--oacp-bg);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oacp-accent);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0.375rem 0 0;
+  color: var(--oacp-text-muted);
+  font-size: 0.875rem;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.badgeLive {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  background: var(--oacp-accent-dim);
+  color: var(--oacp-accent);
+}
+
+.metaItem {
+  font-size: 0.8125rem;
+  color: var(--oacp-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.section {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--oacp-text-muted);
+}
+
+.swatchGrid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.swatchColor {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--oacp-border);
+  flex-shrink: 0;
+}
+
+.swatchMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.swatchLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.swatchValue {
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+}
+
+.typeStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.typeStack p {
+  margin: 0;
+}
+
+.spacingList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.spacingRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+}
+
+.spacingBar {
+  height: 0.5rem;
+  background: linear-gradient(90deg, var(--oacp-accent), var(--oacp-blue));
+  border-radius: 999px;
+  min-width: 0.25rem;
+}
+
+.demoCopy {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--oacp-text-muted);
+  line-height: 1.5;
+}
+
+.demoGlow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255, 255, 255, 0.02) 24px),
+    repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(255, 255, 255, 0.02) 24px);
+  border-radius: var(--oacp-control-radius);
+  border: 1px solid var(--oacp-border-subtle);
+}
+
+.nodeIdle,
+.nodeActive,
+.edge {
+  display: block;
+  border-radius: 50%;
+}
+
+.nodeIdle {
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--oacp-node-idle);
+  border: 2px solid #556680;
+}
+
+.nodeActive {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--oacp-node-active);
+  border: 2px solid var(--oacp-accent-hover);
+  box-shadow: 0 0 16px var(--oacp-accent-glow);
+}
+
+.edge {
+  width: 3rem;
+  height: 0.125rem;
+  border-radius: 0;
+  background: var(--oacp-edge);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--oacp-text-muted);
+}
+
+.legend span::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+  background: var(--oacp-node-idle);
+}
+
+.legend span:nth-child(2)::before {
+  background: var(--oacp-node-active);
+}
+
+.legend span:nth-child(3)::before {
+  border-radius: 0;
+  width: 0.75rem;
+  height: 2px;
+  background: var(--oacp-edge);
+}

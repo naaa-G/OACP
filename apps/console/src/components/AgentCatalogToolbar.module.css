@@ -1,0 +1,100 @@
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 0 0.75rem 0.75rem;
+  border-bottom: 1px solid var(--oacp-border-subtle);
+  flex-shrink: 0;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+}
+
+.groupLabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--oacp-text-dim);
+  min-width: 3.25rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  margin: 0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--oacp-border);
+  background: color-mix(in srgb, var(--oacp-text) 3%, transparent);
+  color: var(--oacp-text-muted);
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    border-color var(--oacp-duration-normal) var(--oacp-easing),
+    background var(--oacp-duration-normal) var(--oacp-easing),
+    color var(--oacp-duration-normal) var(--oacp-easing);
+}
+
+.chip:hover {
+  border-color: color-mix(in srgb, var(--oacp-accent) 35%, var(--oacp-border));
+  color: var(--oacp-text);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--oacp-accent);
+  outline-offset: 2px;
+}
+
+.chipActive {
+  border-color: color-mix(in srgb, var(--oacp-accent) 45%, transparent);
+  background: var(--oacp-accent-dim);
+  color: var(--oacp-accent);
+}
+
+.sortWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortLabel {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--oacp-text-dim);
+}
+
+.clearButton {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--oacp-text-muted);
+  font: inherit;
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  color: var(--oacp-accent);
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid var(--oacp-accent);
+  outline-offset: 2px;
+}

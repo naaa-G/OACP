@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oacp.dev/schemas/v0.1/agent/permissions.schema.json",
+  "$id": "https://oacp.dev/schemas/v1.0/agent/permissions.schema.json",
   "title": "OACP Agent Permissions",
   "description": "Scoped permissions governing what an agent may invoke, delegate, and access.",
   "type": "object",

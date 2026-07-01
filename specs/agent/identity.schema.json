@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oacp.dev/schemas/v0.1/agent/identity.schema.json",
+  "$id": "https://oacp.dev/schemas/v1.0/agent/identity.schema.json",
   "title": "OACP Agent Identity",
   "description": "Canonical identity record for an OACP agent.",
   "type": "object",

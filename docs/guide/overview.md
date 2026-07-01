@@ -6,19 +6,23 @@ Use the sidebar to browse guides, or start with [What is OACP?](/what-is-oacp) a
 
 ## Start here
 
-| Document                             | Description                             |
-| ------------------------------------ | --------------------------------------- |
-| [Quick start](/quick-start)          | Get a result in under 5 minutes         |
-| [What is OACP?](/what-is-oacp)       | Positioning, architecture, and diagrams |
-| [Development guide](/development)    | Local setup, scripts, and workflow      |
-| [Architecture](/architecture)        | System layers and package boundaries    |
-| [CLI](/cli)                          | `oacp run` / trace / serve (Day 24)     |
-| [TypeScript SDK](/sdk-typescript)    | `@oacp/sdk` and `@oacp/sdk/client`      |
-| [Python SDK](/sdk-python)            | `oacp-sdk` async HTTP client            |
-| [Example gallery](/examples-gallery) | Coding, research, bug-finder swarms     |
-| [Integrations](/integrations)        | LangChain & AutoGen adapters (Day 28)   |
-| [Startup team](/startup-team)        | Flagship autonomous team demo           |
-| [Playground](/playground)            | Live agent graph UI                     |
+| Document                                      | Description                             |
+| --------------------------------------------- | --------------------------------------- |
+| [Quick start](/quick-start)                   | Get a result in under 5 minutes         |
+| [What is OACP?](/what-is-oacp)                | Positioning, architecture, and diagrams |
+| [Development guide](/development)             | Local setup, scripts, and workflow      |
+| [Architecture](/architecture)                 | System layers and package boundaries    |
+| [CLI](/cli)                                   | `oacp run` / trace / serve (Day 24)     |
+| [TypeScript SDK](/sdk-typescript)             | `@oacp/sdk` and `@oacp/sdk/client`      |
+| [Python SDK](/sdk-python)                     | `oacp-sdk` async HTTP client            |
+| [Example gallery](/examples-gallery)          | Coding, research, bug-finder swarms     |
+| [Integrations](/integrations)                 | LangChain & AutoGen adapters (Day 28)   |
+| [Startup team](/startup-team)                 | Flagship autonomous team demo           |
+| [Playground](/playground)                     | Legacy agent graph UI (→ Console)       |
+| [OACP Console](/console)                      | v1.0 observability UI (Week 2 complete) |
+| [MCPLab integration](/mcplab-integration)     | Fleet/role metadata contract (Day 11)   |
+| [Observability client](/observability-client) | Snapshot API + React Query hooks        |
+| [v1.0 build plan](/version1)                  | 60-day Console + MCPLab launch plan     |
 
 ## Protocol & runtime
 

@@ -4,20 +4,31 @@ import { parseRunCommandArgs, runRunCommand } from '../src/commands/run.js';
 
 describe('oacp run integration (Day 24)', () => {
   it('runs startup team workflow and returns JSON output', async () => {
-    const parsed = parseRunCommandArgs([
-      'build',
-      'habit',
-      'tracker',
-      '--format',
-      'json',
-      '--quiet',
-    ]);
-    expect(parsed).not.toBe('help');
-    if (parsed === 'help') {
-      return;
-    }
+    const previousBackend = process.env.OACP_MEMORY_BACKEND;
+    process.env.OACP_MEMORY_BACKEND = 'memory';
 
-    const exitCode = await runRunCommand(parsed);
-    expect(exitCode).toBe(0);
+    try {
+      const parsed = parseRunCommandArgs([
+        'build',
+        'habit',
+        'tracker',
+        '--format',
+        'json',
+        '--quiet',
+      ]);
+      expect(parsed).not.toBe('help');
+      if (parsed === 'help') {
+        return;
+      }
+
+      const exitCode = await runRunCommand(parsed);
+      expect(exitCode).toBe(0);
+    } finally {
+      if (previousBackend === undefined) {
+        delete process.env.OACP_MEMORY_BACKEND;
+      } else {
+        process.env.OACP_MEMORY_BACKEND = previousBackend;
+      }
+    }
   }, 90_000);
 });
