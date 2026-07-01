@@ -65,6 +65,7 @@ pnpm ci:act verify -n
 | `playwright install --with-deps` fails | E2E uses `full-latest` automatically; pre-pull: `docker pull catthehacker/ubuntu:full-latest`       |
 | Docker job cannot reach daemon         | `pnpm ci:act docker` adds `--privileged` and socket mount; restart Docker Desktop if it still fails |
 | act much slower than GitHub            | Expected — no hosted-runner cache; first pull is large                                              |
+| Prettier reports hundreds of files     | `pnpm install` in act creates `.pnpm-store/`; ignored via `.prettierignore` (do not remove)         |
 
 ## When to use act vs host commands
 

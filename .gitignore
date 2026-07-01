@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 __pycache__/
 *.py[cod]
 
@@ -9,6 +10,8 @@ dist/
 
 # Test & coverage
 coverage/
+**/test-results/
+playwright-report/
 
 # Turborepo
 .turbo/

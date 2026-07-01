@@ -5,3 +5,6 @@ coverage
 pnpm-lock.yaml
 core/schemas
 lint-report.json
+.pnpm-store
+**/test-results
+playwright-report
