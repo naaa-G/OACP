@@ -273,6 +273,19 @@ $env:CONSOLE_E2E_PORT = "5190"
 pnpm --filter @oacp/console test:e2e
 ```
 
+### CI failure logs
+
+GitHub Actions uploads `console-e2e-report` on every E2E run (pass or fail):
+
+| Artifact                       | Purpose                                 |
+| ------------------------------ | --------------------------------------- |
+| `test-results/e2e-errors.md`   | Human-readable failure summary          |
+| `test-results/e2e-errors.json` | Machine-readable failure list           |
+| `test-results/results.json`    | Full Playwright JSON report             |
+| `playwright-report/`           | HTML report (open `index.html` locally) |
+
+Playwright runs the **full suite** even when tests fail (`maxFailures: 0`).
+
 ## Build
 
 ```bash

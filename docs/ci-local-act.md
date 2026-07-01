@@ -92,6 +92,25 @@ Or remove all act containers:
 docker ps -aq --filter "name=act-" | ForEach-Object { docker rm -f $_ }
 ```
 
+## What act downloads each run
+
+| Item                                                               | First run                          | Later `pnpm ci:act e2e` runs                                             |
+| ------------------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------------------ |
+| **Runner image** (`full-latest`, ~70GB on disk)                    | `docker pull` once                 | **Reused** — `ci:act` passes `--pull=false`                              |
+| **GitHub Actions** (`checkout`, `setup-node`, `pnpm-action-setup`) | Cloned into act cache              | Usually **cached** under `%LOCALAPPDATA%\.cache\act` (or `~/.cache/act`) |
+| **`pnpm install --frozen-lockfile`**                               | Full install in a fresh container  | **Runs again** — new container each job (no GitHub `pnpm` cache)         |
+| **`playwright install chromium --with-deps`**                      | Large Linux browser + apt deps     | **Runs again** inside that fresh container                               |
+| **Your repo**                                                      | Copied/bind-mounted into container | Fast (local files)                                                       |
+
+So repeat E2E runs are still slow mainly because **dependencies and Playwright are reinstalled every time**, not because the 70GB runner image is pulled again.
+
+### Tips
+
+- **Pre-pull the runner image once:** `pnpm ci:act:pull:full`
+- **Skip local E2E when possible:** push and let GitHub Actions run E2E (hosted `pnpm` + Playwright cache is much faster).
+- **Reuse a job container (optional, advanced):** `pnpm ci:act e2e -- -r` keeps the act container between runs so later runs may skip some setup — can leave stale state; use only when iterating on the same job.
+- **Force refresh the runner image:** `pnpm ci:act e2e -- --pull`
+
 ## When to use act vs host commands
 
 | Goal                         | Command                                     |
