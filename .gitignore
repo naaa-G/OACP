@@ -43,10 +43,10 @@ Thumbs.db
 !.vscode/settings.json
 
 # ATDN — separate product (local only; not part of OACP repo)
-ATDN/
+/ATDN/
 
-# MCPLab — MCP × OACP reference lab (local only; not part of OACP repo yet)
-MCPLab/
+# MCPLab reference lab — sibling tree at repo root only (not sdk/typescript/src/mcplab)
+/MCPLab/
 
 # Local / internal planning docs (not published to GitHub)
 plan.md

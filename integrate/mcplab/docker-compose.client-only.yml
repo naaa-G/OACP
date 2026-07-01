@@ -1,0 +1,31 @@
+# MCPLab-only compose — client against external OACP (no embedded server)
+#
+# Use when running MCPLab from its own repo while OACP runs separately:
+#   docker compose -f docker-compose.client-only.yml up --build
+#
+# Requires OACP platform already running:
+#   cd ../oacp && docker compose up -d
+
+services:
+  mcplab:
+    build: .
+    ports:
+      - '${MCPLAB_PUBLISH_PORT:-8080}:${MCPLAB_CONTAINER_PORT:-8080}'
+    environment:
+      OACP_SERVER_URL: ${OACP_SERVER_URL:-http://host.docker.internal:3847}
+      MCPLAB_OACP_SERVER_URL: ${MCPLAB_OACP_SERVER_URL:-http://host.docker.internal:3847}
+      MCPLAB_OACP_CONSOLE_URL: ${MCPLAB_OACP_CONSOLE_URL:-http://127.0.0.1:3847/console}
+      MCPLAB_EMBEDDED_OACP: '0'
+      OACP_EMBEDDED_SERVER: '0'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'curl -fsS http://127.0.0.1:${MCPLAB_CONTAINER_PORT:-8080}/health || exit 1',
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s

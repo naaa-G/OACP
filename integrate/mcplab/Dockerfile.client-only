@@ -1,0 +1,36 @@
+# MCPLab client-only image — NO embedded OACP server (v1 unified stack)
+#
+# Copy to MCPLab/Dockerfile when MCPLab lives at OACP/MCPLab/
+# Platform OACP + Console runs in the `oacp` Compose service on :3847.
+#
+# Build context: MCPLab repository root.
+
+FROM python:3.11-slim AS runtime
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install MCPLab + OACP Python SDK (adjust paths to match your MCPLab layout)
+COPY pyproject.toml poetry.lock* requirements.txt* ./
+RUN pip install --no-cache-dir -e ".[dev]" 2>/dev/null \
+  || pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+ENV MCPLAB_EMBEDDED_OACP=0 \
+  OACP_EMBEDDED_SERVER=0 \
+  OACP_SERVER_URL=http://oacp:3847 \
+  MCPLAB_OACP_SERVER_URL=http://oacp:3847 \
+  MCPLAB_OACP_CONSOLE_URL=http://127.0.0.1:3847/console \
+  MCPLAB_CONTAINER_PORT=8080
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=60s --retries=5 \
+  CMD curl -fsS "http://127.0.0.1:${MCPLAB_CONTAINER_PORT}/health" || exit 1
+
+# Replace with your MCPLab API / lab entrypoint (uvicorn, gunicorn, etc.)
+CMD ["python", "-m", "mcplab", "serve", "--host", "0.0.0.0", "--port", "8080"]

@@ -25,7 +25,12 @@ export function parseConsoleFleetLabels(raw: string | undefined): Readonly<Recor
   }
 }
 
+function readViteFleetLabelsEnv(): string | undefined {
+  const raw = (import.meta as { env?: { VITE_OACP_CONSOLE_FLEETS?: string } }).env
+    ?.VITE_OACP_CONSOLE_FLEETS;
+  return typeof raw === 'string' ? raw : undefined;
+}
+
 /** Build-time fleet labels from `VITE_OACP_CONSOLE_FLEETS`. */
-export const CONSOLE_FLEET_LABELS: Readonly<Record<string, string>> = parseConsoleFleetLabels(
-  import.meta.env.VITE_OACP_CONSOLE_FLEETS,
-);
+export const CONSOLE_FLEET_LABELS: Readonly<Record<string, string>> =
+  parseConsoleFleetLabels(readViteFleetLabelsEnv());
