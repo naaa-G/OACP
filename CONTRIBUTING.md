@@ -22,6 +22,7 @@ git clone https://github.com/naaa-G/OACP.git
 cd OACP
 pnpm install
 pnpm verify    # format check, lint, typecheck, test, build
+pnpm ci:act verify   # same CI job in Docker via act (see docs/ci-local-act.md)
 ```
 
 See [docs/development.md](./docs/development.md) for the full developer guide.
@@ -67,7 +68,7 @@ Prefixes: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`.
 
 ## Pull request checklist
 
-- [ ] `pnpm verify` passes locally
+- [ ] `pnpm verify` passes locally (or `pnpm ci:act verify` for the full GitHub Verify job in Docker)
 - [ ] Tests added or updated for behavior changes
 - [ ] Public API or schema changes documented
 - [ ] [CHANGELOG.md](./CHANGELOG.md) updated under `[Unreleased]` for user-facing changes

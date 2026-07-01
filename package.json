@@ -46,7 +46,14 @@
     "demo:custom-agents": "pnpm --filter oacp-examples start:custom-agents",
     "verify:rc": "node scripts/verify-rc.mjs",
     "test:day59": "node scripts/run-day59-rc.mjs",
-    "test:day59:live": "node scripts/run-day59-rc.mjs --live"
+    "test:day59:live": "node scripts/run-day59-rc.mjs --live",
+    "ci:act": "node scripts/act-ci.mjs",
+    "ci:act:verify": "node scripts/act-ci.mjs verify",
+    "ci:act:e2e": "node scripts/act-ci.mjs e2e",
+    "ci:act:python": "node scripts/act-ci.mjs python",
+    "ci:act:docker": "node scripts/act-ci.mjs docker",
+    "ci:act:pull": "docker pull catthehacker/ubuntu:act-latest",
+    "ci:act:pull:full": "docker pull catthehacker/ubuntu:full-latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
