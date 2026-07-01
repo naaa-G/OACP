@@ -2,10 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { buildE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
 import { buildE2eTraceGraph } from './fixtures/trace-graph.js';
-import {
-  buildOpsSnapshotFromGraph,
-  mockOpsSnapshotGraph,
-} from './helpers/ops-snapshot-mock.js';
+import { buildOpsSnapshotFromGraph, mockOpsSnapshotGraph } from './helpers/ops-snapshot-mock.js';
 import { buildScaleTraceGraph } from '../src/graph/ops-graph-layout.js';
 
 const E2E_AGENT_COORDINATOR = 'agent://coordinator';
