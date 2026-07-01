@@ -1,8 +1,14 @@
 import { expect, test } from '@playwright/test';
 
-import { buildE2eSnapshot, E2E_TRACE_ID, E2E_SECOND_TRACE_ID } from './fixtures/snapshot.js';
+import {
+  buildE2eSnapshot,
+  buildRunningE2eSnapshot,
+  E2E_TRACE_ID,
+  E2E_SECOND_TRACE_ID,
+} from './fixtures/snapshot.js';
 import { buildE2eTraceGraph, buildMultiFleetE2eTraceGraph } from './fixtures/trace-graph.js';
 import { buildScaleTraceGraph } from '../src/graph/ops-graph-layout.js';
+import { seedFastReconcileInterval } from './helpers/live-feed.js';
 
 async function mockGraphApi(page: import('@playwright/test').Page): Promise<void> {
   await page.route('**/v1/observability/snapshot**', async (route) => {
@@ -50,14 +56,14 @@ test.describe('Showcase 3D graph scaffold (Day 36)', () => {
 
     await expect(page).toHaveURL(/mode=showcase/);
     await expect(page.getByTestId('showcase-graph')).toBeVisible();
-    await expect(page.getByTestId('ops-graph')).toHaveCount(0);
+    await expect(page.getByTestId('ops-graph')).toBeHidden();
     await expect(page.getByTestId('graph-mode-showcase')).toHaveAttribute('aria-pressed', 'true');
 
     await page.getByTestId('graph-mode-ops').click();
 
     await expect(page).toHaveURL(/mode=ops/);
     await expect(page.getByTestId('ops-graph')).toBeVisible({ timeout: 20_000 });
-    await expect(page.getByTestId('showcase-graph')).toHaveCount(0);
+    await expect(page.getByTestId('showcase-graph')).toBeHidden();
   });
 
   test('orbit controls canvas remains interactive after mode switch', async ({ page }) => {
@@ -321,9 +327,11 @@ test.describe('Showcase edge animation (Day 40)', () => {
   test('poll-based timeline growth enqueues an edge pulse', async ({ page }) => {
     let pollCount = 0;
 
+    await seedFastReconcileInterval(page);
+
     await page.route('**/v1/observability/snapshot**', async (route) => {
       pollCount += 1;
-      const snapshot = buildE2eSnapshot(E2E_TRACE_ID);
+      const snapshot = buildRunningE2eSnapshot(E2E_TRACE_ID);
       const timeline =
         pollCount >= 2
           ? [
@@ -362,6 +370,14 @@ test.describe('Showcase edge animation (Day 40)', () => {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({ ok: true, graph: buildE2eTraceGraph(E2E_TRACE_ID) }),
+      });
+    });
+
+    await page.route('**/v1/observability/events**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'text/event-stream',
+        body: ': connected\n\n',
       });
     });
 

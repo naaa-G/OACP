@@ -187,3 +187,38 @@ export function buildE2eSnapshot(traceId: string = E2E_TRACE_ID): PlaygroundSnap
           ],
   };
 }
+
+/** Running trace variant — keeps reconcile polling enabled for live-update E2E. */
+export function buildRunningE2eSnapshot(traceId: string = E2E_TRACE_ID): PlaygroundSnapshot {
+  const base = buildE2eSnapshot(traceId);
+  const runningTimeline =
+    traceId === E2E_SECOND_TRACE_ID
+      ? (base.active_trace?.timeline ?? [])
+      : (base.active_trace?.timeline ?? []).filter((event) => event.type !== 'task_response');
+
+  const traces = base.traces.map((trace) =>
+    trace.traceId === traceId
+      ? {
+          ...trace,
+          status: 'running' as const,
+          completedAt: undefined,
+          messageCount: runningTimeline.length,
+          messageTypes: [...new Set(runningTimeline.map((event) => event.type))],
+        }
+      : trace,
+  );
+
+  return {
+    ...base,
+    traces,
+    active_trace:
+      base.active_trace === undefined
+        ? undefined
+        : {
+            ...base.active_trace,
+            message_count: runningTimeline.length,
+            message_types: [...new Set(runningTimeline.map((event) => event.type))],
+            timeline: runningTimeline,
+          },
+  };
+}

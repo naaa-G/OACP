@@ -51,8 +51,10 @@ export function MessageFlowPanel({
 
   const feedUpdatesPaused = isLiveFeed && (feedPaused || feedHovered);
 
+  const feedTimeline = isOffline ? undefined : timeline;
+
   const { events, newMessageIds, bufferedCount } = useIncrementalMessageFeed({
-    timeline,
+    timeline: feedTimeline,
     selectedTraceId,
     selectedAgentId,
     liveEnabled: isLiveFeed,
@@ -150,10 +152,10 @@ export function MessageFlowPanel({
     !isLoading &&
     !isReconnecting &&
     !showAgentFilterEmpty &&
-    (selectedTraceId === undefined || displayEvents.length === 0);
+    (isOffline || selectedTraceId === undefined || displayEvents.length === 0);
   const showLoading =
     isLoading && !isReconnecting && selectedTraceId !== undefined && displayEvents.length === 0;
-  const showList = filteredEvents.length > 0;
+  const showList = !isOffline && filteredEvents.length > 0;
   const showFilterEmpty =
     !showLoading && !showReconnecting && displayEvents.length > 0 && filteredEvents.length === 0;
 

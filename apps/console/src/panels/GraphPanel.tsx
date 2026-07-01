@@ -68,10 +68,12 @@ function resolveGraphState({
   mode,
   traceGraphLoading = false,
   hasTraceGraph = false,
+  hasTraceGraphFromApi = false,
 }: GraphPanelProps & {
   readonly mode: ReturnType<typeof useGraphMode>;
   readonly traceGraphLoading?: boolean | undefined;
   readonly hasTraceGraph?: boolean | undefined;
+  readonly hasTraceGraphFromApi?: boolean | undefined;
 }): GraphPanelState {
   if (selectedTraceId === undefined) {
     if (mode === 'showcase' && agents.length > 0 && !isOffline) {
@@ -91,8 +93,10 @@ function resolveGraphState({
   }
 
   if (mode === 'showcase') {
-    // Showcase can render from snapshot agents before the trace-graph API returns.
-    if (isLoading && !hasTraceGraph && !hasAgents) {
+    if (traceGraphLoading && !hasTraceGraphFromApi) {
+      return 'loading';
+    }
+    if (isLoading && !hasTraceGraphFromApi && !hasAgents) {
       return 'loading';
     }
     return 'ready';
@@ -125,6 +129,7 @@ function explainGraphPanelState(input: {
   readonly agents: readonly unknown[];
   readonly traceGraphLoading: boolean;
   readonly hasTraceGraph: boolean;
+  readonly hasTraceGraphFromApi: boolean;
 }): string {
   const hasAgents = input.agents.length > 0;
 
@@ -146,10 +151,10 @@ function explainGraphPanelState(input: {
   }
 
   if (input.state === 'loading') {
-    if (input.mode === 'showcase' && input.isLoading && !input.hasTraceGraph && !hasAgents) {
+    if (input.mode === 'showcase' && input.isLoading && !input.hasTraceGraphFromApi && !hasAgents) {
       return 'showcase-waiting-snapshot';
     }
-    if (input.mode === 'showcase' && input.traceGraphLoading && !input.hasTraceGraph) {
+    if (input.mode === 'showcase' && input.traceGraphLoading && !input.hasTraceGraphFromApi) {
       return 'showcase-waiting-trace-graph-api';
     }
     if (input.mode === 'ops' && input.traceGraphLoading && !input.hasTraceGraph && !hasAgents) {
@@ -270,6 +275,8 @@ export function GraphPanel({
   }, [activeAgentIds, agentLinks, agents, mode, scopedAgentLinks, scopedAgents, selectedTraceId]);
 
   const traceGraphFromApi = traceGraphQuery.data;
+  const hasTraceGraphFromApi =
+    traceGraphFromApi !== undefined && traceGraphFromApi.nodes.length > 0;
   const traceGraph = useMemo(() => {
     // Ops 2D renders from snapshot links/depths; avoid swapping to API graph on background refetch.
     if (mode === 'ops') {
@@ -337,7 +344,7 @@ export function GraphPanel({
     mode === 'ops'
       ? isLoading && !hasTraceGraph && agentLinks.length === 0
       : traceGraphQuery.isLoading ||
-        (traceGraphQuery.isFetching && !traceGraphQuery.isError && !hasTraceGraph);
+        (traceGraphQuery.isFetching && !traceGraphQuery.isError && !hasTraceGraphFromApi);
 
   const state = resolveGraphState({
     selectedTraceId,
@@ -348,6 +355,7 @@ export function GraphPanel({
     mode,
     traceGraphLoading,
     hasTraceGraph,
+    hasTraceGraphFromApi,
   });
 
   const showcaseVisible = mode === 'showcase' && state === 'ready';
@@ -363,6 +371,7 @@ export function GraphPanel({
     agents,
     traceGraphLoading,
     hasTraceGraph,
+    hasTraceGraphFromApi,
   });
 
   const prevPanelSignatureRef = useRef('');

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import type { PlaygroundSnapshot, TraceTimelineEvent } from '@oacp/observability-client';
 
-import { buildE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
+import { buildE2eSnapshot, buildRunningE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
 import { seedFastReconcileInterval } from './helpers/live-feed.js';
 
 function timelineEvent(messageId: string, index: number): TraceTimelineEvent {
@@ -197,7 +197,7 @@ test.describe('Console message feed scroll (Day 48)', () => {
 
   test('pause feed toggle buffers updates until resumed', async ({ page }) => {
     let pollCount = 0;
-    const base = buildE2eSnapshot(E2E_TRACE_ID);
+    const base = buildRunningE2eSnapshot(E2E_TRACE_ID);
     const baseTimeline = base.active_trace!.timeline;
 
     await seedFastReconcileInterval(page);

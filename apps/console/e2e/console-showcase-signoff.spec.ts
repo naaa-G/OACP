@@ -49,7 +49,7 @@ test.describe('Day 45 — Showcase sign-off (Issue #2)', () => {
 
     await expect(page).toHaveURL(/mode=showcase/);
     await expect(page.getByTestId('showcase-graph')).toBeVisible();
-    await expect(page.getByTestId('ops-graph')).toHaveCount(0);
+    await expect(page.getByTestId('ops-graph')).toBeHidden();
 
     await page.getByTestId('graph-mode-ops').click();
     await expect(page).toHaveURL(/mode=ops/);

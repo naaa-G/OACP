@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import type { PlaygroundSnapshot, TraceTimelineEvent } from '@oacp/observability-client';
 
 import { buildLargeTimelineSnapshot } from './fixtures/large-timeline.js';
-import { buildE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
+import { buildE2eSnapshot, buildRunningE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
 import { seedFastReconcileInterval } from './helpers/live-feed.js';
 
 test.describe('Console message feed virtual list (Day 49)', () => {
@@ -101,7 +101,7 @@ test.describe('Console message feed virtual list (Day 49)', () => {
 test.describe('Console message feed hover pause (Day 49)', () => {
   test('buffers live updates while hovered and flushes on mouse leave', async ({ page }) => {
     let pollCount = 0;
-    const base = buildE2eSnapshot(E2E_TRACE_ID);
+    const base = buildRunningE2eSnapshot(E2E_TRACE_ID);
     const baseTimeline = base.active_trace!.timeline;
 
     await seedFastReconcileInterval(page);

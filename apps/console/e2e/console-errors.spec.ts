@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-import { buildE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
+import { buildE2eSnapshot, buildRunningE2eSnapshot, E2E_TRACE_ID } from './fixtures/snapshot.js';
+import { seedFastReconcileInterval } from './helpers/live-feed.js';
 
 test.describe('Console errors and empty states (Day 14)', () => {
   test('shows actionable banner when snapshot API is unreachable', async ({ page }) => {
@@ -143,6 +144,8 @@ test.describe('Console errors and empty states (Day 14)', () => {
   test('clears stale UI when polling fails after a successful snapshot', async ({ page }) => {
     let failRequests = false;
 
+    await seedFastReconcileInterval(page);
+
     await page.route('**/v1/observability/snapshot**', async (route) => {
       if (!failRequests) {
         const url = new URL(route.request().url());
@@ -150,12 +153,20 @@ test.describe('Console errors and empty states (Day 14)', () => {
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
-          body: JSON.stringify({ ok: true, snapshot: buildE2eSnapshot(traceId) }),
+          body: JSON.stringify({ ok: true, snapshot: buildRunningE2eSnapshot(traceId) }),
         });
         return;
       }
 
       await route.abort('failed');
+    });
+
+    await page.route('**/v1/observability/events**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'text/event-stream',
+        body: ': connected\n\n',
+      });
     });
 
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=legacy`);
@@ -173,9 +184,22 @@ test.describe('Console errors and empty states (Day 14)', () => {
   });
 
   test('shows reconnecting copy instead of loading skeletons while retrying', async ({ page }) => {
-    let phase: 'abort' | 'hang' = 'abort';
+    let phase: 'success' | 'abort' | 'hang' = 'success';
+
+    await seedFastReconcileInterval(page);
 
     await page.route('**/v1/observability/snapshot**', async (route) => {
+      if (phase === 'success') {
+        const url = new URL(route.request().url());
+        const traceId = url.searchParams.get('trace_id') ?? E2E_TRACE_ID;
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({ ok: true, snapshot: buildRunningE2eSnapshot(traceId) }),
+        });
+        return;
+      }
+
       if (phase === 'abort') {
         await route.abort('failed');
         return;
@@ -186,7 +210,19 @@ test.describe('Console errors and empty states (Day 14)', () => {
       });
     });
 
+    await page.route('**/v1/observability/events**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'text/event-stream',
+        body: ': connected\n\n',
+      });
+    });
+
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=legacy`);
+
+    await expect(page.locator('button[data-agent-id="agent://coordinator"]')).toBeVisible();
+
+    phase = 'abort';
 
     await expect(page.getByTestId('global-error-banner')).toBeVisible({ timeout: 10_000 });
     await expect(page.locator('header').getByText('Offline', { exact: true })).toBeVisible();

@@ -134,11 +134,11 @@ export function useIncrementalMessageFeed({
 
   useEffect(() => {
     if (selectedTraceId === undefined || timeline === undefined) {
-      if (selectedTraceId === undefined) {
-        pauseBufferRef.current = [];
-        setBufferedCount(0);
-        setRows([]);
-      }
+      pauseBufferRef.current = [];
+      setBufferedCount(0);
+      setRows([]);
+      setNewMessageIds(new Set());
+      initializedRef.current = false;
       return;
     }
 
