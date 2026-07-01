@@ -21,10 +21,7 @@ services:
       - 'host.docker.internal:host-gateway'
     healthcheck:
       test:
-        [
-          'CMD-SHELL',
-          'curl -fsS http://127.0.0.1:${MCPLAB_CONTAINER_PORT:-8080}/health || exit 1',
-        ]
+        ['CMD-SHELL', 'curl -fsS http://127.0.0.1:${MCPLAB_CONTAINER_PORT:-8080}/health || exit 1']
       interval: 15s
       timeout: 5s
       retries: 5

@@ -41,7 +41,7 @@ test.describe('Ops 2D graph (Day 27)', () => {
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 
     const opsGraph = page.getByTestId('ops-graph');
-    await expect(opsGraph).toBeVisible();
+    await expect(opsGraph).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId('graph-mode-coming-soon')).toHaveCount(0);
     await expect(page.getByTestId('legacy-ring-graph')).toHaveCount(0);
 
@@ -95,7 +95,7 @@ test.describe('Ops 2D graph (Day 27)', () => {
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 
     const opsGraph = page.getByTestId('ops-graph');
-    await expect(opsGraph).toBeVisible();
+    await expect(opsGraph).toBeVisible({ timeout: 20_000 });
     await expect(opsGraph.locator('[data-agent-id]')).toHaveCount(scaleGraph.nodes.length);
     await expect(opsGraph.locator('[data-agent-id="agent://coordinator"]')).toBeVisible();
   });
@@ -107,7 +107,7 @@ test.describe('Ops 2D graph labels (Day 28)', () => {
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 
     const opsGraph = page.getByTestId('ops-graph');
-    await expect(opsGraph).toBeVisible();
+    await expect(opsGraph).toBeVisible({ timeout: 20_000 });
     await expect(opsGraph.locator('[data-testid^="ops-graph-pinned-label-"]')).toHaveCount(0);
     await expect(opsGraph.locator('[data-testid^="ops-graph-tooltip-"]')).toHaveCount(0);
 

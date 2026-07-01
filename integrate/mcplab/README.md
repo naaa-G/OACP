@@ -4,10 +4,10 @@ MCPLab is the **flagship OACP integration** — MCP tool servers plus multi-agen
 
 ## Layout options
 
-| Location | When to use |
-| -------- | ----------- |
-| `./MCPLab/` | Local clone (gitignored in OACP monorepo until public launch) |
-| `./integrate/mcplab/` | Client-only compose templates shipped with OACP |
+| Location              | When to use                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| `./MCPLab/`           | Local clone (gitignored in OACP monorepo until public launch) |
+| `./integrate/mcplab/` | Client-only compose templates shipped with OACP               |
 
 Resolution order: `integrate/mcplab/` → `MCPLab/` (see `docker/scripts/resolve-mcplab-root.mjs`).
 
@@ -24,12 +24,12 @@ pnpm docker:mcplab
 
 ## Environment
 
-| Variable | v1 value |
-| -------- | -------- |
-| `MCPLAB_OACP_SERVER_URL` | `http://oacp:3847` (Docker) or `http://127.0.0.1:3847` (host) |
-| `MCPLAB_OACP_CONSOLE_URL` | `http://127.0.0.1:3847/console` |
-| `MCPLAB_SYNC_SECRET` | Shared secret for observability sync |
-| `MCPLAB_OACP_API_KEY` | Matches `OACP_API_KEY` when auth enabled |
+| Variable                  | v1 value                                                      |
+| ------------------------- | ------------------------------------------------------------- |
+| `MCPLAB_OACP_SERVER_URL`  | `http://oacp:3847` (Docker) or `http://127.0.0.1:3847` (host) |
+| `MCPLAB_OACP_CONSOLE_URL` | `http://127.0.0.1:3847/console`                               |
+| `MCPLAB_SYNC_SECRET`      | Shared secret for observability sync                          |
+| `MCPLAB_OACP_API_KEY`     | Matches `OACP_API_KEY` when auth enabled                      |
 
 ## Migration from legacy embedded OACP
 

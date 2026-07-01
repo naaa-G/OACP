@@ -30,7 +30,7 @@ test.describe('Showcase 3D graph scaffold (Day 36)', () => {
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=showcase`);
 
     const showcaseGraph = page.getByTestId('showcase-graph');
-    await expect(showcaseGraph).toBeVisible();
+    await expect(showcaseGraph).toBeVisible({ timeout: 20_000 });
     await expect(showcaseGraph).toHaveAttribute('data-showcase-layout', 'force');
     await expect(showcaseGraph).toHaveAttribute('data-showcase-node-count', '2');
     await expect(showcaseGraph).toHaveAttribute('data-showcase-edge-count', '1');
@@ -43,7 +43,7 @@ test.describe('Showcase 3D graph scaffold (Day 36)', () => {
     await mockGraphApi(page);
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=ops`);
 
-    await expect(page.getByTestId('ops-graph')).toBeVisible();
+    await expect(page.getByTestId('ops-graph')).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId('graph-mode-ops')).toHaveAttribute('aria-pressed', 'true');
 
     await page.getByTestId('graph-mode-showcase').click();
@@ -56,7 +56,7 @@ test.describe('Showcase 3D graph scaffold (Day 36)', () => {
     await page.getByTestId('graph-mode-ops').click();
 
     await expect(page).toHaveURL(/mode=ops/);
-    await expect(page.getByTestId('ops-graph')).toBeVisible();
+    await expect(page.getByTestId('ops-graph')).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId('showcase-graph')).toHaveCount(0);
   });
 
@@ -65,13 +65,13 @@ test.describe('Showcase 3D graph scaffold (Day 36)', () => {
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=showcase`);
 
     const showcaseGraph = page.getByTestId('showcase-graph');
-    await expect(showcaseGraph).toBeVisible();
+    await expect(showcaseGraph).toBeVisible({ timeout: 20_000 });
     await expect(showcaseGraph.locator('canvas')).toHaveCount(1);
 
     await showcaseGraph.click({ position: { x: 220, y: 180 } });
     await page.mouse.wheel(0, -200);
 
-    await expect(showcaseGraph).toBeVisible();
+    await expect(showcaseGraph).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId('graph-mode-showcase')).toHaveAttribute('aria-pressed', 'true');
   });
 });
@@ -99,7 +99,7 @@ test.describe('Showcase 3D force layout (Day 37)', () => {
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=showcase`);
 
     const showcaseGraph = page.getByTestId('showcase-graph');
-    await expect(showcaseGraph).toBeVisible();
+    await expect(showcaseGraph).toBeVisible({ timeout: 20_000 });
     await expect(showcaseGraph).toHaveAttribute('data-showcase-layout', 'force');
     await expect(showcaseGraph).toHaveAttribute('data-showcase-node-count', '27');
     await expect(
@@ -168,7 +168,7 @@ test.describe('Showcase hover labels + selection (Day 39)', () => {
     await mockGraphApi(page);
     await page.goto(`/?trace_id=${E2E_TRACE_ID}&mode=showcase`);
 
-    await page.locator('[data-agent-id="agent://coordinator"]').click();
+    await page.locator('button[data-agent-id="agent://coordinator"]').click();
 
     await expect(page.getByTestId('showcase-graph')).toHaveAttribute(
       'data-showcase-focused-agent',

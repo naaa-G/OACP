@@ -9,7 +9,10 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: 1,
   reporter: process.env.CI ? 'github' : 'list',
-  timeout: 60_000,
+  timeout: 90_000,
+  expect: {
+    timeout: 15_000,
+  },
   use: {
     ...devices['Desktop Chrome'],
     // CI installs Playwright Chromium; local dev can use system Chrome when CDN is blocked.

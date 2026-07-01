@@ -20,8 +20,9 @@ export interface ConsoleProvidersProps {
 export function ConsoleProviders({ children }: ConsoleProvidersProps) {
   const [queryClient] = useState(createQueryClient);
 
-  const apiBase = import.meta.env.VITE_OACP_API_BASE ?? '';
-  const apiKey = import.meta.env.VITE_OACP_API_KEY?.trim() ?? '';
+  const viteEnv = (import.meta as { env?: ImportMetaEnv }).env;
+  const apiBase = viteEnv?.VITE_OACP_API_BASE ?? '';
+  const apiKey = viteEnv?.VITE_OACP_API_KEY?.trim() ?? '';
   const observabilityConfig = useMemo(
     () => ({
       baseUrl: apiBase,

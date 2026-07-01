@@ -115,7 +115,7 @@ jobs:
         run: docker compose build oacp
 
       - name: Start OACP stack
-        run: docker compose up -d oacp
+        run: docker compose up -d oacp oacp-gateway
 
       - name: Wait for health
         run: |

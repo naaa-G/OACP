@@ -1,9 +1,5 @@
 import { PROTOCOL_VERSION, type AgentIdentity } from '@oacp/core';
-import {
-  MCPLAB_FLEET,
-  MCPLAB_ROLES,
-  buildMcplabAgentMetadata,
-} from '@oacp/core';
+import { MCPLAB_FLEET, MCPLAB_ROLES, buildMcplabAgentMetadata } from '@oacp/core';
 
 import { DEFAULT_DEV_PUBLIC_KEY } from '../defaults.js';
 import type { AgentClient } from '../client/agent-client.js';

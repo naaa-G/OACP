@@ -13,7 +13,9 @@ export function parseGraphMode(raw: string | undefined): GraphMode {
 }
 
 /** Resolved at build time from `VITE_GRAPH_MODE`. */
-export const graphMode: GraphMode = parseGraphMode(import.meta.env.VITE_GRAPH_MODE);
+export const graphMode: GraphMode = parseGraphMode(
+  (import.meta as { env?: { VITE_GRAPH_MODE?: string } }).env?.VITE_GRAPH_MODE,
+);
 
 export function graphModeLabel(mode: GraphMode): string {
   switch (mode) {

@@ -4,12 +4,12 @@ Migrate legacy MCPLab deployments that **embedded OACP on port 3001** to the v1 
 
 ## What changed
 
-| Legacy (pre-v1) | v1 unified |
-| --------------- | ---------- |
-| MCPLab compose includes `oacp :3001` | Single OACP service on `:3847` |
-| Playground at `/playground` | **Console** at `/console` |
-| Console dev server `:5173` | Served from OACP container |
-| Trace links to playground HTML | `?trace_id=` deep links to Console |
+| Legacy (pre-v1)                      | v1 unified                         |
+| ------------------------------------ | ---------------------------------- |
+| MCPLab compose includes `oacp :3001` | Single OACP service on `:3847`     |
+| Playground at `/playground`          | **Console** at `/console`          |
+| Console dev server `:5173`           | Served from OACP container         |
+| Trace links to playground HTML       | `?trace_id=` deep links to Console |
 
 ## Migration steps
 
@@ -73,11 +73,11 @@ docker compose restart oacp
 
 ## Troubleshooting
 
-| Symptom | Fix |
-| ------- | --- |
+| Symptom                           | Fix                                                                  |
+| --------------------------------- | -------------------------------------------------------------------- |
 | Console empty after OACP recreate | Check MCPLab sync logs; verify `MCPLAB_SYNC_SECRET` and backfill env |
-| Intentional history wipe | `docker compose down -v` on **both** OACP and MCPLab stacks |
-| Port 3001 still in use | Remove legacy OACP sidecar from MCPLab compose |
-| 401 on observability API | Set matching `OACP_API_KEY` / `MCPLAB_OACP_API_KEY` |
+| Intentional history wipe          | `docker compose down -v` on **both** OACP and MCPLab stacks          |
+| Port 3001 still in use            | Remove legacy OACP sidecar from MCPLab compose                       |
+| 401 on observability API          | Set matching `OACP_API_KEY` / `MCPLAB_OACP_API_KEY`                  |
 
 See [docs/docker-compose.md](../../docs/docker-compose.md) and [docs/mcplab-oacp-data-model.md](../../docs/mcplab-oacp-data-model.md).
