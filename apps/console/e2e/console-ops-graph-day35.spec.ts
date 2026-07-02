@@ -168,11 +168,17 @@ test.describe('Ops 2D graph polish + sign-off (Day 35)', () => {
     await expect(opsGraph).toBeVisible();
     await page.getByTestId('ops-graph-fit-view').click();
     await expect(opsGraph.locator('[data-agent-id]').first()).toBeVisible();
-    await page.waitForTimeout(300);
 
-    await expect(opsGraph).toHaveScreenshot('ops-graph-30-agent.png', {
+    const viewport = opsGraph.locator('.react-flow__viewport');
+    await expect(viewport).toBeVisible();
+    await expect
+      .poll(async () => viewport.boundingBox())
+      .toMatchObject({ width: expect.any(Number), height: expect.any(Number) });
+
+    await expect(viewport).toHaveScreenshot('ops-graph-30-agent.png', {
       animations: 'disabled',
       maxDiffPixelRatio: 0.03,
+      mask: [opsGraph.locator('.react-flow__minimap')],
     });
   });
 });
