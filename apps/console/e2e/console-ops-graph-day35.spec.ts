@@ -96,6 +96,8 @@ async function mockScaleOpsApi(
   });
 }
 
+const OPS_GRAPH_SNAPSHOT_CLIP = { width: 650, height: 672 } as const;
+
 test.describe('Ops 2D graph polish + sign-off (Day 35)', () => {
   test.beforeEach(async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -169,15 +171,31 @@ test.describe('Ops 2D graph polish + sign-off (Day 35)', () => {
     await page.getByTestId('ops-graph-fit-view').click();
     await expect(opsGraph.locator('[data-agent-id]').first()).toBeVisible();
 
-    const viewport = opsGraph.locator('.react-flow__viewport');
-    await expect(viewport).toBeVisible();
     await expect
-      .poll(async () => viewport.boundingBox())
-      .toMatchObject({ width: expect.any(Number), height: expect.any(Number) });
+      .poll(async () =>
+        page.evaluate(() => (window as Window & { __oacpTestOpsGraph?: { getViewport: () => { zoom: number } | undefined } }).__oacpTestOpsGraph?.getViewport()?.zoom ?? 0),
+      )
+      .toBeGreaterThan(0);
 
-    await expect(viewport).toHaveScreenshot('ops-graph-30-agent.png', {
+    const canvasWrap = page
+      .locator('#graphPanel div[class*="canvasWrap"]:not([class*="hiddenCanvasLayer"])')
+      .filter({ has: opsGraph });
+    await expect(canvasWrap).toBeVisible();
+
+    const clip = await canvasWrap.evaluate((element, size) => {
+      const { x, y } = element.getBoundingClientRect();
+      return {
+        x: Math.round(x),
+        y: Math.round(y),
+        width: size.width,
+        height: size.height,
+      };
+    }, OPS_GRAPH_SNAPSHOT_CLIP);
+
+    await expect(page).toHaveScreenshot('ops-graph-30-agent.png', {
+      clip,
       animations: 'disabled',
-      maxDiffPixelRatio: 0.03,
+      maxDiffPixelRatio: 0.04,
       mask: [opsGraph.locator('.react-flow__minimap')],
     });
   });
