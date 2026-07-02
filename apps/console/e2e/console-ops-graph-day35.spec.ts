@@ -173,7 +173,14 @@ test.describe('Ops 2D graph polish + sign-off (Day 35)', () => {
 
     await expect
       .poll(async () =>
-        page.evaluate(() => (window as Window & { __oacpTestOpsGraph?: { getViewport: () => { zoom: number } | undefined } }).__oacpTestOpsGraph?.getViewport()?.zoom ?? 0),
+        page.evaluate(
+          () =>
+            (
+              window as Window & {
+                __oacpTestOpsGraph?: { getViewport: () => { zoom: number } | undefined };
+              }
+            ).__oacpTestOpsGraph?.getViewport()?.zoom ?? 0,
+        ),
       )
       .toBeGreaterThan(0);
 
