@@ -106,7 +106,7 @@ docker compose up --build -d
 # Console → http://127.0.0.1:3847/console/
 
 docker compose --profile demo up --build   # seed MCPLab-style demo trace
-pnpm docker:mcplab                          # platform + MCPLab (requires ./MCPLab)
+pnpm docker:mcplab                          # platform + MCPLab (clone MCPLab first — see docs/mcplab.md)
 ```
 
 See [docker-compose.md](./docker-compose.md). MCPLab client migration: [integrate/mcplab/MIGRATION.md](../integrate/mcplab/MIGRATION.md).

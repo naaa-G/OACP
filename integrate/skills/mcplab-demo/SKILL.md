@@ -14,10 +14,11 @@ Start OACP + MCPLab, run or seed a crew trace, open **Console Showcase**.
 ## Full stack
 
 ```bash
+git clone https://github.com/naaa-G/MCPLab.git MCPLab
 pnpm docker:mcplab
 ```
 
-Requires `MCPLab/` clone or `integrate/mcplab/` at repo root.
+Requires `MCPLab/` ([public repo](https://github.com/naaa-G/MCPLab)) or `integrate/mcplab/` at repo root.
 
 | URL                                          | Purpose                    |
 | -------------------------------------------- | -------------------------- |

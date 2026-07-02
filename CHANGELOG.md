@@ -11,6 +11,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - _(Track post-v1.0.0 changes here.)_
 
+## [1.0.0] — 2026-07-01
+
+**General availability** — joint launch with [MCPLab v1.0.0](https://github.com/naaa-G/MCPLab/releases/tag/v1.0.0).
+
+### Added
+
+- Enterprise README with Docker-first quick start, Console hero, and adoption kit links.
+- MCPLab public repository links across docs, skills, and `pnpm docker:mcplab` helpers.
+- GitHub Release `v1.0.0` with migration guide and verification gate (`pnpm test:day59`).
+- Protocol schemas tagged **v1.0** (`specs/`); frozen OpenAPI at `GET /v1/openapi.json`; CI API freeze guard (`scripts/verify-api-freeze.mjs`).
+- Migration guide `docs/migration/v0.1-to-v1.0.md` and release notes `docs/releases/v1.0.0.md`.
+- Packages at semver **1.0.0**: `@oacp/core`, `@oacp/sdk`, `@oacp/server`, `@oacp/observability-client`, `@oacp/console`, `oacp-sdk`, `oacp-examples`.
+
+### Changed
+
+- CLI `oacp run` / `oacp serve` print **Console** deep links instead of playground URLs.
+- `GET /` server index drops deprecated `playground_snapshot` — use `observability_snapshot`.
+- New outbound messages use protocol `version` **`1.0`** (`PROTOCOL_VERSION`).
+
+### Removed
+
+- **`GET /playground/snapshot`** — returns **410 Gone** with `Link` to `/v1/observability/snapshot` (removed per Day 60 sunset).
+- Legacy inline playground HTML (`playground-html.ts`) — `/playground` remains a **302** redirect to `/console/`.
+
+### Notes
+
+- Upgrade from **v1.0.0-rc.1**: no protocol changes; update snapshot URL and Console links only.
+- See [docs/migration/v0.1-to-v1.0.md](docs/migration/v0.1-to-v1.0.md) for v0.1 → v1.0.
+
 ## [1.0.0-rc.1] — 2026-07-01 (Day 59 release candidate)
 
 Release candidate for joint OACP + MCPLab v1.0.0 launch (Day 60).
@@ -27,29 +56,8 @@ Release candidate for joint OACP + MCPLab v1.0.0 launch (Day 60).
 
 ### Notes
 
-- Tag: `v1.0.0-rc.1` (pre-release). Ship `v1.0.0` on Day 60 after RC sign-off.
+- Tag: `v1.0.0-rc.1` (pre-release). Superseded by **`v1.0.0`** (Day 60 GA).
 - P1 backlog items in `docs/load-security-smoke.md` are **not** RC blockers.
-
-## [1.0.0] — 2026-07-01 (Day 54 freeze)
-
-Protocol and `/v1/observability/*` API freeze ahead of Day 60 joint launch.
-
-### Added
-
-- Protocol schemas tagged **v1.0** (`specs/`); validator accepts `1.0` and read-compat `0.1`.
-- Frozen OpenAPI 3.1 spec: `specs/openapi/v1.json`, served at `GET /v1/openapi.json`.
-- CI API freeze guard: `scripts/verify-api-freeze.mjs` + `specs/openapi/v1.lock.json` (required `/v1/` paths).
-- AJV live OpenAPI response validation in `server/tests/openapi-freeze.test.ts`.
-- Migration guide `docs/migration/v0.1-to-v1.0.md` and release notes `docs/releases/v1.0.0.md`.
-
-### Changed
-
-- **BREAKING (semver):** `@oacp/core`, `@oacp/sdk`, `@oacp/server`, `@oacp/observability-client`, `@oacp/console`, `@oacp/ui`, `oacp-sdk`, `oacp-examples` → **1.0.0**.
-- New outbound messages use protocol `version` **`1.0`** (`PROTOCOL_VERSION`).
-
-### Deprecated
-
-- `GET /playground/snapshot` — RFC 9745 deprecation headers; removal **Day 60**. Use `GET /v1/observability/snapshot`.
 
 ## [0.1.0-alpha] — 2026-06-13
 

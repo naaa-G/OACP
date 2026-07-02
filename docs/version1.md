@@ -1615,22 +1615,22 @@ Custom `metadata.fleet` / `metadata.role` control catalog grouping (unknown flee
 
 **Tasks**
 
-- [ ] Tag **`v1.0.0`** on OACP
-- [ ] Tag **`v1.0.0`** on MCPLab (public repo push)
-- [ ] GitHub Release with migration guide + demo video
-- [ ] Remove or hard-redirect legacy `PLAYGROUND_HTML` (keep `/playground` → `/console` 302)
+- [x] Tag **`v1.0.0`** on OACP
+- [x] Tag **`v1.0.0`** on MCPLab (public repo push) — [github.com/naaa-G/MCPLab](https://github.com/naaa-G/MCPLab)
+- [x] GitHub Release with migration guide (demo video skipped per [demo-video.md](./demo-video.md))
+- [x] Remove legacy `PLAYGROUND_HTML`; `GET /playground/snapshot` → 410 Gone (keep `/playground` → `/console` 302)
 - [ ] One outreach channel: Show HN or launch post (optional same day)
 
 **Acceptance — 60-day complete / v1.0 launched**
 
-- [ ] `docker compose up` → MCPLab crew → Console Showcase with trace
-- [ ] All three UI issues closed (agents, graph, message flow)
-- [ ] OACP README flagship section = MCPLab + Console
-- [ ] External reviewer reaches Showcase in under 15 minutes from README
-- [ ] **Bring-your-own-agents** example runs without MCPLab; agents visible in Console
-- [ ] **MCPLab↔OACP sync** — recreate OACP; Console still lists MCPLab crew traces after startup backfill
-- [ ] **Data-model + sync docs** linked from Docker + MCPLab integration guides
-- [ ] **Adoption kit** linked from README: SDK install, custom-agents example, Cursor skills, MCP adapter (optional)
+- [x] `docker compose up` → MCPLab crew → Console Showcase with trace
+- [x] All three UI issues closed (agents, graph, message flow)
+- [x] OACP README flagship section = MCPLab + Console
+- [x] External reviewer reaches Showcase in under 15 minutes from README
+- [x] **Bring-your-own-agents** example runs without MCPLab; agents visible in Console
+- [x] **MCPLab↔OACP sync** — recreate OACP; Console still lists MCPLab crew traces after startup backfill
+- [x] **Data-model + sync docs** linked from Docker + MCPLab integration guides
+- [x] **Adoption kit** linked from README: SDK install, custom-agents example, Cursor skills, MCP adapter (optional)
 
 ---
 
@@ -1640,7 +1640,7 @@ Custom `metadata.fleet` / `metadata.role` control catalog grouping (unknown flee
 
 ### Prerequisites (complete before Day 61)
 
-- [ ] Day 60 sign-off — v1.0.0 shipped
+- [x] Day 60 sign-off — v1.0.0 shipped
 - [ ] Launch feedback triaged; P0 hotfixes released as `v1.0.x`
 
 ### Day 61–63 — OIDC / SSO
@@ -1817,10 +1817,10 @@ You have shipped **OACP v1.0.0 + MCPLab public** when:
 | [development.md](./development.md)               | Dev setup                                |
 | [mcplab-integration.md](./mcplab-integration.md) | MCPLab agent metadata + Console URLs     |
 | [docker-compose.md](./docker-compose.md)         | Unified stack + reset workflow           |
-| [MCPLab 30-DAY-PLAN](../MCPLab/30-DAY-PLAN.md)   | MCPLab build plan (complete)             |
+| [MCPLab](https://github.com/naaa-G/MCPLab)       | MCP × OACP reference lab (public)        |
 
 _Planned at launch (Day 58):_ `bring-your-own-agents.md`, `mcplab-oacp-data-model.md`, `distribution.md`
 
 ---
 
-_Last updated: 2026-07-01 — Day 56 complete (demo scripts + fallback fixtures); Week 12 in progress._
+_Last updated: 2026-07-01 — Day 60 complete (OACP v1.0.0 + MCPLab public)._

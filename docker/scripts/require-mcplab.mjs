@@ -21,9 +21,10 @@ if (!mcplabRoot) {
   console.error('');
   console.error('MCPLab directory not found.');
   console.error('');
-  console.error('Clone or symlink MCPLab into one of:');
-  console.error('  ./integrate/mcplab/docker-compose.yml');
-  console.error('  ./MCPLab/docker-compose.yml');
+  console.error('Clone MCPLab:');
+  console.error('  git clone https://github.com/naaa-G/MCPLab.git MCPLab');
+  console.error('');
+  console.error('Or use integrate templates at ./integrate/mcplab/docker-compose.yml');
   console.error('');
   console.error('Then retry:');
   console.error('  pnpm docker:mcplab');

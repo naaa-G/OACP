@@ -2,9 +2,12 @@
 
 **MCPLab** is the flagship **MCP × OACP** reference lab: MCP connects agents to tools; OACP connects agents to each other. The **OACP Console** is the launch observability surface.
 
+**Public repository:** [github.com/naaa-G/MCPLab](https://github.com/naaa-G/MCPLab)
+
 ## Quick start
 
 ```bash
+git clone https://github.com/naaa-G/MCPLab.git MCPLab   # sibling to OACP clone
 pnpm docker:mcplab
 ```
 

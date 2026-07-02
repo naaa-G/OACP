@@ -16,10 +16,10 @@ Open **http://127.0.0.1:3847/console/**. Seed a MCPLab-style demo trace:
 docker compose --profile demo up --build
 ```
 
-Full showcase with MCPLab (client-only — no embedded OACP in MCPLab):
+Full showcase with [MCPLab](https://github.com/naaa-G/MCPLab) (client-only — no embedded OACP in MCPLab):
 
 ```bash
-git clone <mcplab-repo> MCPLab
+git clone https://github.com/naaa-G/MCPLab.git MCPLab
 pnpm docker:mcplab
 ```
 

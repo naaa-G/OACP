@@ -424,13 +424,21 @@ export function registerHttpRoutes(app: FastifyInstance, context: ServerContext)
     snapshotHandler,
   );
 
-  app.get<{ Querystring: { trace_id?: string; limit?: string } }>(
-    '/playground/snapshot',
-    async (request, reply) => {
-      applyLegacySnapshotDeprecationHeaders(reply);
-      return snapshotHandler(request);
-    },
-  );
+  app.get('/playground/snapshot', async (_request, reply) => {
+    applyLegacySnapshotDeprecationHeaders(reply);
+    return reply
+      .status(410)
+      .type('application/json; charset=utf-8')
+      .send({
+        ok: false,
+        error: {
+          code: 'GONE',
+          message:
+            'GET /playground/snapshot was removed in OACP v1.0.0. Use GET /v1/observability/snapshot.',
+          successor: '/v1/observability/snapshot',
+        },
+      });
+  });
 
   app.post<{ Body: ObservabilityImportTrace }>('/v1/observability/import', async (request) => {
     const body = request.body;

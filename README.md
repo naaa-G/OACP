@@ -2,122 +2,74 @@
 
 # OACP — Open Agent Collaboration Protocol
 
-**A multi-agent task-execution system you can watch working live.**
+**Multi-agent collaboration you can observe, trace, and operate in production.**
 
-OACP gives autonomous AI agents a common way to discover each other, exchange tasks,
-delegate work, and collaborate — with the **OACP Console** (Showcase + Ops modes) so you can
-_see_ the collaboration happen, not just read it in logs.
+OACP gives autonomous agents a shared protocol for identity, capability routing, delegation,
+and reliable delivery — with the **OACP Console** for live and historical trace visibility.
 
-[![Status: v1.0](https://img.shields.io/badge/status-v1.0-blue.svg)](#-project-status)
-[![GitHub](https://img.shields.io/badge/GitHub-naaa--G%2FOACP-181717?logo=github)](https://github.com/naaa-G/OACP)
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](./docs/releases/v1.0.0.md)
-[![Spec Version](https://img.shields.io/badge/protocol-v1.0-blue.svg)](./specs)
+[![Spec](https://img.shields.io/badge/protocol-v1.0-blue.svg)](./specs)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](./LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
-[![TypeScript](https://img.shields.io/badge/built%20with-TypeScript-3178c6.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178c6.svg)](https://www.typescriptlang.org/)
+[![CI](https://img.shields.io/github/actions/workflow/status/naaa-G/OACP/ci.yml?branch=main&label=CI)](https://github.com/naaa-G/OACP/actions)
 
-[Quick Start](#-quick-start) · [Run the demo](./docs/demo-scripts.md) · [Docs](https://naaa-g.github.io/OACP) · [Architecture](#-architecture) · [Examples](#-examples) · [Roadmap](#-roadmap) · [Contributing](./CONTRIBUTING.md)
+[Quick Start](#quick-start) · [Console](#oacp-console) · [Documentation](https://naaa-g.github.io/OACP) · [Examples](#examples) · [Contributing](./CONTRIBUTING.md)
 
 </div>
 
 <p align="center">
-  <a href="#-quick-start">
+  <a href="#quick-start">
     <img
       src="./docs/public/screenshots/console-showcase-hero.png"
-      alt="OACP Console Showcase — MCPLab multi-agent fleet in 3D"
+      alt="OACP Console Showcase — multi-agent fleet visualization"
       width="920"
     />
   </a>
   <br />
-  <strong>OACP Console Showcase</strong> — MCPLab crews on OACP v1.0
+  <strong>OACP Console</strong> — Showcase 3D and Ops 2D delegation views
   · <a href="./docs/demo-scripts.md">Run the demo</a>
 </p>
 
-<div align="center">
+---
+
+## Why OACP
+
+Building one capable agent is straightforward. Running **several agents that coordinate reliably** is not. Most teams end up with ad-hoc HTTP glue, opaque message passing, and no shared model for identity, capabilities, or traceability.
+
+OACP standardizes the infrastructure layer:
+
+| Concern           | What OACP provides                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| **Messaging**     | Schema-validated envelopes: `task_request`, `task_response`, `delegation`, and more |
+| **Identity**      | Agent IDs, declared capabilities, and public-key identity                           |
+| **Routing**       | Capability-based discovery and delivery with retries and timeouts                   |
+| **Orchestration** | DAG workflows, delegation graphs, and shared memory                                 |
+| **Observability** | `/v1/observability/*` APIs, SSE events, and the OACP Console                        |
+
+OACP is a **collaboration and orchestration layer**. It complements tool and model protocols (MCP, A2A, framework adapters) rather than replacing them. See [Comparison & interoperability](#comparison--interoperability).
 
 ---
 
-## 📋 Table of Contents
+## Features
 
-- [Why OACP?](#-why-oacp)
-- [Project Status](#-project-status)
-- [Features](#-features)
-- [Quick Start](#-quick-start)
-- [Core Concepts](#-core-concepts)
-- [Architecture](#-architecture)
-- [The Protocol](#-the-protocol)
-- [SDKs](#-sdks)
-- [Examples](#-examples)
-- [The Console](#-the-console)
-- [Legacy Playground](#-legacy-playground)
-- [Project Structure](#-project-structure)
-- [Roadmap](#-roadmap)
-- [Comparison & Interoperability](#-comparison--interoperability)
-- [Contributing](#-contributing)
-- [Security](#-security)
-- [License](#-license)
+| Area             | Capability                                                                                         |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| **Protocol**     | Versioned JSON Schema message types (`v1.0`), OpenAPI `/v1/*` surface                              |
+| **Runtime**      | In-process and networked agents; HTTP server with registry and workflows                           |
+| **SDKs**         | TypeScript (`@oacp/sdk`) and Python (`oacp-sdk`)                                                   |
+| **Console**      | Showcase 3D graph, Ops 2D hierarchy, agent catalog, live message feed                              |
+| **Platform**     | Docker Compose stack, API key auth, SQLite persistence, MCPLab sync                                |
+| **Integrations** | LangChain, AutoGen; [MCPLab](https://github.com/naaa-G/MCPLab); MCP tools server and Cursor skills |
+
+Full capability matrix: [documentation site](https://naaa-g.github.io/OACP).
 
 ---
 
-## 🤔 Why OACP?
+## Quick start
 
-Building one capable agent is increasingly easy. Getting **several agents to reliably work
-together** is not. Today that means brittle glue code, invisible message passing, and no
-shared notion of identity, capability, or delivery guarantees.
+### Docker (recommended)
 
-OACP standardizes the boring-but-critical parts of multi-agent collaboration:
-
-- **A common message format** — `task_request`, `task_response`, `delegation`, `capability_query`, and more.
-- **Agent identity & capabilities** — every agent declares who it is and what it can do.
-- **Capability-based routing** — "find an agent that can debug code" routes automatically.
-- **Delivery guarantees** — retries, timeouts, and fallback routing built in.
-- **Shared memory & delegation graphs** — agents remember decisions and track who did what.
-- **The OACP Console** — Showcase 3D graph + Ops hierarchy for live and historical traces
-
-> **Positioning:** OACP is a _collaboration & orchestration layer_, not a replacement for
-> model or tool protocols. It's designed to **interoperate** with emerging standards (e.g.
-> MCP, A2A) rather than compete with them. See [Comparison & Interoperability](#-comparison--interoperability).
-
----
-
-## 🚧 Project Status
-
-> **OACP v1.0.0** — protocol freeze, Docker platform, enterprise API key auth, MCPLab↔OACP sync,
-> and Console Showcase as the launch demo surface. Docs: [naaa-g.github.io/OACP](https://naaa-g.github.io/OACP).
-> Migration from `v0.1`: [docs/migration/v0.1-to-v1.0.md](./docs/migration/v0.1-to-v1.0.md).
-
----
-
-## ✨ Features
-
-| Area                | Capability                                                |     Status     |
-| ------------------- | --------------------------------------------------------- | :------------: |
-| **Monorepo**        | pnpm + Turborepo, strict TypeScript, ESLint, Prettier, CI |    🟢 Done     |
-| **Protocol**        | Versioned JSON-Schema message types (`v1.0`)              |    🟢 Done     |
-| **Schema registry** | Load bundled schemas via `@oacp/core`                     |    🟢 Done     |
-| **Identity**        | Agent identity model with public keys & capabilities      | 🟢 Day 3 done  |
-| **Validation**      | Message validator (JSON Schema + type + version `1.0`)    | 🟢 Day 4 done  |
-| **Routing**         | In-memory message bus + capability-based routing          | 🟢 Day 5 done  |
-| **Runtime**         | `Agent.sendTask()` / `receiveTask()` / `respond()`        | 🟢 Day 6 done  |
-| **Integration**     | Multi-agent E2E tests (Agent A → Agent B in one process)  | 🟢 Day 7 done  |
-| **Networking**      | HTTP server + remote SDK + network demo (A→B→C)           | 🟢 Day 14 done |
-| **Reliability**     | Retries, timeouts, at-least-once HTTP delivery            | 🟢 Day 12 done |
-| **Memory**          | Shared task history (SQLite/Postgres + HTTP API)          | 🟢 Day 15 done |
-| **Orchestration**   | DAG workflow engine                                       |    ✅ Done     |
-| **Console**         | Showcase + Ops observability UI (`/console`)              |    🟢 v1.0     |
-| **Playground**      | Legacy web visualization (deprecated for launch)          |   🟡 Legacy    |
-| **SDKs**            | TypeScript + Python HTTP clients                          | 🟢 Day 27 done |
-| **Adapters**        | LangChain + AutoGen integration bridges                   | 🟢 Day 28 done |
-
-Legend: 🟢 stable · 🟡 in progress · ⚪ planned
-
----
-
-## ⚡ Quick Start
-
-### Docker (fastest — Day 51)
-
-**Under 5 minutes** with Docker only — OACP server + Console, no local Node build:
+Run the platform and Console without a local Node build:
 
 ```bash
 git clone https://github.com/naaa-G/OACP.git
@@ -125,66 +77,41 @@ cd OACP
 docker compose up --build -d
 ```
 
-Open **http://127.0.0.1:3847/console/?mode=showcase**. Seed demo traces:
+Open **http://127.0.0.1:3847/console/?mode=showcase**
+
+Seed demo traces:
 
 ```bash
-docker compose --profile demo up --build      # single research trace
-docker compose --profile demo-full run --rm seed-demo-full   # three crews (Day 56)
-pnpm demo:fallback   # host-side, no Docker profile
+docker compose --profile demo up --build
+pnpm demo:fallback   # host-side fixtures when LLM/network unavailable
 ```
 
-**Run the demo:** [demo scripts](./docs/demo-scripts.md) · `pnpm docker:mcplab`
-
-### Adoption kit (Day 58)
-
-Integrate OACP without MCPLab:
+**MCPLab full stack** ([MCPLab](https://github.com/naaa-G/MCPLab) — clone alongside this repo):
 
 ```bash
-pnpm --filter oacp-examples start:custom-agents
-```
-
-| Resource                                    | Link                                                             |
-| ------------------------------------------- | ---------------------------------------------------------------- |
-| Bring-your-own agents                       | [docs/bring-your-own-agents.md](./docs/bring-your-own-agents.md) |
-| Integration surfaces (SDK vs MCP vs skills) | [docs/integration-surfaces.md](./docs/integration-surfaces.md)   |
-| Cursor skills                               | [.cursor/skills/](./.cursor/skills/)                             |
-| MCP tools server                            | [integrate/mcp-oacp/](./integrate/mcp-oacp/)                     |
-
-**With MCPLab** (clone to `./MCPLab`, client-only — no embedded OACP server):
-
-```bash
-git clone <mcplab-repo> MCPLab
+git clone https://github.com/naaa-G/MCPLab.git MCPLab
 pnpm docker:mcplab
 ```
 
-See [docs/docker-compose.md](./docs/docker-compose.md) and [integrate/mcplab/MIGRATION.md](./integrate/mcplab/MIGRATION.md).
+Guides: [docker-compose.md](./docs/docker-compose.md) · [demo-scripts.md](./docs/demo-scripts.md)
 
-### Local development
+### Integrate your agents
 
-**Under 5 minutes** — clone, build, run the Autonomous Startup Team, open the playground:
+Register agents via the SDK and open traces in the Console — no MCPLab required:
 
 ```bash
-git clone https://github.com/naaa-G/OACP.git
-cd OACP
 pnpm install && pnpm build
-pnpm oacp run "build todo app" --keep-alive
+pnpm --filter oacp-examples start:custom-agents
 ```
 
-Open the `playground_url` printed in the output. You will see PM, Designer, Backend, Frontend,
-and QA agents collaborate and deliver a repo scaffold with full trace visibility.
+| Resource                                                 | Description                                       |
+| -------------------------------------------------------- | ------------------------------------------------- |
+| [Bring your own agents](./docs/bring-your-own-agents.md) | SDK registration, fleet/role metadata, deep links |
+| [Integration surfaces](./docs/integration-surfaces.md)   | SDK vs MCP adapter vs Cursor skills               |
+| [Distribution](./docs/distribution.md)                   | npm, PyPI, Docker, MCP                            |
+| [MCP tools server](./integrate/mcp-oacp/)                | Optional stdio MCP wrapper over `/v1/*`           |
 
-| Output                | Meaning                                  |
-| --------------------- | ---------------------------------------- |
-| `repo_structure`      | Generated project files                  |
-| `qa_status: approved` | QA agent sign-off                        |
-| `trace_id`            | Correlation ID for traces and playground |
-| `playground_url`      | Live agent graph + message timeline      |
-
-More paths: [`docs/quick-start.md`](./docs/quick-start.md) · [`docs/startup-team.md`](./docs/startup-team.md)
-
----
-
-## 🚀 Developer setup
+### Local development
 
 ```bash
 git clone https://github.com/naaa-G/OACP.git
@@ -193,113 +120,29 @@ pnpm install
 pnpm verify    # format · lint · typecheck · test · build
 ```
 
-Or use the setup script:
+Run the Autonomous Startup Team from the CLI:
 
 ```bash
-./scripts/setup.sh
+pnpm oacp run "build todo app" --keep-alive
 ```
 
-Verify the SDK is wired:
+Open the Console URL printed in the output (`/console/?trace_id=…`).
 
-```ts
-import { PROTOCOL_VERSION, SDK_VERSION } from '@oacp/sdk';
+Developer guide: [development.md](./docs/development.md) · [quick-start.md](./docs/quick-start.md)
 
-console.log(PROTOCOL_VERSION); // "1.0"
-console.log(SDK_VERSION); // "1.0.0"
-```
-
-Full developer guide: [`docs/development.md`](./docs/development.md).
-
-### Demo v1 — agents over the network (Week 2 — Day 14)
-
-Run the Week 2 capstone: a remote coordinator drives three server-side agents over HTTP:
-
-```bash
-pnpm build
-pnpm --filter oacp-examples start:demo
-```
-
-You get structured output, capability discovery, and a full message timeline with one shared
-`trace_id`. Walkthrough: [`docs/demo-v1.md`](./docs/demo-v1.md).
-
-### Demo v2 — structured task chain (Week 3 — Day 21)
-
-Run the Week 3 capstone: a remote coordinator triggers a DAG workflow with memory, recovery,
-and trace observability:
-
-```bash
-pnpm build
-pnpm --filter oacp-examples start:demo-v2
-```
-
-Walkthrough: [`docs/demo-v2.md`](./docs/demo-v2.md).
-
-### Autonomous Startup Team — flagship demo (Week 4 — Day 23)
-
-Watch PM, Designer, Backend, Frontend, and QA agents collaborate on a product prompt and
-deliver a repo scaffold — best viewed in the playground:
-
-```bash
-pnpm build
-pnpm --filter oacp-examples start:startup
-pnpm --filter oacp-examples start:playground -- --loop
-```
-
-Walkthrough: [`docs/startup-team.md`](./docs/startup-team.md).
-
-### OACP CLI (Week 4 — Day 24)
-
-Run agent teams from the terminal:
-
-```bash
-pnpm build
-pnpm oacp run "build todo app"
-pnpm oacp run "build habit tracker" --format json
-pnpm oacp serve --bootstrap startup
-```
-
-Guide: [`docs/cli.md`](./docs/cli.md).
-
-### Example gallery (Week 4 — Day 25)
-
-Three swarms showcasing different collaboration patterns:
-
-```bash
-pnpm build
-pnpm --filter oacp-examples start:coding-swarm
-pnpm --filter oacp-examples start:research-swarm
-pnpm --filter oacp-examples start:bug-finder-swarm
-```
-
-Guide: [`docs/examples-gallery.md`](./docs/examples-gallery.md).
-
-### Documentation site (Week 4 — Day 26)
-
-Browse the full docs site locally:
-
-```bash
-pnpm install
-pnpm docs:dev
-# Open http://localhost:5173
-```
-
-Build for production: `pnpm docs:build`. See [`docs/development.md`](./docs/development.md#documentation-website-day-26).
-
-### Hello, Agents (Week 1 — verified Day 7)
-
-Create two agents in one process and have one delegate a task to the other:
+### Minimal SDK example
 
 ```ts
 import { Agent, LocalBus } from '@oacp/sdk';
 
 const bus = new LocalBus();
 
-const summarizer = new Agent({
+const worker = new Agent({
   name: 'summarizer',
   capabilities: ['text.summarize'],
   bus,
   onTask: async (task) => ({
-    output: `Summary of: ${task.input.text.slice(0, 40)}...`,
+    output: `Summary: ${task.input.text.slice(0, 40)}…`,
   }),
 });
 
@@ -309,338 +152,223 @@ const coordinator = new Agent({
   bus,
 });
 
-await Promise.all([summarizer.start(), coordinator.start()]);
+await Promise.all([worker.start(), coordinator.start()]);
 
 const result = await coordinator.sendTask({
   capability: 'text.summarize',
-  input: { text: 'OACP lets agents collaborate over a shared protocol...' },
+  input: { text: 'OACP lets agents collaborate over a shared protocol.' },
 });
 
 console.log(result.output);
 ```
 
-### Run a demo from the CLI (Week 4)
+---
 
-```bash
-oacp run "build a habit tracker app"
+## OACP Console
+
+The Console is the default observability UI, served at **`/console`** from the OACP platform (port **3847** in Docker).
+
+| Mode         | URL              | Use case                                 |
+| ------------ | ---------------- | ---------------------------------------- |
+| **Showcase** | `?mode=showcase` | Demos, presentations, 3D fleet graph     |
+| **Ops**      | `?mode=ops`      | Delegation drill-down, incident analysis |
+
+Deep link example:
+
+```text
+http://127.0.0.1:3847/console/?trace_id=<uuid>&mode=showcase
 ```
 
-## 📣 Community
+**Highlights:** live SSE feed, agent catalog with fleet/role grouping, trace replay, PNG export, optional API key auth (`OACP_API_KEY`).
 
-**Public launch (Day 30):** release `v0.1.0-alpha` and community tooling are ready.
+User guide: [console.md](./docs/console.md) · API: [observability.md](./docs/observability.md)
 
-| Resource                                                | Purpose                            |
-| ------------------------------------------------------- | ---------------------------------- |
-| [Community & support](./docs/community.md)              | Issues, Discussions, security      |
-| [Release v0.1.0-alpha](./docs/releases/v0.1.0-alpha.md) | What's in the first public release |
-
-Tag a release: `.\scripts\tag-release.ps1` (Windows) or `./scripts/tag-release.sh`
+> **Legacy playground:** `/playground` redirects to `/console`. See [playground.md](./docs/playground.md).
 
 ---
 
-## 🧠 Core Concepts
+## Core concepts
 
-| Concept              | Description                                                                                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------ |
-| **Agent**            | An addressable participant with an `id`, `name`, declared `capabilities[]`, and a `publicKey` for identity.  |
-| **Capability**       | A named skill (e.g. `code.debug`, `text.summarize`) used for discovery and routing.                          |
-| **Message**          | A typed, schema-validated envelope (`task_request`, `task_response`, `delegation`, …) carrying a `trace_id`. |
-| **Message Bus**      | The transport that delivers messages — local (in-memory) or networked (HTTP).                                |
-| **Registry**         | A discovery service mapping capabilities → agents.                                                           |
-| **Delegation Graph** | A record of who delegated what to whom, enabling traceability and recovery.                                  |
-| **Memory**           | Shared, scoped storage of task history, decisions, and outputs.                                              |
-| **Orchestrator**     | A workflow engine that decomposes tasks and executes them as a DAG.                                          |
+| Concept              | Description                                                          |
+| -------------------- | -------------------------------------------------------------------- |
+| **Agent**            | Addressable participant with `id`, `capabilities[]`, and `publicKey` |
+| **Capability**       | Named skill used for discovery and routing (e.g. `code.debug`)       |
+| **Message**          | Typed envelope with `trace_id` linking a collaboration session       |
+| **Registry**         | Maps capabilities to registered agents                               |
+| **Delegation graph** | Who delegated what to whom — visible in Ops and Showcase modes       |
+| **Orchestrator**     | DAG workflow engine for multi-step agent pipelines                   |
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ![OACP architecture diagram](./docs/public/architecture-diagram.svg)
 
-<details>
-<summary>Text diagram (fallback)</summary>
-
 ```text
 ┌──────────────────────────────────────────────────────────────┐
-│                         Playground (Web)                       │
-│        live agent graph · message flow · delegation view       │
+│                    OACP Console  (/console)                  │
+│         Showcase 3D · Ops 2D · agent catalog · message feed  │
 └───────────────────────────────┬──────────────────────────────┘
-                                 │ observes
+                                │ /v1/observability/*
 ┌───────────────────────────────▼──────────────────────────────┐
-│                       OACP Server (node)                       │
-│   HTTP/gRPC API · Registry · Orchestrator · Storage adapters   │
+│                       OACP Server                            │
+│   HTTP API · registry · orchestrator · SSE · persistence     │
 └───────────────────────────────┬──────────────────────────────┘
-                                 │ uses
+                                │
 ┌───────────────────────────────▼──────────────────────────────┐
-│                            Core Engine                         │
-│  Protocol (validate/version) · Routing (bus/retry) ·           │
-│  Security (auth/signatures) · Runtime (lifecycle) · Memory     │
+│                         @oacp/core                           │
+│   Protocol · routing · runtime · workflow · memory           │
 └───────────────────────────────┬──────────────────────────────┘
-                                 │ governed by
+                                │
 ┌───────────────────────────────▼──────────────────────────────┐
-│              Specs  (JSON Schemas — source of truth)           │
-│   messages/ · agent/ · registry/                               │
-└────────────────────────────────────────────────────────────────┘
-        ▲                                              ▲
-        │                                              │
-   SDKs (TS/Py/Rust)                          Integrations (LangChain,
-   used by your agents                        AutoGen, CrewAI, …)
+│              specs/  — JSON Schema (source of truth)         │
+└──────────────────────────────────────────────────────────────┘
+        ▲                              ▲
+   @oacp/sdk                      Framework adapters
+   (TypeScript / Python)          (LangChain, AutoGen, …)
 ```
 
-</details>
-
-See [`docs/architecture.md`](./docs/architecture.md) for the full breakdown.
+Details: [architecture.md](./docs/architecture.md)
 
 ---
 
-## 📜 The Protocol
+## Protocol
 
-The protocol is the product. All message types are defined as JSON Schemas under
-[`specs/`](./specs) and are the **single source of truth** — SDKs and servers validate
-against them.
+Message types are defined as JSON Schemas under [`specs/`](./specs) and validated at runtime. Protocol version **`1.0`** is frozen for the v1.0 release.
 
-### Core message types (`v0.1`)
-
-| Message            | Purpose                                                |
-| ------------------ | ------------------------------------------------------ |
-| `task_request`     | Ask an agent (or capability) to perform work.          |
-| `task_response`    | Return the result (or error) of a task.                |
-| `delegation`       | Hand a (sub)task to another agent and track the chain. |
-| `capability_query` | Discover agents that can perform a capability.         |
-| `memory_share`     | Share scoped context/decisions between agents.         |
-| `heartbeat`        | Liveness + health signaling.                           |
-
-### Example: `task_request`
+| Message            | Purpose                                    |
+| ------------------ | ------------------------------------------ |
+| `task_request`     | Ask an agent or capability to perform work |
+| `task_response`    | Return a result or error                   |
+| `delegation`       | Hand a subtask to another agent            |
+| `capability_query` | Discover agents for a capability           |
+| `memory_share`     | Share scoped context between agents        |
+| `heartbeat`        | Liveness signaling                         |
 
 ```json
 {
   "type": "task_request",
   "version": "1.0",
-  "trace_id": "0c8f1e2a-...-9b",
+  "trace_id": "0c8f1e2a-7b3d-4f9e-9b1a-2d4e6f8a0c66",
   "from": "agent://coordinator",
   "capability": "text.summarize",
-  "input": { "text": "..." },
+  "input": { "text": "…" },
   "deadline_ms": 30000
 }
 ```
 
-> Versioning is explicit (`version` field) so the protocol can evolve without silently
-> breaking agents. See [`docs/message-types.md`](./docs/message-types.md).
+Reference: [message-types.md](./docs/message-types.md) · Migration: [v0.1 → v1.0](./docs/migration/v0.1-to-v1.0.md)
 
 ---
 
-## 📦 SDKs
+## SDKs
 
-| Language   | Package        |       Status        |
-| ---------- | -------------- | :-----------------: |
-| TypeScript | `@oacp/sdk`    | 🟢 Primary (Day 27) |
-| Python     | `oacp-sdk`     | 🟢 Minimal (Day 27) |
-| Rust       | `oacp` (crate) |     ⚪ Planned      |
+| Language   | Package     | Install                |
+| ---------- | ----------- | ---------------------- |
+| TypeScript | `@oacp/sdk` | `pnpm add @oacp/sdk`   |
+| Python     | `oacp-sdk`  | `pip install oacp-sdk` |
 
-```bash
-# TypeScript — full SDK or remote-only subpath
-pnpm add @oacp/sdk
-import { createAgentClient } from '@oacp/sdk/client';
-
-# Python — async HTTP client
-pip install -e "sdk/python[dev]"
+```ts
+import { PROTOCOL_VERSION, SDK_VERSION } from '@oacp/sdk';
+console.log(PROTOCOL_VERSION); // "1.0"
+console.log(SDK_VERSION); // "1.0.0"
 ```
 
-Guides: [`docs/sdk-typescript.md`](./docs/sdk-typescript.md) · [`docs/sdk-python.md`](./docs/sdk-python.md) · [`docs/integrations.md`](./docs/integrations.md)
-
-The TypeScript SDK is the reference implementation; Python mirrors `AgentClient` for
-remote orchestration from non-Node runtimes.
+Guides: [sdk-typescript.md](./docs/sdk-typescript.md) · [sdk-python.md](./docs/sdk-python.md) · [integrations.md](./docs/integrations.md)
 
 ---
 
-## 💡 Examples
+## Examples
 
-Runnable examples live in [`examples/`](./examples):
+Runnable examples in [`examples/`](./examples):
 
-| Command / path                                            | What it shows                                   |
-| --------------------------------------------------------- | ----------------------------------------------- |
-| `pnpm oacp run "build todo app"`                          | **CLI** — startup team from terminal (Day 24)   |
-| `pnpm --filter oacp-examples start:coding-swarm`          | **Gallery** — coding swarm pipeline (Day 25)    |
-| `pnpm --filter oacp-examples start:research-swarm`        | **Gallery** — research brief DAG (Day 25)       |
-| `pnpm --filter oacp-examples start:bug-finder-swarm`      | **Gallery** — bug triage + recovery (Day 25)    |
-| `pnpm --filter oacp-examples start:startup`               | **Flagship** — Autonomous Startup Team (Day 23) |
-| `pnpm --filter oacp-examples start:playground`            | **Playground** — live graph + startup team demo |
-| `pnpm --filter oacp-examples start:demo-v2`               | **Demo v2** — incident-response DAG (Week 3)    |
-| `pnpm --filter oacp-examples start:demo`                  | **Demo v1** — 3 agents over HTTP (Week 2)       |
-| [`multi-agent/hello-agents.ts`](./examples/multi-agent)   | In-process Agent A → Agent B (Week 1)           |
-| [`remote-agent/hello-remote.ts`](./examples/remote-agent) | Remote coordinator → single worker (Day 9)      |
-| [`pipeline/agent-chain.ts`](./examples/pipeline)          | Local A → B → C pipeline (Day 13)               |
-| `pnpm --filter oacp-examples start:sdk-remote`            | **SDK** — remote client + dev registration      |
-| `pnpm --filter oacp-examples start:sdk-workflow`          | **SDK** — run startup workflow via HTTP         |
-| `pnpm --filter oacp-examples start:langchain-delegate`    | **Adapter** — LangChain tool → OACP (Day 28)    |
+| Command                                                | Description                   |
+| ------------------------------------------------------ | ----------------------------- |
+| `pnpm oacp run "build todo app"`                       | CLI — Autonomous Startup Team |
+| `pnpm --filter oacp-examples start:custom-agents`      | Minimal BYO agents → Console  |
+| `pnpm --filter oacp-examples start:startup`            | Startup team with live trace  |
+| `pnpm --filter oacp-examples start:coding-swarm`       | Coding pipeline swarm         |
+| `pnpm --filter oacp-examples start:research-swarm`     | Research brief DAG            |
+| `pnpm --filter oacp-examples start:bug-finder-swarm`   | Bug triage with recovery      |
+| `pnpm --filter oacp-examples start:demo`               | Remote agents over HTTP       |
+| `pnpm --filter oacp-examples start:langchain-delegate` | LangChain → OACP delegation   |
 
-SDK guide: [`examples/sdk/README.md`](./examples/sdk/README.md). Integrations: [`docs/integrations.md`](./docs/integrations.md). Gallery guide: [`docs/examples-gallery.md`](./docs/examples-gallery.md).
+Gallery: [examples-gallery.md](./docs/examples-gallery.md) · CLI: [cli.md](./docs/cli.md)
 
 ---
 
-## 🖥 The Console
-
-The **OACP Console** is the v1 launch observability surface — served from the platform at
-`/console` (Docker: port **3847**).
-
-| Mode         | URL param        | Best for                                        |
-| ------------ | ---------------- | ----------------------------------------------- |
-| **Showcase** | `?mode=showcase` | Demos, README hero, conference (3D fleet graph) |
-| **Ops**      | `?mode=ops`      | Delegation drill-down, incident crews           |
-
-```bash
-docker compose up -d
-# → http://127.0.0.1:3847/console/?mode=showcase
-```
-
-**MCPLab full stack:**
-
-```bash
-pnpm docker:mcplab
-# Research crew → Console deep link from MCPLab web or CLI
-```
-
-Features:
-
-- **Live SSE feed** + snapshot reconcile (`GET /v1/observability/snapshot`)
-- **MCPLab fleet** — `metadata.fleet=mcplab`, role badges, Showcase fleet filter
-- **Deep links** — `/console/?trace_id=<uuid>&mode=showcase`
-- **Enterprise auth** — `OACP_API_KEY` via gateway ([production-deployment.md](./docs/production-deployment.md))
-
-Guides: [console-spec.md](./docs/console-spec.md) · [demo-scripts.md](./docs/demo-scripts.md)
-
----
-
-## 🎮 Legacy Playground
-
-The standalone **playground** (`pnpm --filter oacp-examples start:playground`) remains for
-Week 1–4 examples. **Launch demos use the Console**, not `/playground`.
-
-```bash
-pnpm build
-pnpm --filter oacp-examples start:playground -- --loop
-# → http://127.0.0.1:3000/playground (Autonomous Startup Team workload)
-```
-
-Features:
-
-- **Registered agents** with capabilities, highlighted when active in a trace
-- **Delegation graph** — agent topology with subtask/delegation edges
-- **Live message flow** — timeline feed with configurable polling
-- **Deep links** — `?trace_id=<uuid>` from demo or CLI output
-
-Full guide: [`docs/playground.md`](./docs/playground.md) (redirect notice to Console).
-
----
-
-## 🗂 Project Structure
-
-A high-level view of the monorepo:
+## Project structure
 
 ```text
 oacp/
-├── specs/         # ★ Protocol JSON Schemas (source of truth)
-├── core/          # ★ Engine: protocol, routing, security, runtime, memory
-├── sdk/           # ★ Client SDKs (TypeScript first)
-├── server/        # Reference network node (API, registry, orchestration)
-├── playground/    # ★ Live visualization + flagship demos
-├── examples/      # Copy-paste runnable use cases
-├── tools/         # CLI, scaffolding generators, trace/debug tooling
-├── integrations/  # LangChain, LlamaIndex, AutoGen, CrewAI adapters
-├── benchmarks/    # Latency / throughput / coordination metrics
-└── docs/          # Architecture, spec, security, lifecycle, examples
+├── apps/console/           # OACP Console (React + Three.js)
+├── packages/
+│   ├── ui/                 # @oacp/ui design system
+│   └── observability-client/
+├── specs/                  # Protocol JSON Schemas + OpenAPI
+├── core/                   # Engine: protocol, routing, runtime, memory
+├── server/                 # HTTP API, registry, observability, persistence
+├── sdk/                    # TypeScript and Python clients
+├── examples/               # Runnable demos and integration samples
+├── integrations/           # LangChain, AutoGen adapters
+├── integrate/              # MCP adapter, Cursor skills, MCPLab templates
+├── cli/                    # oacp CLI
+└── docs/                   # Documentation (VitePress site)
 ```
 
 ---
 
-## 🗺 Roadmap
+## Comparison & interoperability
 
-### v0.1.0-alpha — shipped ✅
-
-| Milestone | Theme                  | Outcome                                           | Status  |
-| --------- | ---------------------- | ------------------------------------------------- | :-----: |
-| **M0**    | Repository bootstrap   | Monorepo, tooling, CI, docs                       | ✅ Done |
-| **M1**    | Protocol Core          | Schemas + validation + minimal in-process runtime | ✅ Done |
-| **M2**    | Networking             | Agents collaborate over HTTP with a registry      | ✅ Done |
-| **M3**    | Collaboration & Memory | Shared memory, delegation graphs, DAG workflows   | ✅ Done |
-| **M4**    | Adoption               | Playground, CLI, docs site, launch                | ✅ Done |
-
-### v0.2.0-alpha — in progress (trust, polish & adoption)
-
-**Target:** production-adjacent alpha — flawless flagship demo, deployable stack, trust layer for internal evaluation.
-
-| Milestone | Theme                     | Outcome                                           |     Status     |
-| --------- | ------------------------- | ------------------------------------------------- | :------------: |
-| **M5**    | Launch & flagship polish  | Public release, demo video, cold-run verification | 🟡 In progress |
-| **M6**    | Demo & DX                 | Under-5-min quick start, hosted demo, CI smoke    |   ⚪ Planned   |
-| **M7**    | Trust & deployability     | Message signing, server auth, Docker Compose      |   ⚪ Planned   |
-| **M8**    | Stability & observability | API policy, OpenTelemetry, persistent registry    |   ⚪ Planned   |
-
-**M5 focus (remaining):** adoption kit + docs (Day 58), GitHub Discussions, release tags (Days 59–60).
-
-**M7–M8 focus:** teams can run OACP on a private network with signing, Docker, and clearer semver — still **not** production until `v1.0`.
-
-Runbooks: [`docs/security-model.md`](./docs/security-model.md) · [`docs/community.md`](./docs/community.md)
+| Standard                         | Focus                    | Relationship to OACP                                          |
+| -------------------------------- | ------------------------ | ------------------------------------------------------------- |
+| **MCP**                          | Models ↔ tools/data      | Complementary — agents use MCP tools; OACP coordinates agents |
+| **A2A**                          | Agent-to-agent messaging | Overlapping — OACP aims to bridge, not replace                |
+| **LangChain / AutoGen / CrewAI** | Agent frameworks         | Adapters register framework agents on an OACP network         |
 
 ---
 
-## 🔗 Comparison & Interoperability
+## Documentation
 
-OACP focuses on **agent-to-agent collaboration and orchestration**, and aims to play well
-with the broader ecosystem rather than replace it.
-
-| Standard                         | Focus                           | Relationship to OACP                                                   |
-| -------------------------------- | ------------------------------- | ---------------------------------------------------------------------- |
-| **MCP** (Model Context Protocol) | Connecting models to tools/data | Complementary — agents can use MCP tools; OACP coordinates the agents. |
-| **A2A** (Agent2Agent)            | Agent-to-agent messaging        | Overlapping — OACP aims to interoperate / bridge rather than compete.  |
-| **LangChain / AutoGen / CrewAI** | Agent frameworks                | Adapters let framework agents join an OACP network.                    |
-
-> **Honest note:** the agent-protocol space is crowded and backed by large organizations.
-> OACP's bet is **developer experience + live visualization + interoperability**, not
-> "becoming the one true standard."
+| Doc                                                         | Topic                          |
+| ----------------------------------------------------------- | ------------------------------ |
+| [Documentation site](https://naaa-g.github.io/OACP)         | Full guides and API reference  |
+| [quick-start.md](./docs/quick-start.md)                     | First run paths                |
+| [production-deployment.md](./docs/production-deployment.md) | API keys, env vars, operations |
+| [security-model.md](./docs/security-model.md)               | Identity, auth, threat model   |
+| [releases/v1.0.0.md](./docs/releases/v1.0.0.md)             | v1.0.0 release notes           |
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please read:
-
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — dev setup, branch/PR conventions, commit style.
-- [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) — community expectations.
+Contributions welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
 
 ```bash
-pnpm install      # install workspace deps
-pnpm verify       # full quality gate (recommended before PRs)
-pnpm dev          # watch mode for packages
-pnpm test         # run the test suite
-pnpm lint         # ESLint
-pnpm format       # Prettier
+pnpm install
+pnpm verify       # recommended before opening a PR
 ```
 
-See [`docs/development.md`](./docs/development.md) for the full guide.
-
-Good first contributions: new examples, schema edge cases, docs, and playground polish.
+Community: [community.md](./docs/community.md)
 
 ---
 
-## 🔒 Security
+## Security
 
-Do **not** open public issues for vulnerabilities. Follow the responsible-disclosure
-process in [`SECURITY.md`](./SECURITY.md). OACP's security model (identity, signatures,
-permissions, sandboxing) is documented in [`docs/security-model.md`](./docs/security-model.md).
+Report vulnerabilities per [SECURITY.md](./SECURITY.md) — do not open public issues for security findings.
 
 ---
 
-## 📄 License
+## License
 
-Licensed under the **Apache License 2.0** — see [`LICENSE`](./LICENSE).
+Apache License 2.0 — see [LICENSE](./LICENSE).
 
 ---
 
 <div align="center">
 
-**OACP** — _the first usable multi-agent collaboration system you can actually see working._
+**OACP** — open protocol for multi-agent collaboration with production-grade observability.
 
-⭐ [Star the repo](https://github.com/naaa-G/OACP) if multi-agent collaboration excites you.
+[Star on GitHub](https://github.com/naaa-G/OACP) · [Documentation](https://naaa-g.github.io/OACP)
 
 </div>

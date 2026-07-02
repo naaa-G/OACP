@@ -22,9 +22,10 @@ docker compose --profile demo up --build
 
 The `seed-demo` service registers five `fleet=mcplab` agents, sends a research-crew task, and prints a Console showcase URL.
 
-### Full showcase with MCPLab (requires `./MCPLab`)
+### Full showcase with MCPLab
 
 ```bash
+git clone https://github.com/naaa-G/MCPLab.git MCPLab
 pnpm docker:mcplab
 # or manually:
 #   docker compose up -d --build

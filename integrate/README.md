@@ -2,13 +2,13 @@
 
 Adoption paths for external developers and AI runtimes. Pick the surface that matches your client — they all talk to the **same OACP server**.
 
-| Path                 | Best for                                       | Location                                                        |
-| -------------------- | ---------------------------------------------- | --------------------------------------------------------------- |
-| **SDK / HTTP**       | Any app, LangChain, AutoGen, custom agents     | [`@oacp/sdk`](../sdk/typescript/), [`oacp_sdk`](../sdk/python/) |
-| **Minimal example**  | 15-minute proof                                | [`examples/custom-agents/`](../examples/custom-agents/)         |
-| **MCPLab reference** | MCP tools + multi-agent crews                  | [`integrate/mcplab/`](./mcplab/) or `./MCPLab/`                 |
-| **MCP tools server** | Claude Desktop, Cursor MCP, MCP-native clients | [`integrate/mcp-oacp/`](./mcp-oacp/)                            |
-| **Cursor skills**    | Cursor Agent onboarding                        | [`.cursor/skills/`](../.cursor/skills/)                         |
+| Path                 | Best for                                       | Location                                                                       |
+| -------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------ |
+| **SDK / HTTP**       | Any app, LangChain, AutoGen, custom agents     | [`@oacp/sdk`](../sdk/typescript/), [`oacp_sdk`](../sdk/python/)                |
+| **Minimal example**  | 15-minute proof                                | [`examples/custom-agents/`](../examples/custom-agents/)                        |
+| **MCPLab reference** | MCP tools + multi-agent crews                  | [MCPLab](https://github.com/naaa-G/MCPLab) or [`integrate/mcplab/`](./mcplab/) |
+| **MCP tools server** | Claude Desktop, Cursor MCP, MCP-native clients | [`integrate/mcp-oacp/`](./mcp-oacp/)                                           |
+| **Cursor skills**    | Cursor Agent onboarding                        | [`.cursor/skills/`](../.cursor/skills/)                                        |
 
 ## Quick start (any project)
 
@@ -33,6 +33,7 @@ Environment:
 ## Full MCPLab stack
 
 ```bash
+git clone https://github.com/naaa-G/MCPLab.git MCPLab
 pnpm docker:mcplab
 ```
 

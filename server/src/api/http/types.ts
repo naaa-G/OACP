@@ -98,7 +98,7 @@ export interface ServerIndexResponse {
     readonly observability_snapshot: '/v1/observability/snapshot';
     readonly observability_trace_graph: '/v1/observability/traces/:traceId/graph';
     readonly observability_events: '/v1/observability/events';
-    readonly playground_snapshot: '/playground/snapshot';
+    readonly openapi: '/v1/openapi.json';
     readonly workflows: '/workflows';
   };
 }

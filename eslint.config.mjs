@@ -23,8 +23,9 @@ export default tseslint.config(
       'packages/observability-client/dist/**',
       'integrate/mcp-oacp/dist/**',
       // Sibling / gitignored trees at repo root — not part of OACP v1 ship surface
-      '/MCPLab/**',
-      '/ATDN/**',
+      'MCPLab/**',
+      'ATDN/**',
+      'console-e2e-report/**',
       'lint-report.json',
     ],
   },

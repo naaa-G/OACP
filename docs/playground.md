@@ -1,6 +1,6 @@
 # Playground (legacy)
 
-> **v1.0:** The **OACP Console** at `/console` replaces the playground for launch demos, README hero, and adoption. The playground remains for Week 1–4 examples only. See [console.md](./console.md) and [bring-your-own-agents.md](./bring-your-own-agents.md).
+> **v1.0.0:** The **OACP Console** at `/console` is the product surface. `GET /playground` **redirects** to `/console/`. `GET /playground/snapshot` returns **410 Gone** — use `GET /v1/observability/snapshot`. See [console.md](./console.md).
 
 The OACP **playground** was the original web UI that rendered registered agents as nodes and animated message flow and delegation edges as collaboration happened.
 
@@ -134,7 +134,7 @@ When `trace_id` is omitted, the UI auto-selects the most recent trace.
 | Component         | Location                                         |
 | ----------------- | ------------------------------------------------ |
 | Snapshot builder  | `server/src/observability/playground-service.ts` |
-| Web UI            | `server/src/observability/playground-html.ts`    |
+| Web UI            | removed — use Console at `/console`              |
 | Routes            | `server/src/api/http/routes.ts`                  |
 | Live demo example | `examples/playground/live-demo.ts`               |
 

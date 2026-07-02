@@ -207,17 +207,20 @@ describe('OpenAPI v1 freeze (Day 54)', () => {
     assertValidOpenApiJsonResponse('/v1/observability/import', 'post', 200, response.json());
   });
 
-  it('emits deprecation headers on GET /playground/snapshot', async () => {
+  it('returns 410 Gone with deprecation headers for GET /playground/snapshot', async () => {
     const response = await app.inject({
       method: 'GET',
       url: '/playground/snapshot',
     });
 
-    expect(response.statusCode).toBe(200);
-    assertValidOpenApiJsonResponse('/v1/observability/snapshot', 'get', 200, response.json());
+    expect(response.statusCode).toBe(410);
     expect(response.headers.deprecation).toBe('@1754006399');
     expect(response.headers.sunset).toBe(LEGACY_PLAYGROUND_SNAPSHOT_SUNSET);
     expect(response.headers.link).toContain(LEGACY_PLAYGROUND_SNAPSHOT_SUCCESSOR);
     expect(response.headers.link).toContain('successor-version');
+    expect(response.json()).toMatchObject({
+      ok: false,
+      error: { successor: LEGACY_PLAYGROUND_SNAPSHOT_SUCCESSOR },
+    });
   });
 });

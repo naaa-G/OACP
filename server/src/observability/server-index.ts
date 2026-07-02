@@ -20,7 +20,6 @@ export interface ServerIndexResponse {
     readonly observability_trace_graph: '/v1/observability/traces/:traceId/graph';
     readonly observability_events: '/v1/observability/events';
     readonly openapi: '/v1/openapi.json';
-    readonly playground_snapshot: '/playground/snapshot';
     readonly workflows: '/workflows';
   };
 }
@@ -45,7 +44,6 @@ export function buildServerIndexResponse(registeredAgents: number): ServerIndexR
       observability_trace_graph: '/v1/observability/traces/:traceId/graph',
       observability_events: '/v1/observability/events',
       openapi: '/v1/openapi.json',
-      playground_snapshot: '/playground/snapshot',
       workflows: '/workflows',
     },
   };

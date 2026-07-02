@@ -131,10 +131,7 @@ describe('observability snapshot HTTP API (Day 6)', () => {
     await app.close();
   });
 
-  describe.each([
-    [OBSERVABILITY_SNAPSHOT_PATH, 'v1'],
-    [LEGACY_PLAYGROUND_SNAPSHOT_PATH, 'legacy playground'],
-  ] as const)('GET %s (%s)', (path, _label) => {
+  describe.each([[OBSERVABILITY_SNAPSHOT_PATH, 'v1']] as const)('GET %s (%s)', (path, _label) => {
     it('returns unified snapshot envelope', async () => {
       await seedTrace();
 
@@ -182,27 +179,19 @@ describe('observability snapshot HTTP API (Day 6)', () => {
     });
   });
 
-  it('v1 and legacy endpoints return identical snapshots', async () => {
-    await seedTrace();
-
-    const query = `trace_id=${traceId}&limit=10`;
-    const v1 = await app.inject({
+  it('returns 410 Gone for legacy GET /playground/snapshot (Day 60)', async () => {
+    const response = await app.inject({
       method: 'GET',
-      url: `${OBSERVABILITY_SNAPSHOT_PATH}?${query}`,
-      headers: { Accept: 'application/json' },
-    });
-    const legacy = await app.inject({
-      method: 'GET',
-      url: `${LEGACY_PLAYGROUND_SNAPSHOT_PATH}?${query}`,
+      url: LEGACY_PLAYGROUND_SNAPSHOT_PATH,
       headers: { Accept: 'application/json' },
     });
 
-    expect(v1.statusCode).toBe(200);
-    expect(legacy.statusCode).toBe(200);
-
-    const v1Body = v1.json<SnapshotEnvelope>();
-    const legacyBody = legacy.json<SnapshotEnvelope>();
-    expect(v1Body.snapshot).toEqual(legacyBody.snapshot);
+    expect(response.statusCode).toBe(410);
+    expect(response.headers.deprecation).toBe('@1754006399');
+    expect(response.headers.link).toContain('/v1/observability/snapshot');
+    const body = response.json<{ ok: false; error: { successor: string } }>();
+    expect(body.ok).toBe(false);
+    expect(body.error.successor).toBe('/v1/observability/snapshot');
   });
 
   it('advertises v1 snapshot path on server index', async () => {
@@ -214,11 +203,11 @@ describe('observability snapshot HTTP API (Day 6)', () => {
 
     expect(response.statusCode).toBe(200);
     const body = response.json<{
-      api: { observability_snapshot: string; playground_snapshot: string };
+      api: { observability_snapshot: string };
     }>();
 
     expect(body.api.observability_snapshot).toBe(OBSERVABILITY_SNAPSHOT_PATH);
-    expect(body.api.playground_snapshot).toBe(LEGACY_PLAYGROUND_SNAPSHOT_PATH);
+    expect((body.api as { playground_snapshot?: string }).playground_snapshot).toBeUndefined();
   });
 });
 

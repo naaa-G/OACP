@@ -4,10 +4,10 @@ MCPLab is the **flagship OACP integration** — MCP tool servers plus multi-agen
 
 ## Layout options
 
-| Location              | When to use                                                   |
-| --------------------- | ------------------------------------------------------------- |
-| `./MCPLab/`           | Local clone (gitignored in OACP monorepo until public launch) |
-| `./integrate/mcplab/` | Client-only compose templates shipped with OACP               |
+| Location              | When to use                                                                    |
+| --------------------- | ------------------------------------------------------------------------------ |
+| `./MCPLab/`           | Clone [github.com/naaa-G/MCPLab](https://github.com/naaa-G/MCPLab) beside OACP |
+| `./integrate/mcplab/` | Client-only compose templates shipped with OACP                                |
 
 Resolution order: `integrate/mcplab/` → `MCPLab/` (see `docker/scripts/resolve-mcplab-root.mjs`).
 
@@ -16,6 +16,7 @@ Resolution order: `integrate/mcplab/` → `MCPLab/` (see `docker/scripts/resolve
 From the OACP repo root:
 
 ```bash
+git clone https://github.com/naaa-G/MCPLab.git MCPLab
 pnpm docker:mcplab
 ```
 

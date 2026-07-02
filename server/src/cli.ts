@@ -11,7 +11,9 @@ async function main(): Promise<void> {
   console.log('Graph: GET /graph/traces/:traceId');
   console.log('Traces: GET /traces, GET /traces/:traceId, GET /trace-viewer');
   console.log('Console: GET /console (static SPA), GET /v1/observability/snapshot');
-  console.log('Legacy: GET /playground → 302 /console, GET /playground/snapshot');
+  console.log(
+    'Legacy: GET /playground → 302 /console; GET /playground/snapshot → 410 Gone (use /v1/observability/snapshot)',
+  );
   console.log('CLI: pnpm --filter @oacp/server trace -- <trace-id>');
   console.log(
     'Workflows: GET /workflows, POST /workflows, POST /workflows/:id/run, GET /workflows/runs/:runId',

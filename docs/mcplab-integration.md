@@ -2,7 +2,7 @@
 
 MCPLab is the flagship OACP demo: MCP tools plus multi-agent orchestration. The **OACP Console** surfaces MCPLab crews with fleet/role badges, live traces, and delegation graphs.
 
-> **MCPLab repo:** Copy or symlink this document to `MCPLab/docs/oacp-integration.md` so both projects stay aligned.
+> **MCPLab repo:** [github.com/naaa-G/MCPLab](https://github.com/naaa-G/MCPLab) — keep aligned with `MCPLab/docs/oacp-integration.md`.
 
 ## Agent registration contract (Day 11)
 

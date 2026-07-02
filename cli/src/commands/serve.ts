@@ -80,7 +80,7 @@ export async function runServeCommand(options: ServeCommandOptions): Promise<num
 
   const url = await app.listen({ host: options.host, port: options.port });
   console.log(`[oacp] Reference server listening at ${url}`);
-  console.log(`[oacp] Playground: ${url}/playground`);
+  console.log(`[oacp] Console: ${url}/console/`);
 
   const shutdown = async (signal: string): Promise<void> => {
     console.log(`[oacp] Received ${signal}, shutting down…`);

@@ -1,6 +1,6 @@
 import { noopLogger } from '@oacp/core';
 import { createApp, bootstrapStartupTeam, STARTUP_TEAM_WORKFLOW_ID } from '@oacp/server';
-import { AgentClient } from '@oacp/sdk';
+import { AgentClient, buildConsoleTraceUrl } from '@oacp/sdk';
 
 import type { OutputFormat } from '../output.js';
 import { formatDisplayValue, printJson } from '../output.js';
@@ -196,7 +196,7 @@ export async function runRunCommand(options: RunCommandOptions): Promise<number>
     if (options.keepAlive) {
       if (!quiet) {
         console.log('');
-        console.log(`[oacp] Playground: ${baseUrl}/playground?trace_id=${result.traceId}`);
+        console.log(`[oacp] Console: ${buildConsoleTraceUrl(baseUrl, result.traceId)}`);
         console.log('[oacp] Press Ctrl+C to stop');
       }
       await waitForShutdown();
@@ -251,7 +251,7 @@ function printRunOutput(params: {
       trace_id: params.traceId,
       run_id: params.runId,
       base_url: params.baseUrl,
-      playground_url: `${params.baseUrl}/playground?trace_id=${params.traceId}`,
+      console_url: buildConsoleTraceUrl(params.baseUrl, params.traceId),
       output: params.output,
     });
     return;
@@ -274,7 +274,7 @@ function printRunOutput(params: {
   }
   console.log('');
   console.log(`Trace: ${params.traceId}`);
-  console.log(`Playground: ${params.baseUrl}/playground?trace_id=${params.traceId}`);
+  console.log(`Console: ${buildConsoleTraceUrl(params.baseUrl, params.traceId)}`);
 }
 
 function waitForShutdown(): Promise<void> {

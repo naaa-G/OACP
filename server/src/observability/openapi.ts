@@ -6,7 +6,7 @@ import type { FastifyInstance } from 'fastify';
 
 const OPENAPI_SPEC_RELATIVE = join('..', '..', '..', 'specs', 'openapi', 'v1.json');
 
-/** Legacy snapshot sunset target (Day 60 removal). */
+/** Legacy snapshot sunset (removed v1.0.0). */
 export const LEGACY_PLAYGROUND_SNAPSHOT_SUNSET = 'Wed, 31 Jul 2026 23:59:59 GMT';
 
 export const LEGACY_PLAYGROUND_SNAPSHOT_SUCCESSOR = '/v1/observability/snapshot';

@@ -25,11 +25,11 @@ open http://127.0.0.1:3847/console/
 
 Profiles:
 
-| Profile | Command                                      | Result                              |
-| ------- | -------------------------------------------- | ----------------------------------- |
-| Default | `docker compose up -d`                       | OACP + Console                      |
-| Demo    | `docker compose --profile demo up seed-demo` | + MCPLab-style seed trace           |
-| MCPLab  | `pnpm docker:mcplab`                         | Full lab (requires `MCPLab/` clone) |
+| Profile | Command                                                                           | Result                    |
+| ------- | --------------------------------------------------------------------------------- | ------------------------- |
+| Default | `docker compose up -d`                                                            | OACP + Console            |
+| Demo    | `docker compose --profile demo up seed-demo`                                      | + MCPLab-style seed trace |
+| MCPLab  | `git clone https://github.com/naaa-G/MCPLab.git MCPLab` then `pnpm docker:mcplab` | Full lab stack            |
 
 See [docker-compose.md](./docker-compose.md).
 
@@ -70,12 +70,12 @@ See [integrate/mcp-oacp/README.md](../integrate/mcp-oacp/README.md).
 
 ## Examples gallery
 
-| Example                | Command                                                |
-| ---------------------- | ------------------------------------------------------ |
-| Custom agents (Day 58) | `pnpm --filter oacp-examples start:custom-agents`      |
-| SDK remote             | `pnpm --filter oacp-examples start:sdk-remote`         |
-| LangChain              | `pnpm --filter oacp-examples start:langchain-delegate` |
-| MCPLab                 | `pnpm docker:mcplab`                                   |
+| Example                | Command                                                                           |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| Custom agents (Day 58) | `pnpm --filter oacp-examples start:custom-agents`                                 |
+| SDK remote             | `pnpm --filter oacp-examples start:sdk-remote`                                    |
+| LangChain              | `pnpm --filter oacp-examples start:langchain-delegate`                            |
+| MCPLab                 | `git clone https://github.com/naaa-G/MCPLab.git MCPLab` then `pnpm docker:mcplab` |
 
 Index: [examples-gallery.md](./examples-gallery.md)
 
